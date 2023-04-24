@@ -1,0 +1,36 @@
+[
+  { "name":"Thai AirAsia",
+    "logo_url": "",
+    "link_url": "****"
+  },
+  {
+    "name":"Thai Lion Air",
+    "logo_url": "",
+    "link_url": "****" 
+  },
+  {
+    "name":"Thai Airways International",
+    "logo_url": "",
+    "link_url": "***" 
+  },
+  {
+    "name":"Nok Air",
+    "logo_url": "****",
+    "link_url": "" 
+  },
+  {
+    "name":"THAI Smile Airways",
+    "logo_url": "",
+    "link_url": "****" 
+  },
+  {
+    "name":"Bangkok Airways",
+    "logo_url": "****",
+    "link_url": "" 
+  },
+  {
+    "name":"Thai VietJet Air",
+    "logo_url": "",
+    "link_url": "" 
+  }
+]
