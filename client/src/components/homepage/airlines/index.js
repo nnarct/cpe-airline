@@ -17,7 +17,7 @@ export const AirlinesPartner = () => {
   return (
     <div className="flex justify-evenly flex-wrap items-center px-2 ">
       {console.log(airlines)}
-      {airlines[0].Link &&
+      {/* {airlines[0].Link &&
         airlineImg.map((e, i) => {
           return (
             <a
@@ -30,7 +30,7 @@ export const AirlinesPartner = () => {
               <img src={e} alt="" className="w-1/6" />
             </a>
           );
-        })}
+        })} */}
     </div>
   );
 };
