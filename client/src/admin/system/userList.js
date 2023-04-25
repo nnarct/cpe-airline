@@ -1,6 +1,4 @@
-import Axios from "axios";
 import { useEffect, useState } from "react";
-
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 
