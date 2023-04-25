@@ -19,11 +19,11 @@ export const EmployeeList = () => {
   const [modal, setAddAdminModal] = useState(false);
   return (
     <>
-      <div className="flex flex-col items-center px-2 ">
+      <div className="flex flex-col items-center w-full max-h-calc overflow-y-auto pb-4">
         <AddAdmin status={modal} setStatus={setAddAdminModal} />
-        <div className="font-bold py-4   w-full flex justify-center">
+        <div className=" py-4 w-full flex justify-center">
           <div className="container flex justify-between">
-            <h1 className="text-3xl ">Employee List</h1>
+            <h1 className="text-3xl font-bold">Employee List</h1>
             <button
               className="shadow focus:ring-2 rounded px-2 bg-white hover:bg-gray-300 "
               onClick={() => setAddAdminModal(true)}
