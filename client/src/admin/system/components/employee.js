@@ -95,6 +95,7 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
           console.log(res);
           if (res.data.Status === "Edit employee successfully! :)") {
             setEditThisRow(0);
+            window.location.reload();
             // alert("Edit successfully! :)");
           } else {
             alert(res.data.Error);
@@ -108,11 +109,11 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
 
   const changeCurrentTask = () => {
     setEditThisRow(employee.EmployeeID);
-    // if (editThisRow !== 0) {
-    //   alert("Please finish the current task first!");
-    // } else {
+    if (editThisRow !== 0) {
+      alert("Please finish the current task first!");
+    } else {
 
-    // }
+    }
   };
   return (
     <>
