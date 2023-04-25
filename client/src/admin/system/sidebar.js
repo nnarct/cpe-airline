@@ -15,10 +15,11 @@ export const Sidebar = ({ setContent }) => {
         <ul className="list-none p-4 space-y-2">
           <Menu content="EmployeeList">Employee List</Menu>
           <Menu content="AirlineList">Airline List</Menu>
+          <Menu content="AirportList">Airport List</Menu>
           <Menu content="AirlineList">Plane Info</Menu>
           <Menu content="FlightInfo">Flight Info</Menu>
           <Menu content="AirlineList">Dashboard</Menu>
-          <Menu content="AirportList">Airport List</Menu>
+          
         </ul>
       </div>
     </>
