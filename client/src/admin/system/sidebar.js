@@ -16,9 +16,12 @@ export const Sidebar = ({ setContent }) => {
           <Menu content="EmployeeList">Employee List</Menu>
           <Menu content="AirlineList">Airline List</Menu>
           <Menu content="AirportList">Airport List</Menu>
-          <Menu content="AirlineList">Plane Info</Menu>
-          <Menu content="FlightInfo">Flight Info</Menu>
+          <Menu content="FlightList">Flight Info</Menu>
+          <Menu content="UserList">User List</Menu>
+          <Menu content="PassengerList">Passenger List</Menu>
+          
           <Menu content="AirlineList">Dashboard</Menu>
+          <Menu content="AirlineList">Plane List</Menu>
           
         </ul>
       </div>
