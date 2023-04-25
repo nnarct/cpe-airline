@@ -20,6 +20,7 @@ import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
 import { insertAirport } from "./admin/insertAirport.js";
 import { airportList } from "./admin/airportList.js";
+import { deleteAirport } from "./admin/deleteAirport.js";
 
 const app = express();
 app.use(express.json());
@@ -60,6 +61,8 @@ app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
 
 app.post("/system/insertAirport", insertAirport);
+
+app.post("/system/deleteAirport", deleteAirport);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
