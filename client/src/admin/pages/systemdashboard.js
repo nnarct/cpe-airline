@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import Axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -8,7 +8,7 @@ import { EmployeeList } from "../system/employeeList";
 import { AirlineList } from "../system/airlineList";
 import { AdminNavbar } from "../components/navbar";
 import { FlightInfo } from "../system/flightInfo";
-import {AirportList} from "../system/airportList"
+import { AirportList } from "../system/airportList";
 export const SystemDashboard = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState([]);
@@ -18,14 +18,13 @@ export const SystemDashboard = () => {
       if (res.data.Status === "Success") {
         setInfo(res.data.Info);
         if (res.data.Info.Position === "Admin") navigate("/admin");
-        if (res.data.Info.Position === "Manager") navigate("/manager");
       } else {
         navigate("/admin/login");
       }
     });
   }, []);
 
-  const [content, setContent] = useState("EmployeeList");
+  const [content, setContent] = useState("AirportList");
   return (
     <>
       <AdminNavbar info={info} />
