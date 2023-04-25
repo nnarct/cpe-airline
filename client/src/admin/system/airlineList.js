@@ -1,19 +1,20 @@
-import Axios from "axios";
 import { useEffect, useState } from "react";
 
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
+
   useEffect(() => {
     const getAirlines = async () => {
       const res = await fetch("http://localhost:3001/admin/airlineList");
       const data = await res.json();
       setAirlines(data.Data);
-    } 
+    };
     getAirlines();
   }, []);
   const editAirline = (e) => {
     console.log(e);
   };
+
   return (
     <>
       <div className="flex flex-col items-center ">
