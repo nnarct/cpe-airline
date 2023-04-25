@@ -7,7 +7,8 @@ import { Sidebar } from "../system/sidebar";
 import { EmployeeList } from "../system/employeeList";
 import { AirlineList } from "../system/airlineList";
 import { AdminNavbar } from "../components/navbar";
-
+import { FlightInfo } from "../system/flightInfo";
+import {AirportList} from "../system/airportList"
 export const SystemDashboard = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState([]);
@@ -33,6 +34,8 @@ export const SystemDashboard = () => {
         <div className="w-full">
           {content === "EmployeeList" && <EmployeeList />}
           {content === "AirlineList" && <AirlineList />}
+          {content === "FlightInfo" && <FlightInfo />}
+          {content === "AirportList" && <AirportList />}
         </div>
       </div>
     </>
