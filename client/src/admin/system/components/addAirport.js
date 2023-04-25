@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export const AddAirport = () => {
   const Star = () => {
     return <span className="text-red-500">*</span>;
