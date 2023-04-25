@@ -1,7 +1,10 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
+
 import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
+import { Content } from "./components/content";
+import { Header } from "./components/header";
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
   useEffect(() => {
@@ -32,8 +35,8 @@ export const AirportList = () => {
   };
   return (
     <>
-      <div className="flex flex-col items-center w-full max-h-calc overflow-y-auto pb-4">
-        <h1 className="text-3xl py-4 font-bold">Airport List</h1>
+      <Content>
+        <Header>Airport List</Header>
         <table className="container">
           <thead>
             <tr>
@@ -119,7 +122,7 @@ export const AirportList = () => {
         ) : (
           ""
         )}
-      </div>
+      </Content>
     </>
   );
 };
