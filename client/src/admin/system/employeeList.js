@@ -6,7 +6,7 @@ export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   useEffect(() => {
     const getEmployeeList = async () => {
-      const res = await fetch("http://localhost:3001/admin/employeeList");
+      const res = await fetch("http://localhost:3001/system/employeeList");
       const data = await res.json();
       setEmployees(data.Data);
     };

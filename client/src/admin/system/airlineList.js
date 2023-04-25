@@ -5,7 +5,7 @@ export const AirlineList = () => {
 
   useEffect(() => {
     const getAirlines = async () => {
-      const res = await fetch("http://localhost:3001/admin/airlineList");
+      const res = await fetch("http://localhost:3001/system/airlineList");
       const data = await res.json();
       setAirlines(data.Data);
     };
