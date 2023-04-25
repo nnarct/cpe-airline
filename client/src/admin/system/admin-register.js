@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Axios from "axios";
 import { BsXLg } from "react-icons/bs";
-import { Modal } from "./components/modal";
+import { Modal } from "./../../components/modal/modal";
 export const AddAdmin = ({ status, setStatus }) => {
   const [values, setValues] = useState({
     firstName: "",
@@ -31,7 +31,7 @@ export const AddAdmin = ({ status, setStatus }) => {
   return (
     <>
       {status ? (
-      <Modal>
+        <Modal>
           <h1 className="text-4xl font-bold text-white flex items-center space-x-3">
             <span className="pb-2"> Create New Admin </span>
             <span
