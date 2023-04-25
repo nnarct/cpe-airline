@@ -32,8 +32,8 @@ export const AirportList = () => {
   };
   return (
     <>
-      <div className="flex flex-col items-center w-full">
-        <h1 className="text-3xl py-4">Airport List</h1>
+      <div className="flex flex-col items-center w-full max-h-calc overflow-y-auto pb-4">
+        <h1 className="text-3xl py-4 font-bold">Airport List</h1>
         <table className="container">
           <thead>
             <tr>
