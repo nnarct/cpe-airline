@@ -12,15 +12,24 @@ import { logout } from "./users/logout.js";
 
 import { verifyAdmin, verifyAdminRes } from "./admin/verifyAdmin.js";
 import { registerAdmin } from "./admin/registerAdmin.js";
-import { editEmployee } from "./admin/editEmployee.js";
-import { editAirline } from "./admin/editAirline.js";
 import { loginAdmin } from "./admin/loginAdmin.js";
 import { logoutAdmin } from "./admin/logoutAdmin.js";
+
+
+
 import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
-import { insertAirport } from "./admin/insertAirport.js";
 import { airportList } from "./admin/airportList.js";
+import { flightList } from "./admin/flightList.js";
+import { passengerList } from "./admin/passengerList.js";
+import { userList } from "./admin/userList.js";
+
+import { editEmployee } from "./admin/editEmployee.js";
+import { editAirline } from "./admin/editAirline.js";
+
 import { deleteAirport } from "./admin/deleteAirport.js";
+
+import { insertAirport } from "./admin/insertAirport.js";
 
 const app = express();
 app.use(express.json());
@@ -56,6 +65,10 @@ app.get("/admin/logout", logoutAdmin);
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);
+app.get("/system/flightList", flightList);
+app.get("/system/userList", userList);
+app.get("/system/passengerList", passengerList);
+
 
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
