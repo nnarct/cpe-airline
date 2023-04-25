@@ -55,7 +55,7 @@ export const UserList = () => {
                       </td>
                       <td className="border px-3 py-2 text-center">
                         {user.TelNo ? user.TelNo : "-"}
-                      </td>{" "}
+                      </td>
                       <td className="border px-3 py-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50">
                         X
                       </td>
