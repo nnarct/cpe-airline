@@ -3,12 +3,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
+import { AdminNavbar } from "../components/navbar";
 import { Sidebar } from "../system/sidebar";
 import { EmployeeList } from "../system/employeeList";
 import { AirlineList } from "../system/airlineList";
-import { AdminNavbar } from "../components/navbar";
-import { FlightInfo } from "../system/flightInfo";
 import { AirportList } from "../system/airportList";
+import { FlightList } from "../system/flightList";
+import { UserList } from "../system/userList";
+import { PassengerList } from "../system/passengerList";
+import { Dashboard } from "../system/dashboard";
+import { PlaneList } from "../system/planeList";
+
 export const SystemDashboard = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState([]);
@@ -33,8 +38,12 @@ export const SystemDashboard = () => {
         <div className="w-full">
           {content === "EmployeeList" && <EmployeeList />}
           {content === "AirlineList" && <AirlineList />}
-          {content === "FlightInfo" && <FlightInfo />}
           {content === "AirportList" && <AirportList />}
+          {content === "FlightList" && <FlightList />}
+          {content === "UserList" && <UserList />}
+          {content === "PassengerList" && <PassengerList />}
+          {content === "Dashboard" && <Dashboard />}
+          {content === "PlaneList" && <PlaneList />}
         </div>
       </div>
     </>
