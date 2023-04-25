@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Axios from "axios";
 import { BsXLg } from "react-icons/bs";
-import { AiFillFileAdd } from "react-icons/ai";
-
+import { Modal } from "./components/modal";
 export const AddAdmin = ({ status, setStatus }) => {
-  const navigate = useNavigate();
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -34,7 +31,7 @@ export const AddAdmin = ({ status, setStatus }) => {
   return (
     <>
       {status ? (
-        <div className="fixed top-0 left-0 h-screen w-screen bg-black/70 backdrop-blur flex flex-col items-center justify-center space-y-5 ">
+      <Modal>
           <h1 className="text-4xl font-bold text-white flex items-center space-x-3">
             <span className="pb-2"> Create New Admin </span>
             <span
@@ -129,7 +126,7 @@ export const AddAdmin = ({ status, setStatus }) => {
               Create
             </button>
           </form>
-        </div>
+        </Modal>
       ) : (
         ""
       )}
