@@ -1,4 +1,4 @@
-import { db } from "..";
+import { db } from "../index.js";
 export const airlineList = (req, res) => {
   const sql = "SELECT * FROM airline";
   db.query(sql, (err, data) => {

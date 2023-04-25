@@ -1,4 +1,5 @@
-import { db } from "..";
+import { db } from "../index.js";
+
 import bcrypt from "bcrypt";
 export const register =  (req, res) => {
   const sqlCheck = `SELECT * FROM user WHERE email = "${req.body.email}"`;

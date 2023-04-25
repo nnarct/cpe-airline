@@ -1,4 +1,5 @@
-import { db } from "..";
+import { db } from "../index.js";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 export const loginAdmin = (req, res) => {

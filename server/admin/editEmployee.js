@@ -1,4 +1,5 @@
-import { db } from "..";
+import { db } from "../index.js";
+
 export const editEmployee = (req, res) => {
   const sql =
     "UPDATE employee SET FirstName = ?, LastName = ?, username = ?, Email = ?, TelNo = ?, Position = ?, AirlineID = ? WHERE EmployeeID =?";

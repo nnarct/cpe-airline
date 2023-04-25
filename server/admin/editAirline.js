@@ -1,4 +1,4 @@
-import { db } from "..";
+import { db } from "../index.js";
 export const editAirline = (req, res) => {
   const sql =
     "UPDATE airline SET Name = ?, LogoImage = ?, Link = ? WHERE AirlineID =?";
