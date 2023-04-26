@@ -14,7 +14,7 @@ export const AirportList = () => {
       setAirports(data.Data);
     };
     getAirports();
-  });
+  }, []);
 
   const editAirport = (e) => {};
   const [popup, setPopup] = useState(false);
