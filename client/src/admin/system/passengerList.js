@@ -11,7 +11,7 @@ export const PassengerList = () => {
       setPassengers(data.Data);
     };
     getPassengers();
-  });
+  }, []);
   const editPassengers = (e) => {};
   return (
     <>

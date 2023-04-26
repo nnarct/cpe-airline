@@ -11,7 +11,7 @@ export const UserList = () => {
       setUsers(data.Data);
     };
     getUsers();
-  });
+  }, []);
   const editUser = (e) => {};
   return (
     <>
