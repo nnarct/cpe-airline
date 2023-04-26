@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Content } from "./components/content";
+import { Header } from "./components/header";
 
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
@@ -17,8 +19,8 @@ export const AirlineList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center ">
-        <h1 className="text-3xl font-bold py-4">Airline List</h1>
+      <Content>
+        <Header>Airline List</Header>
         <table className="table-auto border-collapse w-4/5 bg-white">
           <thead>
             <tr>
@@ -43,7 +45,7 @@ export const AirlineList = () => {
                     <td className="border px-3 py-2">
                       {airline.AirlineID ? airline.AirlineID : "-"}
                     </td>
-                    <td className="border px-3 py-2">
+                    <td className="whitespace-nowrap border px-3 py-2">
                       {airline.Name ? airline.Name : "-"}
                     </td>
 
@@ -51,14 +53,25 @@ export const AirlineList = () => {
                       {airline.LogoImage ? airline.LogoImage : "-"}
                     </td>
                     <td className="border px-3 py-2">
-                      {airline.Link ? airline.Link : "-"}
+                      {airline.Link ? (
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-blue-500 hover:bg-gray-100 p-1 rounded underline"
+                          href={airline.Link}
+                        >
+                          {airline.Link}
+                        </a>
+                      ) : (
+                        "-"
+                      )}
                     </td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
-      </div>
+      </Content>
     </>
   );
 };
