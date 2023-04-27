@@ -1,18 +1,7 @@
 import Axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Star } from "../../components/star";
-export const AddFlight = () => {
-  const [airlines, setAirlines] = useState([]);
-  const [airports, setAirports] = useState([]);
-  useEffect(() => {
-    const getFlights = async () => {
-      const res = await fetch("http://localhost:3001/system/flightList");
-      const data = await res.json();
-      setAirlines(data.Airlines);
-      setAirports(data.Airports);
-    };
-    getFlights();
-  }, []);
+export const AddFlight = ({ airlines, airports }) => {
   const [values, setValues] = useState({
     FlightNumber: "",
     AirlineID: "",
@@ -67,7 +56,7 @@ export const AddFlight = () => {
           >
             {airlines.map((airline, i) => {
               return (
-                <option key={i} value={airline.AirlineID}>
+                <option key={`airline${i}`} value={airline.AirlineID}>
                   {airline.AirlineID}-{airline.Name}
                 </option>
               );
@@ -98,7 +87,16 @@ export const AddFlight = () => {
           >
             {airports.map((airport, i) => {
               return (
-                <option key={i} value={airport.AirportID}>
+                <option
+                  key={`origin${i}`}
+                  value={airport.AirportID}
+                  onClick={() =>
+                    setValues({
+                      ...values,
+                      OriginAirportID: airport.AirportID,
+                    })
+                  }
+                >
                   {i + 1}. {airport.Name} ({airport.IATA})
                 </option>
               );
@@ -112,7 +110,16 @@ export const AddFlight = () => {
           >
             {airports.map((airport, i) => {
               return (
-                <option key={i} value={airport.AirportID}>
+                <option
+                  key={`destination${i}`}
+                  value={airport.AirportID}
+                  onClick={() =>
+                    setValues({
+                      ...values,
+                      DestinationAirportID: airport.AirportID,
+                    })
+                  }
+                >
                   {i + 1}. {airport.Name} ({airport.IATA})
                 </option>
               );
