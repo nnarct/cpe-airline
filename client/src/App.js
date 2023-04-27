@@ -10,6 +10,7 @@ import { DashboardRouter } from "./admin/pages/dashboardRounter";
 import { ManagerDashboard } from "./admin/pages/managerdashboard";
 import { SystemDashboard } from "./admin/pages/systemdashboard";
 import { AdminDashboard } from "./admin/pages/admindasboard";
+import { ErrorPage } from "./admin/auth/error";
 
 export const App = () => {
   Axios.defaults.withCredentials = true;
@@ -29,6 +30,7 @@ export const App = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/error" element={<ErrorPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register auth={auth} />} />
         <Route path="/homepage" element={<DashboardRouter />} />
