@@ -15,8 +15,8 @@ export const LoginAdmin = () => {
         if (res.data.Status === "Successfully login admin") {
           setAdminAuth(true);
           if (res.data.Position === "Admin") navigate("/admin");
-          if (res.data.Position === "Manager") navigate("/manager");
           if (res.data.Position === "System") navigate("/system");
+          else navigate("/error");
         } else {
           alert(res.data.Error);
         }
@@ -30,7 +30,6 @@ export const LoginAdmin = () => {
       if (res.data.Status === "Success") {
         setAdminAuth(true);
         if (res.data.Info.Position === "Admin") navigate("/admin");
-        if (res.data.Info.Position === "Manager") navigate("/manager");
         if (res.data.Info.Position === "System") navigate("/system");
       } else {
         setAdminAuth(false);
