@@ -1,12 +1,12 @@
 import Axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
+  const addAirport = useRef(null);
   useEffect(() => {
     const getAirports = async () => {
       const res = await fetch("http://localhost:3001/system/airportList");
@@ -33,10 +33,20 @@ export const AirportList = () => {
         if (err) console.log(err);
       });
   };
+
   return (
     <>
       <Content>
-        <Header>Airport List</Header>
+        <Header>
+          <span>Airport List</span>
+          <button
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
+            onClick={() => addAirport.current.scrollIntoView()}
+          >
+            Add Airport +
+          </button>
+        </Header>
+
         <table className="container">
           <thead>
             <tr>
@@ -93,7 +103,8 @@ export const AirportList = () => {
           </tbody>
         </table>
 
-        <AddAirport />
+        <AddAirport id="addAirport" />
+        <span ref={addAirport}></span>
         {popup ? (
           <Popup>
             <div className="p-3 flex flex-col space-y-2">
