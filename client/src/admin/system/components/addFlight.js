@@ -1,8 +1,6 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
-const Star = () => {
-  return <span className="text-red-500">*</span>;
-};
+import { Star } from "../../components/star";
 export const AddFlight = () => {
   const [airlines, setAirlines] = useState([]);
   const [airports, setAirports] = useState([]);

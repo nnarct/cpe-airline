@@ -1,9 +1,7 @@
 import Axios from "axios";
 import { useState } from "react";
+import { Star } from "../../components/star";
 export const AddAirport = () => {
-  const Star = () => {
-    return <span className="text-red-500">*</span>;
-  };
   const [values, setValues] = useState({
     AirportID: "",
     Name: "",
