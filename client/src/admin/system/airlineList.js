@@ -21,14 +21,14 @@ export const AirlineList = () => {
     <>
       <Content>
         <Header>Airline List</Header>
-        <table className="table-auto border-collapse w-4/5 bg-white">
+        <table className="w-full container table-auto border-collapse w-4/5 bg-white">
           <thead>
             <tr>
-              <th className="border px-3 py-2 w-1/12">Edit</th>
-              <th className="border px-3 py-2 w-1/12">ID</th>
-              <th className="border px-3 py-2 w-1/6">Name</th>
-              <th className="border px-3 py-2 w-1/6">Logo Path</th>
-              <th className="border px-3 py-2 w-1/6">Link</th>
+              <th className="border border-black px-3 py-2 w-1/12">Edit</th>
+              <th className="border border-black px-3 py-2 w-1/12">ID</th>
+              <th className="border border-black px-3 py-2 w-1/6">Name</th>
+              <th className="border border-black px-3 py-2 w-1/6">Logo Path</th>
+              <th className="border border-black px-3 py-2 w-1/6">Link</th>
             </tr>
           </thead>
           <tbody>
@@ -42,7 +42,7 @@ export const AirlineList = () => {
                     >
                       e
                     </td>
-                    <td className="border px-3 py-2">
+                    <td className="border px-3 py-2 text-center">
                       {airline.AirlineID ? airline.AirlineID : "-"}
                     </td>
                     <td className="whitespace-nowrap border px-3 py-2">
