@@ -1,27 +1,36 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import moment from "moment";
 import { AddFlight } from "./components/addFlight";
 
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
+  const [airlines, setAirlines] = useState([]);
+  const [airports, setAirports] = useState([]);
   useEffect(() => {
     const getFlights = async () => {
       const res = await fetch("http://localhost:3001/system/flightList");
       const data = await res.json();
       setFlights(data.Data);
+      setAirlines(data.Airlines);
+      setAirports(data.Airports);
     };
     getFlights();
   }, []);
   const ToDATETIME = (time) => {
-    return moment(time).format("DD/MM/YYYY hh:mm a");
+    return moment(time).format("ddd DD-MM-YYYY hh:mm a");
   };
   return (
     <>
       <Content>
-        <Header>Flight List</Header>
-        <table className="">
+        <Header>
+          <span>Flight List</span>
+          <button className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring">
+            Add Flight +
+          </button>
+        </Header>
+        <table className="w-full container">
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
@@ -29,16 +38,16 @@ export const FlightList = () => {
               <th className="p-2 border border-1 border-black">
                 Flight Number
               </th>
-              <th className="p-2 border border-1  border-black">AirlineID</th>
-              <th className="p-2 border border-1  border-black">
+              <th className="p-2 border border-1 border-black">AirlineID</th>
+              <th className="p-2 border border-1 border-black">
                 Departure time
               </th>
-              <th className="p-2 border border-1  border-black">
+              <th className="p-2 border border-1 border-black">
                 Arrival time
               </th>
-              <th className="p-2 border border-1  border-black">Plane ID</th>
-              <th className="p-2 border border-1  border-black">Origin</th>
-              <th className="p-2 border border-1  border-black">Destination</th>
+              <th className="p-2 border border-1 border-black">Plane ID</th>
+              <th className="p-2 border border-1 border-black">Origin</th>
+              <th className="p-2 border border-1 border-black">Destination</th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +55,7 @@ export const FlightList = () => {
               flights.map((flight, i) => {
                 return (
                   <>
-                    <tr key={i}>
+                    <tr key={`flight${i}`}>
                       <th className="p-2 border border-1">Edit</th>
                       <th className="p-2 border border-1">
                         {flight.FlightID ? flight.FlightID : "-"}
@@ -84,7 +93,7 @@ export const FlightList = () => {
               })}
           </tbody>
         </table>
-        <AddFlight />
+        <AddFlight airlines={airlines} airports={airports} />
       </Content>
     </>
   );
