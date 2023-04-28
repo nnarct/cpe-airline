@@ -4,6 +4,7 @@ import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
+import { Table } from "./components/table";
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
   const addAirport = useRef(null);
@@ -47,7 +48,7 @@ export const AirportList = () => {
           </button>
         </Header>
 
-        <table className="container">
+        <Table>
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
@@ -101,7 +102,7 @@ export const AirportList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
 
         <AddAirport id="addAirport" />
         <span ref={addAirport}></span>

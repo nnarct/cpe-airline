@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
+import { Table } from "./components/table";
 
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
@@ -21,7 +22,7 @@ export const AirlineList = () => {
     <>
       <Content>
         <Header>Airline List</Header>
-        <table className="w-full container table-auto border-collapse w-4/5 bg-white">
+        <Table>
           <thead>
             <tr>
               <th className="border border-black px-3 py-2 w-1/12">Edit</th>
@@ -70,7 +71,7 @@ export const AirlineList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </Content>
     </>
   );

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { AddFlight } from "./components/addFlight";
+import { Table } from "./components/table";
 
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -30,7 +31,7 @@ export const FlightList = () => {
             Add Flight +
           </button>
         </Header>
-        <table className="w-full container">
+        <Table>
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
@@ -92,7 +93,7 @@ export const FlightList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
         <AddFlight airlines={airlines} airports={airports} />
       </Content>
     </>

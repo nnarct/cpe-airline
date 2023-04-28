@@ -3,6 +3,7 @@ import { AddAdmin } from "./admin-register";
 import { Employee } from "./components/employee";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
+import { Table } from "./components/table";
 
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -34,7 +35,7 @@ export const EmployeeList = () => {
           </button>
         </Header>
 
-        <table className="w-full table-auto border-collapse container bg-white px-2 mb-4">
+        <Table>
           <thead>
             <tr>
               <th className="border border-black px-3 py-2 min-w-[60px] max-w-[60px] w-[60px]">
@@ -73,7 +74,7 @@ export const EmployeeList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </Content>
     </>
   );
