@@ -1,3 +1,5 @@
+import { BsExclamationOctagon } from "react-icons/bs";
+
 export const Table = ({ children }) => {
   return (
     <>
@@ -19,7 +21,7 @@ export const Th = ({ children, className, width }) => {
   return (
     <>
       <th
-        className={`p-1 border border-1 border-black whitespace-nowrap ${className} ${width}`}
+        className={`p-2 border border-1 border-black whitespace-nowrap ${className} ${width}`}
       >
         {children}
       </th>
@@ -39,6 +41,16 @@ export const Td = ({ e, className }) => {
   return (
     <>
       <td className={`border px-3 py-2 ${className}`}>{e ? e : "-"}</td>
+    </>
+  );
+};
+
+export const Edit = () => {
+  return (
+    <>
+      <th className="border border-black px-3 py-2 min-w-[60px] max-w-[60px] w-[60px]">
+        Edit
+      </th>
     </>
   );
 };
