@@ -1,0 +1,19 @@
+.admin-sidebar::-webkit-scrollbar {
+  width: 0.5rem;
+} /* Track */
+.admin-sidebar::-webkit-scrollbar-track {
+  /* background: rgb(1, 0, 54); */
+  box-shadow: inset 0 0 5px #092b52;
+  border-radius: 10px;
+}
+/* Handle */
+.admin-sidebar::-webkit-scrollbar-thumb {
+  /* background: #22333d; */
+  background: #5c8096;
+  border-radius: 5px;  cursor: pointer;
+}
+
+/* Handle on hover */
+.admin-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #5e8fad;
+}
