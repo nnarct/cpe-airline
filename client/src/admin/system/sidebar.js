@@ -1,28 +1,18 @@
-export const Sidebar = ({ setContent }) => {
-  const Menu = ({ content, children }) => {
-    return (
-      <li
-        onClick={() => setContent(content)}
-        className="whitespace-nowrap hover:bg-sky-800 px-2 rounded text-white"
-      >
-        {children}
-      </li>
-    );
-  };
+import { Menu } from "./components/sidebarMenu";
+export const Sidebar = ({ setContent, current }) => {
   return (
     <>
       <div className="w-52 bg-sky-900">
         <ul className="list-none p-4 space-y-2">
-          <Menu content="EmployeeList">Employee List</Menu>
-          <Menu content="AirlineList">Airline List</Menu>
-          <Menu content="AirportList">Airport List</Menu>
-          <Menu content="FlightList">Flight Info</Menu>
-          <Menu content="UserList">User List</Menu>
-          <Menu content="PassengerList">Passenger List</Menu>
-          
-          <Menu content="AirlineList">Dashboard</Menu>
-          <Menu content="AirlineList">Plane List</Menu>
-          
+          <Menu current={current} setContent={setContent} content="Dashboard">Dashboard</Menu>
+          <Menu current={current} setContent={setContent} content="EmployeeList">Employee List</Menu>
+          <Menu current={current} setContent={setContent} content="AirlineList">Airline List</Menu>
+          <Menu current={current} setContent={setContent} content="AirportList">Airport List</Menu>
+          <Menu current={current} setContent={setContent} content="FlightList">Flight Info</Menu>
+          <Menu current={current} setContent={setContent} content="UserList">User List</Menu>
+          <Menu current={current} setContent={setContent} content="PassengerList">Passenger List</Menu>
+
+          <Menu current={current} setContent={setContent} content="PlaneList">Plane List</Menu>
         </ul>
       </div>
     </>
