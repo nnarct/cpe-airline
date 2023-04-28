@@ -33,34 +33,32 @@ export const UserList = () => {
             {users &&
               users.map((user, i) => {
                 return (
-                  <>
-                    <tr key={i}>
-                      <td
-                        className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-                        onClick={(e) => editUser(user.UserID)}
-                      >
-                        e
-                      </td>
-                      <td className="border px-3 py-2 text-center">
-                        {user.UserID ? user.UserID : "-"}
-                      </td>
-                      <td className="border px-3 py-2 text-center">
-                        {user.FirstName ? user.FirstName : "-"}
-                      </td>
-                      <td className="border px-3 py-2 text-center">
-                        {user.LastName ? user.LastName : "-"}
-                      </td>
-                      <td className="border px-3 py-2 text-center">
-                        {user.Email ? user.Email : "-"}
-                      </td>
-                      <td className="border px-3 py-2 text-center">
-                        {user.TelNo ? user.TelNo : "-"}
-                      </td>
-                      <td className="border px-3 py-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50">
-                        X
-                      </td>
-                    </tr>
-                  </>
+                  <tr key={`user${i}`}>
+                    <td
+                      className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => editUser(user.UserID)}
+                    >
+                      e
+                    </td>
+                    <td className="border px-3 py-2 text-center">
+                      {user.UserID ? user.UserID : "-"}
+                    </td>
+                    <td className="border px-3 py-2 text-center">
+                      {user.FirstName ? user.FirstName : "-"}
+                    </td>
+                    <td className="border px-3 py-2 text-center">
+                      {user.LastName ? user.LastName : "-"}
+                    </td>
+                    <td className="border px-3 py-2 text-center">
+                      {user.Email ? user.Email : "-"}
+                    </td>
+                    <td className="border px-3 py-2 text-center">
+                      {user.TelNo ? user.TelNo : "-"}
+                    </td>
+                    <td className="border px-3 py-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50">
+                      X
+                    </td>
+                  </tr>
                 );
               })}
           </tbody>

@@ -45,7 +45,10 @@ export const FlightList = () => {
                 "To",
               ].map((e, i) => {
                 return (
-                  <th className="p-2 border border-1 border-black" key={e + i}>
+                  <th
+                    className="p-2 border border-1 border-black"
+                    key={`head${i}`}
+                  >
                     {e}
                   </th>
                 );
@@ -56,46 +59,41 @@ export const FlightList = () => {
             {flights &&
               flights.map((flight, i) => {
                 return (
-                  <>
-                    <tr key={`flight${i}`}>
-                      <th className="p-2 border border-1">Edit</th>
-                      <th className="p-2 border border-1">
-                        {flight.FlightID ? flight.FlightID : "-"}
-                      </th>
-                      <th className="p-2 border border-1">
-                        {flight.FlightNumber ? flight.FlightNumber : "-"}
-                      </th>
-                      <th className="p-2 border border-1">
-                        {flight.AirlineID ? flight.AirlineID : "-"}
-                      </th>
-                      <th className="p-2 border border-1 whitespace-nowrap">
-                        {flight.DepartureTime
-                          ? toDATETIME(flight.DepartureTime)
-                          : "-"}
-                      </th>
-                      <th className="p-2 border border-1 whitespace-nowrap">
-                        {flight.ArrivalTime
-                          ? toDATETIME(flight.ArrivalTime)
-                          : "-"}
-                      </th>
-                      <th className="p-2 border border-1">
-                        {flight.PlaneID ? flight.PlaneID : "-"}
-                      </th>
-                      <th className="p-2 border border-1">
-                        {flight.OriginAirportID
-                          ? getAirportName(airports, flight.OriginAirportID)
-                          : "-"}
-                      </th>
-                      <th className="p-2 border border-1">
-                        {flight.DestinationAirportID
-                          ? getAirportName(
-                              airports,
-                              flight.DestinationAirportID
-                            )
-                          : "-"}
-                      </th>
-                    </tr>
-                  </>
+                  <tr key={i}>
+                    <th className="p-2 border border-1">Edit</th>
+                    <th className="p-2 border border-1">
+                      {flight.FlightID ? flight.FlightID : "-"}
+                    </th>
+                    <th className="p-2 border border-1">
+                      {flight.FlightNumber ? flight.FlightNumber : "-"}
+                    </th>
+                    <th className="p-2 border border-1">
+                      {flight.AirlineID ? flight.AirlineID : "-"}
+                    </th>
+                    <th className="p-2 border border-1 whitespace-nowrap">
+                      {flight.DepartureTime
+                        ? toDATETIME(flight.DepartureTime)
+                        : "-"}
+                    </th>
+                    <th className="p-2 border border-1 whitespace-nowrap">
+                      {flight.ArrivalTime
+                        ? toDATETIME(flight.ArrivalTime)
+                        : "-"}
+                    </th>
+                    <th className="p-2 border border-1">
+                      {flight.PlaneID ? flight.PlaneID : "-"}
+                    </th>
+                    <th className="p-2 border border-1">
+                      {flight.OriginAirportID
+                        ? getAirportName(airports, flight.OriginAirportID)
+                        : "-"}
+                    </th>
+                    <th className="p-2 border border-1">
+                      {flight.DestinationAirportID
+                        ? getAirportName(airports, flight.DestinationAirportID)
+                        : "-"}
+                    </th>
+                  </tr>
                 );
               })}
           </tbody>
