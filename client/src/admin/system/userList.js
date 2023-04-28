@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-
+import { Table } from "./components/table";
 export const UserList = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -17,7 +17,7 @@ export const UserList = () => {
     <>
       <Content>
         <Header>User List</Header>
-        <table className="container">
+        <Table className="container">
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
@@ -64,7 +64,7 @@ export const UserList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </Content>
     </>
   );
