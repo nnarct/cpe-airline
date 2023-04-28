@@ -7,7 +7,9 @@ import { Header } from "./components/header";
 import { Table } from "./components/table";
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
-  const addAirport = useRef(null);
+  const [popup, setPopup] = useState(false);
+  const [isDel, setIsDel] = useState(1);
+  const [addAirport, setAddAirport] = useState(false);
   useEffect(() => {
     const getAirports = async () => {
       const res = await fetch("http://localhost:3001/system/airportList");
@@ -18,8 +20,7 @@ export const AirportList = () => {
   }, []);
 
   const editAirport = (e) => {};
-  const [popup, setPopup] = useState(false);
-  const [isDel, setIsDel] = useState(1);
+
   const deleteAirport = () => {
     setPopup(false);
     Axios.post("http://localhost:3001/system/deleteAirport", { id: isDel })
@@ -34,7 +35,6 @@ export const AirportList = () => {
         if (err) console.log(err);
       });
   };
-
   return (
     <>
       <Content>
@@ -42,12 +42,12 @@ export const AirportList = () => {
           <span>Airport List</span>
           <button
             className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
-            onClick={() => addAirport.current.scrollIntoView()}
+            onClick={() => setAddAirport(!addAirport)}
           >
             Add Airport +
           </button>
         </Header>
-
+        {addAirport && <AddAirport />}
         <Table>
           <thead>
             <tr>
@@ -104,9 +104,7 @@ export const AirportList = () => {
           </tbody>
         </Table>
 
-        <AddAirport id="addAirport" />
-        <span ref={addAirport}></span>
-        {popup ? (
+        {popup && (
           <Popup>
             <div className="p-3 flex flex-col space-y-2">
               <h1 className="text-xl font-bold justify-center h-1/3 flex items-center">
@@ -131,8 +129,6 @@ export const AirportList = () => {
               </div>
             </div>
           </Popup>
-        ) : (
-          ""
         )}
       </Content>
     </>

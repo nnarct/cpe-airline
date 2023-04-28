@@ -28,7 +28,7 @@ export const AddAirport = () => {
   };
   return (
     <>
-      <div className="min-h-[calc(100vh-300px)]">
+      <div className="">
         <div className="flex flex-col items-center bg-gray-50 border rounded mt-4 p-3">
           <h1 className="text-xl">Add New Airport</h1>
           <form
