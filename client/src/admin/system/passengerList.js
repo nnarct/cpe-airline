@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
+import { Table } from "./components/table";
 
 export const PassengerList = () => {
   const [passengers, setPassengers] = useState([]);
   useEffect(() => {
-    const getPassengers= async () => {
+    const getPassengers = async () => {
       const res = await fetch("http://localhost:3001/system/passengerList");
       const data = await res.json();
       setPassengers(data.Data);
@@ -17,11 +18,13 @@ export const PassengerList = () => {
     <>
       <Content>
         <Header>All Passengers</Header>
-        <table className="container">
+        <Table>
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black w-14">PassengerID</th>
+              <th className="p-2 border border-1 border-black w-14">
+                PassengerID
+              </th>
               <th className="p-2 border border-1 border-black">FirstName</th>
               <th className="p-2 border border-1 border-black">LastName</th>
               <th className="p-2 border border-1 border-black">DOB</th>
@@ -29,6 +32,8 @@ export const PassengerList = () => {
               <th className="p-2 border border-1 border-black">Nationality</th>
               <th className="p-2 border border-1 border-black">TelNo</th>
               <th className="p-2 border border-1 border-black">BookingID</th>
+              <th className="p-2 border border-1 border-black">AddOnsID</th>
+              <th className="p-2 border border-1 border-black">SeatID</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +72,9 @@ export const PassengerList = () => {
                       <td className="border px-3 py-2 text-center">
                         {passenger.BookingID ? passenger.BookingID : "-"}
                       </td>
+                      <td className="border px-3 py-2 text-center">
+                        {passenger.BookingID ? passenger.BookingID : "-"}
+                      </td>
                       <td className="border px-3 py-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50">
                         X
                       </td>
@@ -75,8 +83,8 @@ export const PassengerList = () => {
                 );
               })}
           </tbody>
-        </table>
+        </Table>
       </Content>
     </>
   );
-}
+};
