@@ -1,5 +1,6 @@
-import moment from "moment";
 import { useEffect, useState } from "react";
+import { toDATETIME } from "../../feature/formatTime";
+import { getAirportName } from "../../feature/getAirportName";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { AddFlight } from "./components/addFlight";
@@ -19,9 +20,7 @@ export const FlightList = () => {
     };
     getFlights();
   }, []);
-  const ToDATETIME = (time) => {
-    return moment(time).format("ddd DD-MM-YYYY hh:mm a");
-  };
+
   return (
     <>
       <Content>
@@ -34,21 +33,23 @@ export const FlightList = () => {
         <Table>
           <thead>
             <tr>
-              <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black">FlightID</th>
-              <th className="p-2 border border-1 border-black">
-                Flight Number
-              </th>
-              <th className="p-2 border border-1 border-black">AirlineID</th>
-              <th className="p-2 border border-1 border-black">
-                Departure time
-              </th>
-              <th className="p-2 border border-1 border-black">
-                Arrival time
-              </th>
-              <th className="p-2 border border-1 border-black">Plane ID</th>
-              <th className="p-2 border border-1 border-black">Origin</th>
-              <th className="p-2 border border-1 border-black">Destination</th>
+              {[
+                "Edit",
+                "FlightID",
+                "Flight Number",
+                "Airline ID",
+                "Departure time",
+                "Arrival time",
+                "Plane ID",
+                "From",
+                "To",
+              ].map((e, i) => {
+                return (
+                  <th className="p-2 border border-1 border-black" key={e + i}>
+                    {e}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
@@ -69,23 +70,28 @@ export const FlightList = () => {
                       </th>
                       <th className="p-2 border border-1 whitespace-nowrap">
                         {flight.DepartureTime
-                          ? ToDATETIME(flight.DepartureTime)
+                          ? toDATETIME(flight.DepartureTime)
                           : "-"}
                       </th>
                       <th className="p-2 border border-1 whitespace-nowrap">
                         {flight.ArrivalTime
-                          ? ToDATETIME(flight.ArrivalTime)
+                          ? toDATETIME(flight.ArrivalTime)
                           : "-"}
                       </th>
                       <th className="p-2 border border-1">
                         {flight.PlaneID ? flight.PlaneID : "-"}
                       </th>
                       <th className="p-2 border border-1">
-                        {flight.OriginAirportID ? flight.OriginAirportID : "-"}
+                        {flight.OriginAirportID
+                          ? getAirportName(airports, flight.OriginAirportID)
+                          : "-"}
                       </th>
                       <th className="p-2 border border-1">
                         {flight.DestinationAirportID
-                          ? flight.DestinationAirportID
+                          ? getAirportName(
+                              airports,
+                              flight.DestinationAirportID
+                            )
                           : "-"}
                       </th>
                     </tr>
