@@ -34,15 +34,15 @@ export const SystemDashboard = () => {
     <>
       <AdminNavbar info={info} />
       <div className="min-h-calc flex">
-        <Sidebar content={content} setContent={setContent} />
-        <div className="w-full">
+        <Sidebar current={content} setContent={setContent} />
+        <div className="w-full bg-slate-100">
+          {content === "Dashboard" && <Dashboard />}
           {content === "EmployeeList" && <EmployeeList />}
           {content === "AirlineList" && <AirlineList />}
           {content === "AirportList" && <AirportList />}
           {content === "FlightList" && <FlightList />}
           {content === "UserList" && <UserList />}
           {content === "PassengerList" && <PassengerList />}
-          {content === "Dashboard" && <Dashboard />}
           {content === "PlaneList" && <PlaneList />}
         </div>
       </div>
