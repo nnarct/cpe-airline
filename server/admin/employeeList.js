@@ -1,6 +1,6 @@
 import { db } from "../index.js";
 export const employeeList = (req, res) => {
-  const sql = "SELECT * FROM employee";
+  const sql = "SELECT EmployeeID, FirstName, LastName, username, Email, TelNo, Position, AirlineID FROM employee";
   db.query(sql, (err, data) => {
     if (err) {
       return res.json({ Error: "Select employee list error in server..." });

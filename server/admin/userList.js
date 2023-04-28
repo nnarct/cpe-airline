@@ -1,6 +1,6 @@
 import { db } from "../index.js";
 export const userList = (req, res) => {
-  const sql = "SELECT * FROM user";
+  const sql = "SELECT UserID, FirstName, LastName, Email, TelNo FROM user";
   db.query(sql, (err, data) => {
     if (err) {
       console.log(err);

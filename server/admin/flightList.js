@@ -1,8 +1,8 @@
 import { db } from "../index.js";
 export const flightList = (req, res) => {
   const sql = "SELECT * FROM flight";
-  const sqlAirports = "SELECT * FROM airport";
-  const sqlAirlines = "SELECT * FROM airline";
+  const sqlAirports = "SELECT AirportID, Name, IATA FROM airport";
+  const sqlAirlines = "SELECT AirlineID, Name, Link FROM airline";
   let airports = [];
   let airlines = [];
   db.query(sqlAirports, (err, data) => {
