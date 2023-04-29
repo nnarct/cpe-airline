@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
 import { Content } from "./components/content";
@@ -41,7 +41,7 @@ export const AirportList = () => {
         <Header>
           <span>Airport List</span>
           <button
-            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white hover:ring"
             onClick={() => setAddAirport(!addAirport)}
           >
             Add Airport +
@@ -52,9 +52,7 @@ export const AirportList = () => {
           <thead>
             <tr>
               <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black w-14">
-                AirportID
-              </th>
+              <th className="p-2 border border-1 border-black">AirportID</th>
               <th className="p-2 border border-1 border-black">Name</th>
               <th className="p-2 border border-1 border-black">IATA</th>
               <th className="p-2 border border-1 border-black">State</th>
@@ -66,31 +64,31 @@ export const AirportList = () => {
             {airports &&
               airports.map((airport, i) => {
                 return (
-                  <tr key={i}>
+                  <tr key={`airport ${i}`}>
                     <td
-                      className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-                      onClick={(e) => editAirport(airport.AirlineID)}
+                      className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => editAirport(airport.AirportID)}
                     >
                       e
                     </td>
-                    <td className="border px-3 py-2 text-center">
+                    <td className="border p-2 text-center">
                       {airport.AirportID ? airport.AirportID : "-"}
                     </td>
-                    <td className="border px-3 py-2">
+                    <td className="border p-2">
                       {airport.Name ? airport.Name : "-"}
                     </td>
 
-                    <td className="border px-3 py-2 text-center">
+                    <td className="border p-2 text-center">
                       {airport.IATA ? airport.IATA : "-"}
                     </td>
-                    <td className="border px-3 py-2">
+                    <td className="border p-2">
                       {airport.State ? airport.State : "-"}
                     </td>
-                    <td className="border px-3 py-2">
+                    <td className="border p-2">
                       {airport.Province ? airport.Province : "-"}
                     </td>
                     <td
-                      className="border px-3 py-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50"
+                      className="border p-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50"
                       onClick={() => {
                         setPopup(true);
                         setIsDel(airport.AirportID);
