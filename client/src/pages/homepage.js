@@ -1,13 +1,12 @@
-import { AirlinesPartner } from "../components/homepage/airlines";
+import { BookingGroup } from "../components/homepage/bookingGroup/bookingGroup";
+import Hero from "../components/homepage/hero/hero";
 import { Navbar } from "../components/navbar";
 export const Homepage = () => {
   return (
     <>
       <Navbar />
-      <div className="w-full min-h-calc bg-slate-100 flex justify-center items-center text-4xl">
-        Homepage
-        <AirlinesPartner />
-      </div>
+      <Hero />
+      <BookingGroup />
     </>
   );
 };
