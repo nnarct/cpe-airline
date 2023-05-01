@@ -17,6 +17,9 @@ module.exports = {
         md: "768px",
         // => @media (min-width: 768px) { ... }
 
+        l: "990px",
+        // => @media (min-width: 990px) { ... }
+
         lg: "1024px",
         // => @media (min-width: 1024px) { ... }
 
@@ -34,5 +37,5 @@ module.exports = {
       calc: "calc(100vh - 3rem)",
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
