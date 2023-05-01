@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { Table } from "./components/table";
+import { Table,Th } from "./components/table";
+import {Table, THead, Th, Edit} from "./components/table";
+import {AiOutlineEdit} from "react-icons/ai";
+
 export const UserList = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -18,17 +22,15 @@ export const UserList = () => {
       <Content>
         <Header>User List</Header>
         <Table className="container">
-          <thead>
-            <tr>
-              <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black w-14">UserID</th>
-              <th className="p-2 border border-1 border-black">FirstName</th>
-              <th className="p-2 border border-1 border-black">LastName</th>
-              <th className="p-2 border border-1 border-black">Email</th>
-              <th className="p-2 border border-1 border-black">TelNo</th>
-              <th className="p-2 border border-1 border-black">Delete</th>
-            </tr>
-          </thead>
+          <THead>
+              <Edit/>
+              <Th className="w-14">UserID</Th>
+              <Th>FirstName</Th>
+              <Th>LastName</Th>
+              <Th>Email</Th>
+              <Th>TelNo</Th>
+              <Th>Delete</Th>
+          </THead>
           <tbody>
             {users &&
               users.map((user, i) => {

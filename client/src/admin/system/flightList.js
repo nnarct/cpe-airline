@@ -5,6 +5,10 @@ import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { AddFlight } from "./components/addFlight";
 import { Table } from "./components/table";
+import { Table,Th } from "./components/table";
+import {Table, THead, Th, Edit} from "./components/table";
+import {AiOutlineEdit} from "react-icons/ai";
+
 
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -31,8 +35,8 @@ export const FlightList = () => {
           </button>
         </Header>
         <Table>
-          <thead>
-            <tr>
+        <THead>
+              <Edit/>
               {[
                 "Edit",
                 "FlightID",
@@ -53,8 +57,7 @@ export const FlightList = () => {
                   </th>
                 );
               })}
-            </tr>
-          </thead>
+          </THead>
           <tbody>
             {flights &&
               flights.map((flight, i) => {

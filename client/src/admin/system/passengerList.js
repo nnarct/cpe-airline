@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { Table } from "./components/table";
+import { Table,Th } from "./components/table";
+import {Table, THead, Th, Edit} from "./components/table";
+import {AiOutlineEdit} from "react-icons/ai";
 
 export const PassengerList = () => {
   const [passengers, setPassengers] = useState([]);
@@ -19,23 +22,20 @@ export const PassengerList = () => {
       <Content>
         <Header>All Passengers</Header>
         <Table>
-          <thead>
-            <tr>
-              <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black w-14">
-                PassengerID
-              </th>
-              <th className="p-2 border border-1 border-black">FirstName</th>
-              <th className="p-2 border border-1 border-black">LastName</th>
-              <th className="p-2 border border-1 border-black">DOB</th>
-              <th className="p-2 border border-1 border-black">Gender</th>
-              <th className="p-2 border border-1 border-black">Nationality</th>
-              <th className="p-2 border border-1 border-black">TelNo</th>
-              <th className="p-2 border border-1 border-black">BookingID</th>
-              <th className="p-2 border border-1 border-black">AddOnsID</th>
-              <th className="p-2 border border-1 border-black">SeatID</th>
-            </tr>
-          </thead>
+          <THead>
+              <Edit/>
+              <Th>Edit</Th>
+              <Th className="w-14">PassengerID</Th>
+              <Th>FirstName</Th>
+              <Th>LastName</Th>
+              <Th>DOB</Th>
+              <Th>Gender</Th>
+              <Th>Nationality</Th>
+              <Th>TelNo</Th>
+              <Th>BookingID</Th>
+              <Th>AddOnsID</Th>
+              <Th>SeatID</Th>
+          </THead>
           <tbody>
             {passengers &&
               passengers.map((passenger, i) => {
