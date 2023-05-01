@@ -4,7 +4,9 @@ import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import { Table } from "./components/table";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
+
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
   const [popup, setPopup] = useState(false);
@@ -49,17 +51,15 @@ export const AirportList = () => {
         </Header>
         {addAirport && <AddAirport />}
         <Table>
-          <thead>
-            <tr>
-              <th className="p-2 border border-1 border-black">Edit</th>
-              <th className="p-2 border border-1 border-black">AirportID</th>
-              <th className="p-2 border border-1 border-black">Name</th>
-              <th className="p-2 border border-1 border-black">IATA</th>
-              <th className="p-2 border border-1 border-black">State</th>
-              <th className="p-2 border border-1 border-black">Province</th>
-              <th className="p-2 border border-1 border-black">Delete</th>
-            </tr>
-          </thead>
+          <THead>
+              <Edit/>
+              <Th className="w-14">AirportID</Th>
+              <Th>Name</Th>
+              <Th>IATA</Th>
+              <Th>State</Th>
+              <Th>Province</Th>
+              <Th>Delete</Th>
+          </THead>
           <tbody>
             {airports &&
               airports.map((airport, i) => {

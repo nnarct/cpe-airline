@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import { Table } from "./components/table";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
+
 
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
@@ -23,15 +25,13 @@ export const AirlineList = () => {
       <Content>
         <Header>Airline List</Header>
         <Table>
-          <thead>
-            <tr>
-              <th className="border border-black px-3 py-2 w-1/12">Edit</th>
-              <th className="border border-black px-3 py-2 w-1/12">ID</th>
-              <th className="border border-black px-3 py-2 w-1/6">Name</th>
-              <th className="border border-black px-3 py-2 w-1/6">Logo Path</th>
-              <th className="border border-black px-3 py-2 w-1/6">Link</th>
-            </tr>
-          </thead>
+          <THead>
+              <Edit/>
+              <Th className="w-1/12">ID</Th>
+              <Th className="w-1/6">Name</Th>
+              <Th className="w-1/6">Logo Path</Th>
+              <Th className="w-1/6">Link</Th>
+          </THead>
           <tbody>
             {airlines &&
               airlines.map((airline, i) => {

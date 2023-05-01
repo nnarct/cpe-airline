@@ -4,7 +4,8 @@ import { getAirportName } from "../../feature/getAirportName";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { AddFlight } from "./components/addFlight";
-import { Table } from "./components/table";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
 
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -31,30 +32,17 @@ export const FlightList = () => {
           </button>
         </Header>
         <Table>
-          <thead>
-            <tr>
-              {[
-                "Edit",
-                "FlightID",
-                "Flight Number",
-                "Airline ID",
-                "Departure time",
-                "Arrival time",
-                "Plane ID",
-                "From",
-                "To",
-              ].map((e, i) => {
-                return (
-                  <th
-                    className="p-2 border border-1 border-black"
-                    key={`head${i}`}
-                  >
-                    {e}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
+        <THead>
+              <Edit/>
+                <Th>FlightID</Th>
+                <Th>Flight Number</Th>
+                <Th>Airline ID</Th>
+                <Th>Departure time</Th>
+                <Th>Arrival time</Th>
+                <Th>Plane ID</Th>
+                <Th>From</Th>
+                <Th>To</Th>
+          </THead>
           <tbody>
             {flights &&
               flights.map((flight, i) => {
