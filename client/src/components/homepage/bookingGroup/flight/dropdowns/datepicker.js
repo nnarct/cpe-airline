@@ -1,7 +1,6 @@
 import Datepicker from "react-tailwindcss-datepicker";
 export const DatePick = ({ values, setValues, isReturn }) => {
   const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
     setValues({ ...values, date: newValue });
   };
   return (
