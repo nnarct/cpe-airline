@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { Table } from "./components/table";
-import { Table,Th } from "./components/table";
-import {Table, THead, Th, Edit} from "./components/table";
-import {AiOutlineEdit} from "react-icons/ai";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
 
 export const UserList = () => {
   const [users, setUsers] = useState([]);
