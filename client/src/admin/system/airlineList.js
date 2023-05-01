@@ -4,7 +4,6 @@ import { Header } from "./components/header";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 
-
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
 
@@ -26,23 +25,21 @@ export const AirlineList = () => {
         <Header>Airline List</Header>
         <Table>
           <THead>
-              <Edit/>
-              <Th className="w-1/12">ID</Th>
-              <Th className="w-1/6">Name</Th>
-              <Th className="w-1/6">Logo Path</Th>
-              <Th className="w-1/6">Link</Th>
+            <Edit />
+            <Th className="w-1/12">ID</Th>
+            <Th>Name</Th>
+            <Th>Logo Path</Th>
+            <Th>Link</Th>
           </THead>
           <tbody>
             {airlines &&
               airlines.map((airline, i) => {
                 return (
-                  <tr key={airline.AirlineID}>
+                  <tr key={i}>
                     <td
-                      className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
+                      className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
                       onClick={(e) => editAirline(airline.AirlineID)}
-                    >
-                      e
-                    </td>
+                    ></td>
                     <td className="border px-3 py-2 text-center">
                       {airline.AirlineID ? airline.AirlineID : "-"}
                     </td>

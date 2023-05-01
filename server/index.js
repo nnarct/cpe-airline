@@ -15,8 +15,6 @@ import { registerAdmin } from "./admin/registerAdmin.js";
 import { loginAdmin } from "./admin/loginAdmin.js";
 import { logoutAdmin } from "./admin/logoutAdmin.js";
 
-
-
 import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
 import { airportList } from "./admin/airportList.js";
@@ -30,6 +28,8 @@ import { editAirline } from "./admin/editAirline.js";
 import { deleteAirport } from "./admin/deleteAirport.js";
 
 import { insertAirport } from "./admin/insertAirport.js";
+
+import { airportListUser } from "./users/airportList.js";
 
 const app = express();
 app.use(express.json());
@@ -51,17 +51,22 @@ export const db = mysql.createConnection({
   port: 4306,
 });
 
+// authentication
 app.get("/", verifyUser, verifyUserRes);
 app.get("/emauth", verifyAdmin, verifyAdminRes);
-
+// user
 app.post("/register", register);
 app.post("/login", login);
 app.get("/logout", logout);
-
+// admin authentication
 app.post("/admin/register", registerAdmin);
 app.post("/admin/login", loginAdmin);
 app.get("/admin/logout", logoutAdmin);
 
+
+
+
+// system admin
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);
@@ -76,6 +81,9 @@ app.post("/system/editAirline", editAirline);
 app.post("/system/insertAirport", insertAirport);
 
 app.post("/system/deleteAirport", deleteAirport);
+
+
+app.get("/airportList", airportListUser);
 
 app.listen(3001, () => {
   console.log("running on port 3001");

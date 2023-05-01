@@ -52,13 +52,13 @@ export const AirportList = () => {
         {addAirport && <AddAirport />}
         <Table>
           <THead>
-              <Edit/>
-              <Th className="w-14">AirportID</Th>
-              <Th>Name</Th>
-              <Th>IATA</Th>
-              <Th>State</Th>
-              <Th>Province</Th>
-              <Th>Delete</Th>
+            <Edit />
+            <Th className="w-14">AirportID</Th>
+            <Th>Name</Th>
+            <Th>IATA</Th>
+            <Th>State</Th>
+            <Th>Province</Th>
+            <Th>Delete</Th>
           </THead>
           <tbody>
             {airports &&

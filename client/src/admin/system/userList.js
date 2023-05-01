@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import { Table } from "./components/table";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -22,13 +21,13 @@ export const UserList = () => {
         <Header>User List</Header>
         <Table className="container">
           <THead>
-              <Edit/>
-              <Th className="w-14">UserID</Th>
-              <Th>FirstName</Th>
-              <Th>LastName</Th>
-              <Th>Email</Th>
-              <Th>TelNo</Th>
-              <Th>Delete</Th>
+            <Edit />
+            <Th className="w-14">UserID</Th>
+            <Th>FirstName</Th>
+            <Th>LastName</Th>
+            <Th>Email</Th>
+            <Th>TelNo</Th>
+            <Th>Delete</Th>
           </THead>
           <tbody>
             {users &&

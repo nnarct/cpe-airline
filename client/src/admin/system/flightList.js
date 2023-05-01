@@ -32,16 +32,16 @@ export const FlightList = () => {
           </button>
         </Header>
         <Table>
-        <THead>
-              <Edit/>
-                <Th>FlightID</Th>
-                <Th>Flight Number</Th>
-                <Th>Airline ID</Th>
-                <Th>Departure time</Th>
-                <Th>Arrival time</Th>
-                <Th>Plane ID</Th>
-                <Th>From</Th>
-                <Th>To</Th>
+          <THead>
+            <Edit />
+            <Th>FlightID</Th>
+            <Th>Flight Number</Th>
+            <Th>Airline ID</Th>
+            <Th>Departure time</Th>
+            <Th>Arrival time</Th>
+            <Th>Plane ID</Th>
+            <Th>From</Th>
+            <Th>To</Th>
           </THead>
           <tbody>
             {flights &&

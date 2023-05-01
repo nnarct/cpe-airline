@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import { Table } from "./components/table";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -22,18 +21,18 @@ export const PassengerList = () => {
         <Header>All Passengers</Header>
         <Table>
           <THead>
-              <Edit/>
-              <Th>Edit</Th>
-              <Th className="w-14">PassengerID</Th>
-              <Th>FirstName</Th>
-              <Th>LastName</Th>
-              <Th>DOB</Th>
-              <Th>Gender</Th>
-              <Th>Nationality</Th>
-              <Th>TelNo</Th>
-              <Th>BookingID</Th>
-              <Th>AddOnsID</Th>
-              <Th>SeatID</Th>
+            <Edit />
+            <Th>Edit</Th>
+            <Th className="w-14">PassengerID</Th>
+            <Th>FirstName</Th>
+            <Th>LastName</Th>
+            <Th>DOB</Th>
+            <Th>Gender</Th>
+            <Th>Nationality</Th>
+            <Th>TelNo</Th>
+            <Th>BookingID</Th>
+            <Th>AddOnsID</Th>
+            <Th>SeatID</Th>
           </THead>
           <tbody>
             {passengers &&
