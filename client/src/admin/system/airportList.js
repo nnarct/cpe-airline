@@ -4,7 +4,6 @@ import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
-import { Table } from "./components/table";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 
