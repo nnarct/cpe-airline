@@ -1,5 +1,3 @@
-import { BsExclamationOctagon } from "react-icons/bs";
-
 export const Table = ({ children }) => {
   return (
     <>
