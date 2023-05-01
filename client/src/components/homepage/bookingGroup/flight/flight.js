@@ -4,6 +4,7 @@ import { Card } from "./card";
 import { From } from "./dropdowns/from";
 import { To } from "./dropdowns/to";
 import { DatePick } from "./dropdowns/datepicker";
+import { Passenger } from "./dropdowns/passenger";
 
 export const Flight = () => {
   const [isReturn, setIsReturn] = useState(1);
@@ -42,9 +43,13 @@ export const Flight = () => {
           <Card className="relative">
             <To airports={airports} values={values} setValues={setValues} />
           </Card>
-          <Card>passenger</Card>
+          <Card className="relative">
+            <Passenger values={values} setValues={setValues} />
+          </Card>
           <Card>class</Card>
-          <div className={`w-full h-20 flex items-center bg-white  rounded-xl active:ring cursor-pointer sm:col-span-2`}>
+          <div
+            className={`w-full h-20 flex items-center bg-white  rounded-xl active:ring cursor-pointer sm:col-span-2`}
+          >
             <DatePick
               values={values}
               setValues={setValues}
