@@ -5,9 +5,8 @@ import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { AddFlight } from "./components/addFlight";
 import { Table } from "./components/table";
-import { Table,Th } from "./components/table";
-import {Table, THead, Th, Edit} from "./components/table";
-import {AiOutlineEdit} from "react-icons/ai";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
 
 
 export const FlightList = () => {
@@ -38,15 +37,14 @@ export const FlightList = () => {
         <THead>
               <Edit/>
               {[
-                "Edit",
-                "FlightID",
-                "Flight Number",
-                "Airline ID",
-                "Departure time",
-                "Arrival time",
-                "Plane ID",
-                "From",
-                "To",
+                <Th>FlightID</Th>
+                <Th>Flight Number</Th>
+                <Th>Airline ID</Th>
+                <Th>Departure time</Th>
+                <Th>Arrival time</Th>
+                <Th>Plane ID</Th>
+                <Th>From</Th>
+                <Th>To</Th>
               ].map((e, i) => {
                 return (
                   <th
