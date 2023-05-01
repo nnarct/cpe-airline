@@ -34,7 +34,9 @@ export const To = ({ airports, values, setValues }) => {
     <>
       <div
         ref={ref}
-        className="flex items-center justify-between w-full h-full px-3"
+        className={`flex items-center justify-between w-full h-full px-3 ${
+          isOpen ? "ring ring-blue-500/20 rounded-xl" : ""
+        }`}
         onClick={() => {
           console.log(isOpen);
           setIsOpen(!isOpen);
@@ -57,7 +59,7 @@ export const To = ({ airports, values, setValues }) => {
           <IoIosArrowDown color="0D3E5E" size={20} />
         </div>
         {isOpen ? (
-          <Card className="absolute left-0 top-20 shadow h-auto flex flex-col justify-center">
+          <Card className="absolute left-0 top-20 z-20 shadow h-auto flex flex-col justify-center">
             <ul className="w-11/12 h-72 overflow-y-auto my-2">
               {airports.map((airport, i) => {
                 const name = airport.Name.replace(" Airport", "").replace(
@@ -68,7 +70,9 @@ export const To = ({ airports, values, setValues }) => {
                   return (
                     <li
                       key={i}
-                      className={`px-2 hover:bg-blue-100 ${airport.AirportID === values.to ? "bg-gray-300" : ""}`}
+                      className={`px-2 hover:bg-blue-100 ${
+                        airport.AirportID === values.to ? "bg-gray-300" : ""
+                      }`}
                       onClick={() =>
                         setValues({ ...values, to: airport.AirportID })
                       }
