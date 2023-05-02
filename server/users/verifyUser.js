@@ -4,7 +4,7 @@ export const verifyUser = (req, res, next) => {
 
   if (!userToken) return res.json({ Status: "You are not authenticated" });
   else {
-    jwt.verify(userToken, "jwt-secret-key", (err, decoded) => {
+    jwt.verify(userToken, "user-secret-key", (err, decoded) => {
       if (err) return res.json({ Error: "Token is not ok" });
       else {
         req.firstName = decoded.firstName;
