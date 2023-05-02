@@ -1,4 +1,5 @@
 import { db } from "../index.js";
+import jwt from "jsonwebtoken";
 
 import bcrypt from "bcrypt";
 export const login = (req, res) => {
@@ -15,10 +16,17 @@ export const login = (req, res) => {
         (err, response) => {
           if (err) return res.json({ Error: "Password compare error..." });
           if (response) {
-            const firstName = data[0].firstName;
-            const token = jwt.sign({ firstName }, "jwt-secret-key", {
-              expiresIn: "1d",
-            });
+            console.log(data[0]);
+            const UserID = data[0].UserID;
+            const FirstName = data[0].FirstName;
+            const LastName = data[0].LastName;
+            const token = jwt.sign(
+              { UserID, FirstName, LastName },
+              "user-secret-key",
+              {
+                expiresIn: "1d",
+              }
+            );
             res.cookie("userToken", token);
             return res.json({ Status: "Successfully login" });
           } else {

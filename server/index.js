@@ -29,6 +29,7 @@ import { deleteAirport } from "./admin/deleteAirport.js";
 
 import { insertAirport } from "./admin/insertAirport.js";
 
+import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
 
 const app = express();
@@ -63,9 +64,6 @@ app.post("/admin/register", registerAdmin);
 app.post("/admin/login", loginAdmin);
 app.get("/admin/logout", logoutAdmin);
 
-
-
-
 // system admin
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
@@ -74,7 +72,6 @@ app.get("/system/flightList", flightList);
 app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
 
-
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
 
@@ -82,7 +79,7 @@ app.post("/system/insertAirport", insertAirport);
 
 app.post("/system/deleteAirport", deleteAirport);
 
-
+app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
 
 app.listen(3001, () => {
