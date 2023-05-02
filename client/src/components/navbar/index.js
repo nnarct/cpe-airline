@@ -19,7 +19,7 @@ export const Navbar = () => {
   return (
     <>
       <div className="z-30 fixed top-0 left-0 w-screen flex justify-center bg-gradient-to-r from-cyan-500 to-primary shadow">
-        <div className="w-full container flex justify-between">
+        <div className="w-full container flex justify-between px-3">
           <div className="">
             <ul className="flex">
               <Menu>Menu 1</Menu>
