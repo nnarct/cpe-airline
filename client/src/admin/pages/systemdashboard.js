@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../system/sidebar";
 import { EmployeeList } from "../system/employeeList";
 import { AirlineList } from "../system/airlineList";
+import { AirportList } from "../system/airportList";
 import { AdminNavbar } from "../components/navbar";
 
 export const SystemDashboard = () => {
@@ -33,6 +34,7 @@ export const SystemDashboard = () => {
         <div className="w-full">
           {content === "EmployeeList" && <EmployeeList />}
           {content === "AirlineList" && <AirlineList />}
+          {content === "AirportList" && <AirportList />}
         </div>
       </div>
     </>

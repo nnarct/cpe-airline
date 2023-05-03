@@ -25,7 +25,7 @@ const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
-  port: 4306,
+  port: 3306,
 });
 
 const verifyUser = (req, res, next) => {
@@ -192,6 +192,21 @@ app.post("/system/editAirline", (req, res) => {
   );
 });
 
+app.post("/system/editAirport", (req, res) => {
+  const sql =
+    "UPDATE airport SET Name = ?, IATA = ?, State = ?, Province = ? WHERE AirportID =?";
+  db.query(
+    sql,
+    [req.body.Name, req.body.IATA, req.body.State,req.body.Province, req.body.AirportID],
+    (err, result) => {
+      if (err) {
+        return res.json({ Error: "Error while editing airport..." });
+      }
+      return res.json({ Status: "Edit airport successfully! :)" });
+    }
+  );
+});
+
 app.post("/admin/login", (req, res) => {
   const sql = "SELECT * FROM employee WHERE username = ?";
   db.query(sql, [req.body.username], (err, data) => {
@@ -265,6 +280,24 @@ app.get("/admin/airlineList", (req, res) => {
   });
 });
 
+app.get("/admin/airportList", (req, res) => {
+  const sql = "SELECT * FROM airport";
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json({ Error: "Select airport list error in server..." });
+    }
+    if (data.length > 0) {
+      // console.log(data);
+      return res.json({
+        Status: "Successfully select airport list",
+        Data: data,
+      });
+    } else {
+      return res.json({ Error: "Airport List not found" });
+    }
+  });
+});
 // app.post("/api/airline", (req, res) => {
 //   const sql = "SELECT * FROM airline";
 //   db.query(sql, (err, data) => {
