@@ -1,0 +1,61 @@
+export const Row = ({ head, children }) => {
+  return (
+    <>
+      <div className="mb-4 flex w-full px-3">
+        <span className="w-32 min-w-fit px-3 py-1 flex items-center bg-white rounded-l border border-r-0   border-neutral-300 text-center leading-6 text-neutral-700 font-semibold whitespace-nowrap">
+          {head}
+        </span>
+        {children}
+      </div>
+    </>
+  );
+};
+
+export const Card = ({ className, children }) => {
+  return (
+    <>
+      <div
+        className={`p-2 m-2 bg-white border border-neutral-200 rounded hover:ring ring-blue-200/20 ${className}`}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
+
+export const MyProfileWrapper = ({ children }) => {
+  return (
+    <>
+      <div className="w-full max-w-5xl">
+        <div className="flex flex-col w-full">{children}</div>
+      </div>
+    </>
+  );
+};
+
+export const NameIcon = ({ children }) => {
+  return (
+    <>
+      <div className="mx-6 flex items-center justify-center bg-primary  border border-blue-400 border-4 text-white  text-4xl w-20 h-20 uppercase rounded-full">
+        <span>{children}</span>
+      </div>
+    </>
+  );
+};
+
+export const DataBlock = ({ title, data }) => {
+  return (
+    <>
+      <h4 className="text-lg font-semibold">{title}</h4>
+      <span>{data}</span>
+    </>
+  );
+};
+
+export const ButtonWrap = ({ children }) => {
+  return (
+    <>
+      <div className="w-full flex items-center justify-end">{children}</div>
+    </>
+  );
+};
