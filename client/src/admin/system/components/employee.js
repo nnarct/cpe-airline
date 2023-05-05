@@ -1,9 +1,8 @@
+import Axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Label } from "./employeeLabel";
-import Axios from "axios";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsCheckCircleFill } from "react-icons/bs";
-
 import { isPhoneNumber } from "../../../feature/verification/phone";
 
 const InputStyle =
@@ -23,7 +22,6 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
   const LastName = useRef(null);
   const Email = useRef(null);
   const TelNo = useRef(null);
-  const Position = useRef(null);
   const AirlineID = useRef(null);
 
   const isCurrentTaskEdit = employee.EmployeeID === editThisRow;
@@ -50,7 +48,6 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
     });
   }, [isCurrentTaskEdit]);
 
-  let u = null;
   const verify = () => {
     if (values.username === "") {
       alert("username can't be NULL");
