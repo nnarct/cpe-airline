@@ -15,7 +15,6 @@ export const login = (req, res) => {
         (err, response) => {
           if (err) return res.json({ Error: "Password compare error..." });
           if (response) {
-            console.log(data[0]);
             const UserID = data[0].UserID;
             const FirstName = data[0].FirstName;
             const LastName = data[0].LastName;
