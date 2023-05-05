@@ -31,6 +31,7 @@ import { insertAirport } from "./admin/insertAirport.js";
 
 import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
+import { showProfile } from "./users/showProfile.js";
 
 const app = express();
 app.use(express.json());
@@ -81,6 +82,9 @@ app.post("/system/deleteAirport", deleteAirport);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
+
+// user profile
+app.post("/showProfile", showProfile);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
