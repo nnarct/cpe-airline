@@ -6,7 +6,6 @@ export const login = (req, res) => {
   const sql = "SELECT * FROM user WHERE email = ?";
   db.query(sql, [req.body.email], (err, data) => {
     if (err) {
-      console.log(err);
       return res.json({ Error: "Login error in server..." });
     }
     if (data.length > 0) {
