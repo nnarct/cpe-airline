@@ -36,7 +36,7 @@ export const ForUser = () => {
 
   return (
     <>
-      <div ref={ref} className="relative font-semibold  bg-red-500">
+      <div ref={ref} className="relative font-semibold">
         <div
           className={`m-1 w-10 h-10 flex items-center justify-center hover:bg-black/20 transition duration-200 cursor-pointer rounded-full ${
             isOpen ? "bg-black/20" : ""
