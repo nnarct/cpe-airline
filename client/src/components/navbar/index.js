@@ -1,6 +1,5 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { ForNoob } from "./forNoob";
 import { ForUser } from "./forUser";
 import { Menu } from "./menu";
@@ -11,11 +10,8 @@ export const Navbar = () => {
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
       if (err) setAuth(false); // You are not authenticated
-      if (res.data.Status === "Success") {
-        setAuth(true);
-      } else {
-        setAuth(false);
-      }
+      if (res.data.Status === "Success") setAuth(true);
+      else setAuth(false);
     });
   });
   return (
@@ -24,18 +20,16 @@ export const Navbar = () => {
         <div className="w-full container flex justify-between px-3">
           <div className="">
             <ul className="flex items-center">
-              <Link to="/">
-                <Menu>
-                  <img src={logo} className="h-8" alt={"CPE Flying"} />
-                </Menu>
-              </Link>
+              <Menu to="/">
+                <img src={logo} className="h-8" alt={"CPE Flying"} />
+              </Menu>
               <Menu>Menu 1</Menu>
               <Menu>Menu 2</Menu>
               <Menu>Menu 3</Menu>
             </ul>
           </div>
           <div className="flex items-center">
-            {auth ? <ForUser /> : <ForNoob />}{" "}
+            {auth ? <ForUser /> : <ForNoob />}
           </div>
         </div>
       </div>
