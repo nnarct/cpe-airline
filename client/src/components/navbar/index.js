@@ -16,7 +16,7 @@ export const Navbar = () => {
   });
   return (
     <>
-      <div className="z-30 fixed top-0 left-0 w-screen flex justify-center bg-gradient-to-r from-cyan-500 to-primary shadow">
+      <div className="z-30 fixed top-0 left-0 w-full flex justify-center bg-gradient-to-r from-cyan-500 to-primary shadow">
         <div className="w-full container flex justify-between px-3">
           <div className="">
             <ul className="flex items-center">
@@ -33,7 +33,7 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="h-12 w-screen opacity-0 "></div>
+      <div className="h-12 opacity-0 "></div>
     </>
   );
 };
