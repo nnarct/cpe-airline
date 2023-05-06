@@ -111,13 +111,13 @@ export const ChangePassword = () => {
                     className="rounded text-sm border w-full hover:ring outline-none p-1 my-1 ml-2 focus:ring ring-blue-200/40"
                   />
                 </li>
-                {correct && (
+                {!correct && (
                   <ErrorMessage err={"Current password is not correct."} />
                 )}
-                {isMatch && (
+                {!isMatch && (
                   <ErrorMessage err={"New password does not match."} />
                 )}
-                {isLong && (
+                {!isLong && (
                   <ErrorMessage
                     err={"Password must be at least 8 characters long."}
                   />
