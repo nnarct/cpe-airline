@@ -21,8 +21,11 @@ const Airline = ({ img, link }) => {
 export const AirlinePartner = () => {
   return (
     <>
-      <div className="flex justify-center mt-8">
-        <div className="flex flex-col items-center ">
+      <div className="flex justify-center">
+        <div className="max-w-[1600px] flex flex-col items-center">
+          <div className="text-center tracking-wider pb-5 text-4xl font-bold uppercase text-primary">
+            Partners
+          </div>
           <div className="flex flex-wrap justify-center">
             <Airline img={AirAsia} link="https://www.airasia.com" />
             <Airline img={ThaiLionair} link="https://www.lionairthai.com" />
@@ -33,6 +36,11 @@ export const AirlinePartner = () => {
             <Airline img={VietjetAir} link="https://www.vietjetair.com/" />
           </div>
         </div>
+
+        {/*
+        <div className="flex flex-col items-center ">
+          
+        </div> */}
       </div>
     </>
   );
