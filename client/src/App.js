@@ -12,6 +12,7 @@ import { ManagerDashboard } from "./admin/pages/managerdashboard";
 import { SystemDashboard } from "./admin/pages/systemdashboard";
 import { AdminDashboard } from "./admin/pages/admindasboard";
 import { ErrorPage } from "./admin/auth/error";
+import { SearchResultPage } from "./pages/searchResultPage";
 
 export const App = () => {
   Axios.defaults.withCredentials = true;
@@ -34,6 +35,7 @@ export const App = () => {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register auth={auth} />} />
+        <Route path="/search" element={<SearchResultPage />} />
         <Route path="/homepage" element={<DashboardRouter />} />
         <Route path="/myProfile/:id" element={<UserProfile />} />
         <Route path="/admin" element={<AdminDashboard />} />
