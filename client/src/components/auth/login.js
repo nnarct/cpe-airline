@@ -38,17 +38,16 @@ export const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = () => {
     if (verifyValues() === true) {
-      Axios.post("http://localhost:3001/login", values)
-        .then((res) => {
-          if (res.data.Status === "Successfully login") {
-            setAuth(true);
-            // window.location.reload(false);
-            navigate("/");
-          } else {
-            alert(res.data.Error);
-          }
-        })
-        .then((err) => console.log(err));
+      Axios.post("http://localhost:3001/login", values).then((res, err) => {
+        if (err) console.log(err);
+        if (res.data.Status === "Successfully login") {
+          setAuth(true);
+          // window.location.reload(false);
+          navigate("/");
+        } else {
+          alert(res.data.Error);
+        }
+      });
     }
   };
   return (
