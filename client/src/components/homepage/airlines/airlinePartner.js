@@ -9,7 +9,7 @@ import VietjetAir from "../../../assets/airlinesLogo/vietjetAir.png";
 const Airline = ({ img, link }) => {
   return (
     <>
-      <div className="m-8">
+      <div className="p-8">
         <a href={link} target="_blank" rel="noreferrer">
           <img alt="" src={img} className="object-contain h-40" />
         </a>
@@ -21,11 +21,8 @@ const Airline = ({ img, link }) => {
 export const AirlinePartner = () => {
   return (
     <>
-      <div className="w-full flex justify-center mt-8">
-        <div className="max-w-[1600px] flex flex-col items-center">
-          <div className="tracking-wider pb-5 text-4xl font-bold uppercase text-primary">
-            Partners
-          </div>
+      <div className="flex justify-center mt-8">
+        <div className="flex flex-col items-center ">
           <div className="flex flex-wrap justify-center">
             <Airline img={AirAsia} link="https://www.airasia.com" />
             <Airline img={ThaiLionair} link="https://www.lionairthai.com" />
