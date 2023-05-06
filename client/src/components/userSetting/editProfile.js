@@ -47,7 +47,10 @@ export const EditProfile = () => {
         // alert(res.data.Status);
         setUser(values);
         setIsEditing(false);
-      } else alert(res.data.Error);
+      } else {
+        alert(res.data.Error);
+        setIsEditing(false);
+      }
     });
   };
 
