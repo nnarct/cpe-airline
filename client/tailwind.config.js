@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
@@ -9,6 +9,12 @@ module.exports = {
     extend: {
       height: {
         // calc: "calc(100vh - 3rem)",
+      },
+      minHeight: {
+        calc: "calc(100vh - 3rem)",
+      },
+      maxHeight: {
+        calc: "calc(100vh - 3rem)",
       },
       colors: {
         primary: "#0D3E5E",
@@ -33,12 +39,6 @@ module.exports = {
         "2xl": "1536px",
         // => @media (min-width: 1536px) { ... }
       },
-    },
-    minHeight: {
-      calc: "calc(100vh - 3rem)",
-    },
-    maxHeight: {
-      calc: "calc(100vh - 3rem)",
     },
   },
   plugins: [require("@tailwindcss/line-clamp")],

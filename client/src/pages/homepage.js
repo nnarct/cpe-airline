@@ -7,11 +7,15 @@ import { Footer } from "../components/navbar/footer";
 export const Homepage = () => {
   return (
     <>
-      <Navbar />
-      <Hero />
-      <BookingGroup />
-      <AirlinePartner />
-      <Footer />
+      <div className="flex flex-col justify-between min-h-screen">
+        <div>
+          <Navbar />
+          <Hero />
+          <BookingGroup />
+          <AirlinePartner />
+        </div>
+        <Footer />
+      </div>
     </>
   );
 };
