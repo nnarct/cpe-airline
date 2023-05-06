@@ -1,9 +1,9 @@
 import { db } from "../index.js";
 
 export const editProfile = (req, res) => {
+  const sqlCheck = "SELECT UserID FROM user WHERE Email = ?";
   const sql =
     "UPDATE user SET FirstName = ?, LastName = ?, Email = ?, TelNo = ? WHERE UserID =?";
-  const sqlCheck = "SELECT UserID FROM user WHERE Email = ?";
   db.query(sqlCheck, [req.body.Email], (error, data) => {
     if (error)
       return res.json({ Error: "Error while checking email unique..." });
