@@ -5,16 +5,16 @@ import { From } from "./dropdowns/from";
 import { To } from "./dropdowns/to";
 import { DatePick } from "./dropdowns/datepicker";
 import { Passenger } from "./dropdowns/passenger";
-
+import { useNavigate } from "react-router-dom";
 export const Flight = () => {
+  const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(1);
-  const today = new Date();
   const [values, setValues] = useState({
     from: 1,
     to: 3,
     date: {
-      departure: null,
-      return: null,
+      startDate: null,
+      endDate: null,
     },
     adult: 1,
     child: 0,
@@ -28,12 +28,43 @@ export const Flight = () => {
       const res = await fetch("http://localhost:3001/airportList");
       const data = await res.json();
       const err = data.Error;
-      if(err) console.log(err);
+      if (err) console.log(err);
       setAirports(data.Data);
     };
     getAirports();
   }, []);
 
+  const handleSubmit = () => {
+    console.log(values);
+    if (values.date.startDate === null || values.date.endDate === null) return;
+    const v = {
+      from: values.from,
+      to: values.to,
+      departure: values.date.startDate,
+      arrival: values.date.endDate,
+    };
+    navigate(
+      "/search?from=" +
+        v.from +
+        "&to=" +
+        v.to +
+        "&departure=" +
+        v.departure +
+        "&arrival=" +
+        v.arrival +
+        "&adult=" +
+        values.adult +
+        "&child=" +
+        values.child +
+        "&infant=" +
+        values.infant +
+        "&class=" +
+        values.class +
+        "&isReturn=" +
+        isReturn +
+        ""
+    );
+  };
   return (
     <>
       <form action="">
@@ -59,6 +90,17 @@ export const Flight = () => {
             />
           </div>
           {/* {isReturn ? <Card>return</Card> : null} */}
+        </div>
+        <div className="flex justify-end">
+          <button
+            className="bg-blue-500 mt-4 w-full l:w-auto px-8 py-2 rounded-xl text-white hover:ring focus:bg-blue-400"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
+            Search
+          </button>
         </div>
       </form>
     </>
