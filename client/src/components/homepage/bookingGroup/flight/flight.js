@@ -27,6 +27,8 @@ export const Flight = () => {
     const getAirports = async () => {
       const res = await fetch("http://localhost:3001/airportList");
       const data = await res.json();
+      const err = data.Error;
+      if(err) console.log(err);
       setAirports(data.Data);
     };
     getAirports();
