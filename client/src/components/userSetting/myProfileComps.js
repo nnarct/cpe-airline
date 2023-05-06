@@ -43,11 +43,12 @@ export const NameIcon = ({ children }) => {
   );
 };
 
-export const DataBlock = ({ title, data }) => {
+export const DataBlock = ({ title, data, children }) => {
   return (
     <>
       <h4 className="text-lg font-semibold">{title}</h4>
-      <span>{data}</span>
+      <span>{data ? data : null}</span>
+      {children ? children : null}
     </>
   );
 };
