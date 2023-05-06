@@ -60,3 +60,11 @@ export const ButtonWrap = ({ children }) => {
     </>
   );
 };
+
+export const ErrorMessage = ({ err }) => {
+  return (
+    <div className="bg-red-200 p-1 rounded text-red-600 text-center my-1">
+      {err}
+    </div>
+  );
+};
