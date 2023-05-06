@@ -6,7 +6,7 @@ import { FaPlane, FaHotel, FaCar } from "react-icons/fa";
 export const MenuBar = ({ active, changeContent }) => {
   return (
     <>
-      <div className="flex justify-between space-x-4">
+      <div className="flex justify-between space-x-1 xs:space-x-3 md:space-x-4">
         <MenuChoice
           text="Flight"
           content={<Flight />}
