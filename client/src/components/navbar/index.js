@@ -35,7 +35,6 @@ export const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center">
-            {" "}
             {auth ? <ForUser /> : <ForNoob />}{" "}
           </div>
         </div>
