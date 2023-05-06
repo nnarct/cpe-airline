@@ -1,6 +1,5 @@
 import { db } from "../index.js";
 import jwt from "jsonwebtoken";
-
 import bcrypt from "bcrypt";
 export const login = (req, res) => {
   const sql = "SELECT * FROM user WHERE email = ?";
