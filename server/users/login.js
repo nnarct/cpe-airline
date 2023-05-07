@@ -1,12 +1,10 @@
 import { db } from "../index.js";
 import jwt from "jsonwebtoken";
-
 import bcrypt from "bcrypt";
 export const login = (req, res) => {
   const sql = "SELECT * FROM user WHERE email = ?";
   db.query(sql, [req.body.email], (err, data) => {
     if (err) {
-      console.log(err);
       return res.json({ Error: "Login error in server..." });
     }
     if (data.length > 0) {
@@ -16,7 +14,6 @@ export const login = (req, res) => {
         (err, response) => {
           if (err) return res.json({ Error: "Password compare error..." });
           if (response) {
-            console.log(data[0]);
             const UserID = data[0].UserID;
             const FirstName = data[0].FirstName;
             const LastName = data[0].LastName;

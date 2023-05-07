@@ -1,6 +1,6 @@
 import { db } from "../index.js";
 
-export const airportListUser = (req,res) => {
+export const airportListUser = (req, res) => {
   const sql = "SELECT AirportID, Name, IATA FROM airport";
   db.query(sql, (err, data) => {
     if (err) {
@@ -14,5 +14,5 @@ export const airportListUser = (req,res) => {
     } else {
       return res.json({ Error: "Airport List not found" });
     }
-  }); 
-}
+  });
+};

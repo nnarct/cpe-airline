@@ -21,7 +21,7 @@ export const MenuChoice = ({
         `}
         >
           {icon}
-          <span className="py-2 ml-2 font-semibold uppercase  select-none text-xs sm:text-base md:text-lg lg:text-xl">
+          <span className="py-2 ml-2 font-semibold uppercase whitespace-nowrap select-none text-xs sm:text-base md:text-lg lg:text-xl">
             {text}
           </span>
         </div>

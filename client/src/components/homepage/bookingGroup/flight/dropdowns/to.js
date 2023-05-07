@@ -12,23 +12,41 @@ export const To = ({ airports, values, setValues }) => {
   const ref = useDetectClickOutside({ onTriggered: closeDropdown });
 
   const toShortName = (id) => {
-    const airport = airports.find((airport) => airport.AirportID === id);
-    if (airport) {
-      if (
-        airport.Name === "Suvarnabhumi International Airport" ||
-        airport.Name === "Don Mueang International Airport"
-      )
-        return "Bangkok";
-      return airport.Name.replace(" Airport", "").replace(" International", "");
+    if (airports) {
+      const airport = airports.find((airport) => airport.AirportID === id);
+      if (airport) {
+        if (
+          airport.Name === "Suvarnabhumi International Airport" ||
+          airport.Name === "Don Mueang International Airport"
+        )
+          return "Bangkok";
+        return airport.Name.replace(" Airport", "").replace(
+          " International",
+          ""
+        );
+      }
+    } else {
+      console.log("airports from database not found");
+      return "";
     }
   };
   const toFullName = (id) => {
-    const airport = airports.find((airport) => airport.AirportID === id);
-    if (airport) return airport.Name;
+    if (airports) {
+      const airport = airports.find((airport) => airport.AirportID === id);
+      if (airport) return airport.Name;
+    } else {
+      console.log("airports from database not found");
+      return "";
+    }
   };
   const toIATA = (id) => {
-    const airport = airports.find((airport) => airport.AirportID === id);
-    if (airport) return airport.IATA;
+    if (airports) {
+      const airport = airports.find((airport) => airport.AirportID === id);
+      if (airport) return airport.IATA;
+    } else {
+      console.log("airports from database not found");
+      return "";
+    }
   };
 
   return (

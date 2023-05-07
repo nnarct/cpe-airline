@@ -5,13 +5,14 @@ import Axios from "axios";
 import { Homepage } from "./pages/homepage";
 import { Register } from "./components/auth/register";
 import { Login } from "./components/auth/login";
-import { MyProfile } from "./components/userSetting/myProfile";
+import { UserProfile } from "./components/userSetting/userProfile";
 import { LoginAdmin } from "./admin/auth/admin-login";
 import { DashboardRouter } from "./admin/pages/dashboardRounter";
 import { ManagerDashboard } from "./admin/pages/managerdashboard";
 import { SystemDashboard } from "./admin/pages/systemdashboard";
 import { AdminDashboard } from "./admin/pages/admindasboard";
 import { ErrorPage } from "./admin/auth/error";
+import { SearchResultPage } from "./pages/searchResultPage";
 
 export const App = () => {
   Axios.defaults.withCredentials = true;
@@ -34,8 +35,9 @@ export const App = () => {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register auth={auth} />} />
+        <Route path="/search" element={<SearchResultPage />} />
         <Route path="/homepage" element={<DashboardRouter />} />
-        <Route path="/myProfile/:id" element={<MyProfile />} />
+        <Route path="/myProfile/:id" element={<UserProfile />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manager" element={<ManagerDashboard />} />
         <Route path="/system" element={<SystemDashboard />} />
