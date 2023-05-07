@@ -1,11 +1,11 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import Axios from "axios";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import { Homepage } from "./pages/homepage";
 import { Register } from "./components/auth/register";
 import { Login } from "./components/auth/login";
-import { UserProfile } from "./components/userSetting/userProfile";
+import { UserProfile } from "./components/userSetting/myProfile/userProfile";
 import { LoginAdmin } from "./admin/auth/admin-login";
 import { DashboardRouter } from "./admin/pages/dashboardRounter";
 import { ManagerDashboard } from "./admin/pages/managerdashboard";
