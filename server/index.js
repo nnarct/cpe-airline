@@ -4,6 +4,7 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import Amadeus from "amadeus";
 
 import { verifyUser, verifyUserRes } from "./users/verifyUser.js";
 import { register } from "./users/register.js";
@@ -34,6 +35,7 @@ import { airportListUser } from "./users/airportList.js";
 import { showProfile } from "./users/showProfile.js";
 import { editProfile } from "./users/editProfile.js";
 import { changePassword } from "./users/changePassword.js";
+import { AmadeusSearchFlights } from "./users/amadeus.js";
 
 const app = express();
 app.use(express.json());
@@ -89,6 +91,8 @@ app.get("/airportList", airportListUser);
 app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
+
+app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
