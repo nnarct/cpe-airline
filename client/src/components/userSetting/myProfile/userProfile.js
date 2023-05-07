@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Navbar } from "../navbar";
-import { Sidebar } from "./sidebar/index.js";
-import { MyFlight } from "./myFlight.js";
+import { Navbar } from "../../navbar";
+import { Sidebar } from "../sidebar/index.js";
+import { MyFlight } from "../myFlight/myFlight.js";
 import { EditProfile } from "./editProfile";
 
 export const UserProfile = () => {

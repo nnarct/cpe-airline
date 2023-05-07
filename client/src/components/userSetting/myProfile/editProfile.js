@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MyProfile } from "./myProfile";
 import { Row, ButtonWrap } from "./myProfileComps";
-import { Popup } from "../modal/popup";
-
+import { Popup } from "../../modal/popup";
 export const EditProfile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
