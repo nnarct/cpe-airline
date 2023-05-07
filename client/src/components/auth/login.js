@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { Star } from "../../admin/components/star";
 export const Login = () => {
   Axios.defaults.withCredentials = true;
 
@@ -52,45 +53,51 @@ export const Login = () => {
   };
   return (
     <>
-      <form
-        className="flex flex-col text-left items-center justify-center space-y-2 w-60 bg-slate-50 m-auto mt-20 rounded p-5"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        <h1 className="text-3xl">Login</h1>
-        <label className="w-full bg-red-300">Email</label>
-        <input
-          type="email"
-          placeholder="nan@example.com"
-          className="px-2 w-full"
-          onChange={(e) => {
-            setValues({ ...values, email: e.target.value });
+      <div className="w-screen h-screen bg-red-200 flex items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600">
+        <form
+          className="w-60 m-auto p-5 flex flex-col items-center justify-center space-y-2 bg-white text-left rounded"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
           }}
-        />
-        <label className="w-full bg-red-300">Password</label>
-        <input
-          type="password"
-          placeholder="*******"
-          className="px-2 w-full"
-          onChange={(e) => {
-            setValues({ ...values, password: e.target.value });
-          }}
-        />
-        <button
-          className="bg-blue-500 text-white rounded px-5 py-1 hover:opacity-40"
-          type="submit"
         >
-          Login
-        </button>
-        <p className="">Don't have account? </p>
-        <Link to="/register">
-          <p className="text-blue-400 cursor-pointer hover:opacity-50">
-            create account
-          </p>
-        </Link>
-      </form>
+          <h1 className="text-3xl">Login</h1>
+          <label className="w-full">
+            Email <Star />
+          </label>
+          <input
+            type="email"
+            placeholder="email@example.com"
+            className="w-full py-1 px-2 border border-gray rounded text-sm focus:ring ring-blue-200 focus:outline-none focus:border-blue-400"
+            onChange={(e) => {
+              setValues({ ...values, email: e.target.value });
+            }}
+          />
+          <label className="w-full">
+            Password <Star />
+          </label>
+          <input
+            type="password"
+            placeholder="*******"
+            className="w-full py-1 px-2 border border-gray rounded text-sm focus:ring ring-blue-200 focus:outline-none focus:border-blue-200"
+            onChange={(e) => {
+              setValues({ ...values, password: e.target.value });
+            }}
+          />
+          <button
+            className="bg-indigo-500 text-white rounded px-5 py-1 hover:opacity-40 transition duration-300 ease-in-out"
+            type="submit"
+          >
+            Login
+          </button>
+          <p className="">Don't have account? </p>
+          <Link to="/register">
+            <p className="text-blue-500 cursor-pointer hover:opacity-50">
+              create account
+            </p>
+          </Link>
+        </form>
+      </div>
     </>
   );
 };

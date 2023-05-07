@@ -1,74 +1,134 @@
+import Axios from "axios";
 import { useEffect, useState } from "react";
+import { AddAirport } from "./components/addAirport";
+import { Popup } from "./../../components/modal/popup";
+import { Content } from "./components/content";
+import { Header } from "./components/header";
+import { Table, THead, Th, Edit } from "./components/table";
+import { AiOutlineEdit } from "react-icons/ai";
 
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
-  useEffect(() =>{
-    const getAirports = async() =>{
-      const res = await fetch("http://localhost:3001/admin/airportList");
+  const [popup, setPopup] = useState(false);
+  const [isDel, setIsDel] = useState(1);
+  const [addAirport, setAddAirport] = useState(false);
+  useEffect(() => {
+    const getAirports = async () => {
+      const res = await fetch("http://localhost:3001/system/airportList");
       const data = await res.json();
       setAirports(data.Data);
-    }
+    };
     getAirports();
-  },[]);
-  const editAirport = (e) =>{
-    console.log(e);
+  }, []);
+
+  const editAirport = (e) => {};
+
+  const deleteAirport = () => {
+    setPopup(false);
+    Axios.post("http://localhost:3001/system/deleteAirport", { id: isDel })
+      .then((res) => {
+        if (res.data.Status === "Delete airport successfully! :)") {
+          alert(res.data.Status);
+        } else {
+          alert(res.data.Error);
+        }
+      })
+      .then((err) => {
+        if (err) console.log(err);
+      });
   };
-
-  const [modal, setAddAirport] = useState(false);
-
-  return(
+  return (
     <>
-    {/* <AddAirport status={modal} setStatus={setAddAirport}/> */}
-    <div className="flex flex-col items-center px-2">
-      <h1 className="text-3xl font-bold py-4">Airport List</h1>
-      <button
-        className="shadow focus:ring-2 rounded px-2 bg-white hover:bg-gray-300"
-        // onClick={() => setAddAdminModal(true)}
-      >
-        Add Airport
-      </button>
-      <table className="table-auto border-collapse w-4/5 bg-white ">
-        <thead>
-          <tr>
-            <th className="p-3 border border-1">Edit</th>
-            <th  className="p-3 border border-1">AirportID</th>
-            <th  className="p-3 border border-1">Name</th>
-            <th className="p-3 border border-1">IATA</th>
-            <th className="p-3 border border-1">State</th>
-            <th className="p-3 border border-1">Province</th>
-          </tr>
-        </thead>
-        <tbody>
-          {airports && airports.map((airport,i)=>{
-            return (
-              <tr key={airport.AirportID}>
-                <td
-                  className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-                  onClick={(e)=> editAirport(airport.AirportID)}
+      <Content>
+        <Header>
+          <span>Airport List</span>
+          <button
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white hover:ring"
+            onClick={() => setAddAirport(!addAirport)}
+          >
+            Add Airport +
+          </button>
+        </Header>
+        {addAirport && <AddAirport />}
+        <Table>
+          <THead>
+            <Edit />
+            <Th className="w-14">AirportID</Th>
+            <Th>Name</Th>
+            <Th>IATA</Th>
+            <Th>State</Th>
+            <Th>Province</Th>
+            <Th>Delete</Th>
+          </THead>
+          <tbody>
+            {airports &&
+              airports.map((airport, i) => {
+                return (
+                  <tr key={`airport ${i}`}>
+                    <td
+                      className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => editAirport(airport.AirportID)}
+                    >
+                      e
+                    </td>
+                    <td className="border p-2 text-center">
+                      {airport.AirportID ? airport.AirportID : "-"}
+                    </td>
+                    <td className="border p-2">
+                      {airport.Name ? airport.Name : "-"}
+                    </td>
+
+                    <td className="border p-2 text-center">
+                      {airport.IATA ? airport.IATA : "-"}
+                    </td>
+                    <td className="border p-2">
+                      {airport.State ? airport.State : "-"}
+                    </td>
+                    <td className="border p-2">
+                      {airport.Province ? airport.Province : "-"}
+                    </td>
+                    <td
+                      className="border p-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50"
+                      onClick={() => {
+                        setPopup(true);
+                        setIsDel(airport.AirportID);
+                      }}
+                    >
+                      X
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+
+        {popup && (
+          <Popup>
+            <div className="p-3 flex flex-col space-y-2">
+              <h1 className="text-xl font-bold justify-center h-1/3 flex items-center">
+                Are you sure?
+              </h1>
+              <p className="h-1/3 flex items-center justify-center border border-red-200 rounded bg-red-100">
+                Airport ID :<span className="font-bold pl-1"> {isDel}</span>
+              </p>
+              <div className="flex space-x-2 h-1/3 items-center">
+                <button
+                  className="w-1/2 rounded bg-green-500 hover:opacity-80 px-3 py-1 hover:ring ring-green-300"
+                  onClick={() => deleteAirport()}
                 >
-                  e
-                </td>
-                <td className="border border-1 px-3 py-2">
-                  {airport.AirportID ? airport.AirportID : "-"}
-                </td>
-                <td className="border border-1 px-3 py-2">
-                  {airport.Name ? airport.Name : "-"}
-                </td>
-                <td className="border border-1 px-3 py-2">
-                  {airport.IATA ? airport.IATA : "-"}
-                </td>
-                <td className="border border-1 px-3 py-2">
-                  {airport.State ? airport.State : "-"}
-                </td>
-                <td className="border border-1 px-3 py-2">
-                  {airport.Province ? airport.Province : "-"}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                  Yes
+                </button>
+                <button
+                  className="w-1/2 rounded bg-red-500 hover:opacity-80 px-3 py-1 hover:ring ring-red-300"
+                  onClick={() => setPopup(false)}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </Popup>
+        )}
+      </Content>
     </>
   );
-}
+};
