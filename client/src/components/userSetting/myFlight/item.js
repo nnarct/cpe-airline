@@ -1,4 +1,5 @@
 import { TbPlaneInflight } from "react-icons/tb";
+import ThaiSmile from "./../../../assets/airlinesLogo/thaiSmile.png";
 export const Item = ({
   Airline,
   BookingID,
@@ -14,9 +15,13 @@ export const Item = ({
       <div className="w-full p-5">
         <div className="w-full py-4 container flex justify-between">
           <div className="w-64 pr-2">
-            <h1 className="mb-2 text-3xl text-gray-900 font-bold tracking-tight">
-              {Airline}
-            </h1>
+            <div className="h-14 flex items-center space-x-2">
+              <img className="h-14 object-fit" src={ThaiSmile} alt="" />
+              <h1 className="text-3xl text-gray-900 font-bold tracking-tight">
+                {Airline}
+              </h1>
+            </div>
+
             <div className="py-4 mx-auto container flex justify-between">
               <ul>
                 <li>Flight</li>
