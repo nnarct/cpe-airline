@@ -6,12 +6,12 @@ import { FaPlane } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import ThaiSmile from "../../assets/airlinesLogo/thaiSmile.png";
 
-export const FlightDetail = ({ v, flight }) => {
+export const FlightDetail = ({ v, flight, airports }) => {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (cookies.userToken !== undefined) {
+    if (cookies.userToken === undefined) {
       Swal.fire({
         icon: "warning",
         text: "Please login first",
@@ -24,9 +24,37 @@ export const FlightDetail = ({ v, flight }) => {
           navigate("/login?redirect=/search");
         }
       });
+    } else {
+      // To do - select flight
     }
     return;
   };
+
+  const iata = (id) => {
+    if (airports) {
+      const airport = airports.find(
+        (airport) => airport.AirportID === Number(id)
+      );
+      if (airport) return airport.IATA;
+    } else return "-";
+  };
+
+  const name = (id) => {
+    if (airports) {
+      const airport = airports.find(
+        (airport) => airport.AirportID === Number(id)
+      );
+      if (airport) {
+        const name = airport.Name.replace(" International", "").replace(
+          " Airport",
+          ""
+        );
+        if (name === "Suvarnabhumi" || name === "Don Mueang") return "Bangkok";
+        return name;
+      }
+    }
+  };
+
   return (
     <>
       <div className="container lg:max-w-1000 my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center">
@@ -39,8 +67,8 @@ export const FlightDetail = ({ v, flight }) => {
             <li className="font-bold text-xl">
               {moment(flight.DepartureTime).format("HH:mm")}
             </li>
-            <li>BKK</li>
-            <li>Bangkok</li>
+            <li>{iata(flight.OriginAirportID)}</li>
+            <li>{name(flight.OriginAirportID)}</li>
           </ul>
           <ul className="flex items-center">
             <li className="">
@@ -55,8 +83,8 @@ export const FlightDetail = ({ v, flight }) => {
             <li className="font-bold text-xl">
               {moment(flight.ArrivalTime).format("HH:mm")}
             </li>
-            <li>CNX</li>
-            <li>Chiang Mai</li>
+            <li>{iata(flight.DestinationAirportID)}</li>
+            <li>{name(flight.DestinationAirportID)}</li>
           </ul>
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
