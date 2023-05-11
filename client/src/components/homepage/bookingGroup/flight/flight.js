@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { Type } from "./type";
 import { Card } from "./card";
@@ -7,6 +8,7 @@ import { DatePick } from "./dropdowns/datepicker";
 import { Passenger } from "./dropdowns/passenger";
 import { useNavigate } from "react-router-dom";
 import { Class } from "./dropdowns/class";
+
 export const Flight = () => {
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(1);
@@ -22,7 +24,11 @@ export const Flight = () => {
     infant: 0,
     class: "Economy",
   });
-
+  const verify = () => {
+    if (values.date.startDate === null || values.date.endDate === null)
+      return false;
+    return true;
+  };
   const [airports, setAirports] = useState([]);
   useEffect(() => {
     const getAirports = async () => {
@@ -36,7 +42,15 @@ export const Flight = () => {
   }, []);
 
   const handleSubmit = () => {
-    console.log(values);
+    if (!verify()) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Please select date",
+        icon: "info",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
     if (values.date.startDate === null || values.date.endDate === null) return;
     const v = {
       from: values.from,
