@@ -55,7 +55,6 @@ export const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
-  port: 4306,
 });
 
 // authentication
