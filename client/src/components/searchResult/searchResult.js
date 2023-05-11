@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { formatDate } from "./function";
-import { TbPlaneInflight } from "react-icons/tb";
+import { FlightDetail } from "./flightdetail";
 
 export const SearchResult = () => {
   const location = useLocation();
@@ -54,7 +54,7 @@ export const SearchResult = () => {
         airport.Name = airport.Name.replace(" Airport", "");
         return airport.Name + " (" + airport.IATA + ")";
       }
-      return "not found airport list";
+      return "-"; //not found airport list
     }
     return "unknown airport";
   };
@@ -79,78 +79,7 @@ export const SearchResult = () => {
         {Flights &&
           Flights.map((flight, i) => {
             return (
-              <div
-                className="bg-white container cursor-pointer rounded-md border my-2 hover:ring ring-gray-200 p-5"
-                key={i}
-              >
-                <div className="w-full py-4 container flex justify-between">
-                  <div className="w-64 pr-2">
-                    <div className="h-14 flex items-center space-x-2">
-                      <h1 className="text-3xl text-gray-900 font-bold tracking-tight">
-                        {flight.AirlineID}
-                      </h1>
-                    </div>
-
-                    <div className="py-4 mx-auto container flex justify-between">
-                      <ul className="list-none">
-                        <li>Flight</li>
-                        <span className="font-bold text-xl">
-                          {flight.FlightNumber}
-                        </span>
-                      </ul>
-                      <ul>
-                        <li>Date</li>
-                        <span className="font-bold text-xl">
-                          {formatDate(v.departure)}
-                        </span>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="w-64 sm:w-72 md:w-80 l:w-96 lg:w-full lg:max-w-[550px] xl:max-w-[800px]">
-                    <div className="flex justify-between items-center">
-                      <ul>
-                        <li>From</li>
-                        <li className="font-bold text-4xl">
-                          {moment(flight.DepartureTime).format("HH:mm")}
-                        </li>
-                        {/* <li className="font-bold text-2xl">
-                          {formatDate(flight.DepartureTime.substring(0, 9))}
-                        </li> */}
-                      </ul>
-                      <div className="p-2 bg-primary rounded-full">
-                        <TbPlaneInflight size="2.5em" color="white" />
-                      </div>
-
-                      <ul>
-                        <li>To</li>
-                        <li className="font-bold text-4xl">
-                          {moment(flight.ArrivalTime).format("HH:mm ")}
-                        </li>
-                        {/* <li className="font-bold text-2xl text-right">
-                          {flight.DestinationAirportID}
-                        </li> */}
-                      </ul>
-                    </div>
-                    <div className="mt-2 border-b-2 border-gray-200"></div>
-                    {/* <li>
-                      Booking ID: <span>{BookingID}</span>
-                    </li> */}
-                    <div className="w-full h-1/2 flex justify-between items-end">
-                      <span className="text-4xl font-bold text-red-500">
-                        1200
-                        <span className="pl-2 text-sm">B</span>
-                      </span>
-                      <Link
-                        to={`/contact?adult=${v.adult}&child=${v.child}&infant=${v.infant}`}
-                      >
-                        <span className="w-32 px-2 py-1 rounded bg-blue-500 text-center font-semibold text-xl text-white hover:ring focus:bg-blue-700">
-                          Check
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <FlightDetail key={i} v={v} flight={flight} airports={airports} />
             );
           })}
       </div>
