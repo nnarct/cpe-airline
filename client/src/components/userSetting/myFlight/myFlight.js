@@ -9,7 +9,7 @@ export const MyFlight = () => {
   return (
     <>
       <div className="w-full flex justify-center">
-        <div className="container max-w-[1000px] mx-2">
+        <div className="container max-w-1000 mx-2">
           <div className="font-medium text-center text-gray-500 border-b border-gray-200">
             <ul className="flex flex-wrap">
               <Menu

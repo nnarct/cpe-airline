@@ -30,7 +30,7 @@ export const Transaction = () => {
             <a
               key={i}
               href="/"
-              className="max-w-[1000px] flex items-center mt-3 bg-white border border-gray-200 rounded-lg shadow hover:ring ring-gray-200"
+              className="max-w-1000 flex items-center mt-3 bg-white border border-gray-200 rounded-lg shadow hover:ring ring-gray-200"
             >
               <Item {...flight} />
             </a>

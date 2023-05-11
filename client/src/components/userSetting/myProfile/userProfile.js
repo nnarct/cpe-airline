@@ -16,7 +16,7 @@ export const UserProfile = () => {
         <div className="bg-gray-100 w-full">
           <div className="flex flex-col items-center justify-center">
             <div className="w-full flex justify-center items-center p-3 bg-white mb-4 bg-blue-100 border-b border-neutral-200 ">
-              <h1 className="container text-3xl font-semibold max-w-[1000px]">
+              <h1 className="container text-3xl font-semibold max-w-1000">
                 {content}
               </h1>
             </div>
