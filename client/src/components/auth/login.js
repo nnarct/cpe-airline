@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Star } from "../../admin/components/star";
 export const Login = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get("redirect");
   Axios.defaults.withCredentials = true;
-
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -16,6 +18,7 @@ export const Login = () => {
       if (err) setAuth(false); // You are not authenticated
       if (res.data.Status === "Success") {
         setAuth(true);
+        if (redirect === "/search") navigate(-1);
         navigate("/");
       } else {
         setAuth(false);
