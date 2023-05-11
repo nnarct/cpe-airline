@@ -45,7 +45,7 @@ export const Login = () => {
         if (err) console.log(err);
         if (res.data.Status === "Successfully login") {
           setAuth(true);
-          // window.location.reload(false);
+          if (redirect === "/search") navigate(-1);
           navigate("/");
         } else {
           alert(res.data.Error);
