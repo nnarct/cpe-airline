@@ -28,6 +28,9 @@ module.exports = {
         36: "9rem",
         38: "9.5rem",
       },
+      maxWidth: {
+        1000: "1000px",
+      },
       colors: {
         primary: "#0D3E5E",
         lightblue: "#E9EDEF",
