@@ -16,6 +16,18 @@ module.exports = {
       maxHeight: {
         calc: "calc(100vh - 3rem)",
       },
+      minWidth: {
+        20: "5rem",
+        22: "5.5rem",
+        24: "6rem",
+        26: "6.5rem",
+        28: "7rem",
+        30: "7.5rem",
+        32: "8rem",
+        34: "8.5rem",
+        36: "9rem",
+        38: "9.5rem",
+      },
       colors: {
         primary: "#0D3E5E",
         lightblue: "#E9EDEF",
