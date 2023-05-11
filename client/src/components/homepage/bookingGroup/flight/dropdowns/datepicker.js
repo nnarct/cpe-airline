@@ -6,8 +6,9 @@ export const DatePick = ({ values, setValues, isReturn }) => {
   return (
     <>
       <Datepicker
-        minDate={"2023-05-29"}
-        mixDate={"2023-04-06"}
+        minDate={new Date("2023-05-28")}
+        maxDate={new Date("2023-06-6")}
+        separator="-"
         primaryColor={"blue"}
         placeholder={
           isReturn ? "Departure Date ~ Arrival Date" : "Departure Date"
