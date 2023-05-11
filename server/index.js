@@ -36,6 +36,7 @@ import { showProfile } from "./users/showProfile.js";
 import { editProfile } from "./users/editProfile.js";
 import { changePassword } from "./users/changePassword.js";
 import { AmadeusSearchFlights } from "./users/amadeus.js";
+import { SearchFlights } from "./users/searchFlight/searchFlight.js";
 
 const app = express();
 app.use(express.json());
@@ -93,6 +94,7 @@ app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
 
 app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
+app.post("/search/SearchFlights", SearchFlights);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
