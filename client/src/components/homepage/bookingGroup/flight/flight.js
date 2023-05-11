@@ -6,6 +6,7 @@ import { To } from "./dropdowns/to";
 import { DatePick } from "./dropdowns/datepicker";
 import { Passenger } from "./dropdowns/passenger";
 import { useNavigate } from "react-router-dom";
+import { Class } from "./dropdowns/class";
 export const Flight = () => {
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(1);
@@ -42,6 +43,7 @@ export const Flight = () => {
       to: values.to,
       departure: values.date.startDate,
       arrival: values.date.endDate,
+      class: values.class,
     };
     navigate(
       "/search?from=" +
@@ -79,7 +81,9 @@ export const Flight = () => {
           <Card className="relative">
             <Passenger values={values} setValues={setValues} />
           </Card>
-          <Card>class</Card>
+          <Card className="relative">
+            <Class values={values} setValues={setValues} />
+          </Card>
           <div
             className={`w-full h-20 flex items-center bg-white  rounded-xl active:ring cursor-pointer sm:col-span-2`}
           >
