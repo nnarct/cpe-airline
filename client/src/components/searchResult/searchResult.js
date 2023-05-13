@@ -19,6 +19,7 @@ export const SearchResult = () => {
     infant: params.get("infant"),
     class: params.get("class"),
     isReturn: params.get("isReturn"),
+    departureFlightID: params.get("departureFlightID"),
   };
 
   const [Flights, setFlights] = useState([]);
@@ -82,7 +83,8 @@ export const SearchResult = () => {
         v.class +
         "&isReturn=" +
         v.isReturn +
-        ""
+        "&departureFlightID=" +
+        v.departureFlightID
     );
     window.location.reload();
   };
@@ -110,10 +112,12 @@ export const SearchResult = () => {
         v.class +
         "&isReturn=" +
         v.isReturn +
-        ""
+        "&departureFlightID=" +
+        v.departureFlightID
     );
     window.location.reload();
   };
+
   return (
     <>
       <div className="bg-gray-100 min-h-screen w-screen flex flex-col items-center">
@@ -132,6 +136,7 @@ export const SearchResult = () => {
             {formatDate(v.departure)}
           </span>
         </div>
+
         <div>
           <button
             onClick={prevDay}
@@ -149,7 +154,7 @@ export const SearchResult = () => {
         {Flights &&
           Flights.map((flight, i) => {
             return (
-              <FlightDetail key={i} v={v} flight={flight} airports={airports} />
+              <FlightDetail key={i} airports={airports} v={v} flight={flight} />
             );
           })}
       </div>
