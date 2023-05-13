@@ -56,3 +56,22 @@ export const Price = ({ price }) => {
     </>
   );
 };
+
+
+export const Head = ({from, to, departure}) => {
+  return (<><div className="container text-3xl py-4 px-3">
+  Flight from
+  <span className="text-cyan-600 font-semibold ">
+    {" "}
+    {from}
+  </span>{" "}
+  to{" "}
+  <span className="text-cyan-600 font-semibold ">
+    {to}
+  </span>{" "}
+  on{" "}
+  <span className="px-1 bg-gray-200 rounded">
+    {departure}
+  </span>
+</div></>)
+}

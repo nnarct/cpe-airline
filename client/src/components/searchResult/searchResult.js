@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatDate } from "./function";
 import { FlightDetail } from "./flightdetail";
+import { Head } from "./components";
+import { SelectedFlight } from "./selectedFlight";
 
 export const SearchResult = () => {
   const navigate = useNavigate();
@@ -36,11 +38,8 @@ export const SearchResult = () => {
     Axios.post("http://localhost:3001/search/SearchFlights", v).then(
       (res, err) => {
         if (err) console.log(err);
-        if (res.data.Status === "Success") {
-          setFlights(res.data.Flights);
-        } else {
-          console.log(res.data.Error);
-        }
+        if (res.data.Status === "Success") setFlights(res.data.Flights);
+        else console.log(res.data.Error);
       }
     );
   }, []);
@@ -61,96 +60,139 @@ export const SearchResult = () => {
   };
   const prevDay = (e) => {
     e.preventDefault();
+
     const date = new Date(v.departure);
+    const limit = new Date("2023-05-29");
+    if (date <= limit) return;
     date.setDate(date.getDate() - 1);
     const newDate = moment(date).format("YYYY-MM-DD");
-    navigate(
-      "/search?from=" +
-        v.from +
-        "&to=" +
-        v.to +
-        "&departure=" +
-        newDate +
-        "&arrival=" +
-        v.arrival +
-        "&adult=" +
-        v.adult +
-        "&child=" +
-        v.child +
-        "&infant=" +
-        v.infant +
-        "&class=" +
-        v.class +
-        "&isReturn=" +
-        v.isReturn +
-        "&departureFlightID=" +
-        v.departureFlightID
-    );
+    if (v.isReturn === 1)
+      navigate(
+        "/search?from=" +
+          v.from +
+          "&to=" +
+          v.to +
+          "&departure=" +
+          newDate +
+          "&arrival=" +
+          v.arrival +
+          "&adult=" +
+          v.adult +
+          "&child=" +
+          v.child +
+          "&infant=" +
+          v.infant +
+          "&class=" +
+          v.class +
+          "&isReturn=" +
+          v.isReturn +
+          "&departureFlightID=" +
+          v.departureFlightID
+      );
+    else
+      navigate(
+        "/search?from=" +
+          v.from +
+          "&to=" +
+          v.to +
+          "&departure=" +
+          newDate +
+          "&arrival=" +
+          v.arrival +
+          "&adult=" +
+          v.adult +
+          "&child=" +
+          v.child +
+          "&infant=" +
+          v.infant +
+          "&class=" +
+          v.class +
+          "&isReturn=" +
+          v.isReturn
+      );
     window.location.reload();
   };
   const nextDay = (e) => {
     e.preventDefault();
     const date = new Date(v.departure);
+    const limit = new Date("2023-06-06");
+    if (date >= limit) return;
     date.setDate(date.getDate() + 1);
     const newDate = moment(date).format("YYYY-MM-DD");
-    navigate(
-      "/search?from=" +
-        v.from +
-        "&to=" +
-        v.to +
-        "&departure=" +
-        newDate +
-        "&arrival=" +
-        v.arrival +
-        "&adult=" +
-        v.adult +
-        "&child=" +
-        v.child +
-        "&infant=" +
-        v.infant +
-        "&class=" +
-        v.class +
-        "&isReturn=" +
-        v.isReturn +
-        "&departureFlightID=" +
-        v.departureFlightID
-    );
+    if (v.isReturn === "1")
+      navigate(
+        "/search?from=" +
+          v.from +
+          "&to=" +
+          v.to +
+          "&departure=" +
+          newDate +
+          "&arrival=" +
+          v.arrival +
+          "&adult=" +
+          v.adult +
+          "&child=" +
+          v.child +
+          "&infant=" +
+          v.infant +
+          "&class=" +
+          v.class +
+          "&isReturn=" +
+          v.isReturn +
+          "&departureFlightID=" +
+          v.departureFlightID
+      );
+    else
+      navigate(
+        "/search?from=" +
+          v.from +
+          "&to=" +
+          v.to +
+          "&departure=" +
+          newDate +
+          "&arrival=" +
+          v.arrival +
+          "&adult=" +
+          v.adult +
+          "&child=" +
+          v.child +
+          "&infant=" +
+          v.infant +
+          "&class=" +
+          v.class +
+          "&isReturn=" +
+          v.isReturn
+      );
     window.location.reload();
   };
 
   return (
     <>
       <div className="bg-gray-100 min-h-screen w-screen flex flex-col items-center">
-        <div className="container text-3xl py-4 px-3">
-          Flight from
-          <span className="text-cyan-600 font-semibold ">
-            {" "}
-            {airportName(v.from)}
-          </span>{" "}
-          to{" "}
-          <span className="text-cyan-600 font-semibold ">
-            {airportName(v.to)}
-          </span>{" "}
-          on{" "}
-          <span className="px-1 bg-gray-200 rounded">
-            {formatDate(v.departure)}
-          </span>
-        </div>
+        <Head
+          from={airportName(v.from)}
+          to={airportName(v.to)}
+          departure={formatDate(v.departure)}
+        />
+        {v.departureFlightID !== "null" ? (
+          <SelectedFlight id={v.departureFlightID} airports={airports} />
+        ) : (
+          <div>
+            <button
+              onClick={prevDay}
+              className="bg-blue-300 hover:ring border rounded mx-3 px-3"
+            >
+              Previous Day
+            </button>
+            <button
+              onClick={nextDay}
+              className="bg-blue-300 hover:ring border rounded mx-3 px-3"
+            >
+              Next Day
+            </button>{" "}
+          </div>
+        )}
 
-        <div>
-          <button
-            onClick={prevDay}
-            className="bg-blue-300 hover:ring border rounded mx-3 px-3"
-          >
-            Previous Day
-          </button>
-          <button
-            onClick={nextDay}
-            className="bg-blue-300 hover:ring border rounded mx-3 px-3"
-          >
-            Next Day
-          </button>
-        </div>
         {Flights &&
           Flights.map((flight, i) => {
             return (
