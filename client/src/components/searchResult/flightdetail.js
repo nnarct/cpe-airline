@@ -2,13 +2,14 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { LineIcon, Logo, Price, TimeAndAirport } from "./components";
+import { useEffect } from "react";
 export const FlightDetail = ({ v, flight, airports }) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
-  // console.log(flight);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (cookies.userToken === undefined) {
+    if (cookies.userToken === undefined)
       Swal.fire({
         icon: "warning",
         text: "Please login first",
@@ -17,17 +18,30 @@ export const FlightDetail = ({ v, flight, airports }) => {
         confirmButtonText: "Login",
         showCancelButton: true,
       }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login?redirect=/search");
-        }
+        if (result.isConfirmed) navigate("/login?redirect=/search");
       });
-    } else {
-      if (v.isReturn) {
+    else if (v.isReturn === "1") {
+      if (v.departureFlightID)
+        navigate(
+          "/contact?adult=" +
+            v.adult +
+            "&child=" +
+            v.child +
+            "&infant=" +
+            v.infant +
+            "&isReturn=" +
+            v.isReturn +
+            "&departureFlightID=" +
+            v.departureFlightID +
+            "&returnFlightID=" +
+            flight.FlightID
+        );
+      else
         navigate(
           "/search?from=" +
-            v.from +
-            "&to=" +
             v.to +
+            "&to=" +
+            v.from +
             "&departure=" +
             v.departure +
             "&arrival=" +
@@ -45,8 +59,22 @@ export const FlightDetail = ({ v, flight, airports }) => {
             "&departureFlightID=" +
             flight.FlightID
         );
-      }
+      window.location.reload();
+    } else if (v.isReturn === "0") {
+      navigate(
+        "/contact?adult=" +
+          v.adult +
+          "&child=" +
+          v.child +
+          "&infant=" +
+          v.infant +
+          "&isReturn=" +
+          v.isReturn +
+          "&departureFlightID=" +
+          flight.FlightID
+      );
     }
+
     return;
   };
 
@@ -75,7 +103,7 @@ export const FlightDetail = ({ v, flight, airports }) => {
     }
   };
 
-  if(flight) return (
+  return (
     <>
       <div className="container lg:max-w-1000 my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center">
         <Logo id={flight.AirlineID} flight={flight.FlightNumber} />
@@ -109,5 +137,4 @@ export const FlightDetail = ({ v, flight, airports }) => {
       </div>
     </>
   );
-  else return <><div className="p-8 rounded bg-red-200 text-red-800 font-black text-3xl">Flight is null</div></>;
 };
