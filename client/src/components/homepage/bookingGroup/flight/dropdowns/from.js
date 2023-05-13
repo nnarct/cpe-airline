@@ -73,21 +73,19 @@ export const From = ({ airports, values, setValues }) => {
                   "International",
                   ""
                 );
-                if (airport.AirportID !== values.to)
-                  return (
-                    <li
-                      key={i}
-                      className={`px-2 hover:bg-blue-100 ${
-                        airport.AirportID === values.from ? "bg-blue-300" : ""
-                      } transition duration-100 ease-in-out`}
-                      onClick={() =>
-                        setValues({ ...values, from: airport.AirportID })
-                      }
-                    >
-                      {name} ({airport.IATA})
-                    </li>
-                  );
-                return null;
+                return (
+                  <li
+                    key={i}
+                    className={`px-2 hover:bg-blue-100 ${
+                      airport.AirportID === values.from ? "bg-blue-300" : ""
+                    } transition duration-100 ease-in-out`}
+                    onClick={() =>
+                      setValues({ ...values, from: airport.AirportID })
+                    }
+                  >
+                    {name} ({airport.IATA})
+                  </li>
+                );
               })}
             </ul>
           </Card>
