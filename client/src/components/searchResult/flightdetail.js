@@ -1,14 +1,11 @@
-import moment from "moment";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { FaPlane } from "react-icons/fa";
-import { MdLocationOn } from "react-icons/md";
-import ThaiSmile from "../../assets/airlinesLogo/thaiSmile.png";
-
+import { LineIcon, Logo, Price, TimeAndAirport } from "./components";
 export const FlightDetail = ({ v, flight, airports }) => {
-  const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
+  // console.log(flight);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cookies.userToken === undefined) {
@@ -25,7 +22,30 @@ export const FlightDetail = ({ v, flight, airports }) => {
         }
       });
     } else {
-      // To do - select flight
+      if (v.isReturn) {
+        navigate(
+          "/search?from=" +
+            v.from +
+            "&to=" +
+            v.to +
+            "&departure=" +
+            v.departure +
+            "&arrival=" +
+            v.arrival +
+            "&adult=" +
+            v.adult +
+            "&child=" +
+            v.child +
+            "&infant=" +
+            v.infant +
+            "&class=" +
+            v.class +
+            "&isReturn=" +
+            v.isReturn +
+            "&departureFlightID=" +
+            flight.FlightID
+        );
+      }
     }
     return;
   };
@@ -55,44 +75,26 @@ export const FlightDetail = ({ v, flight, airports }) => {
     }
   };
 
-  return (
+  if(flight) return (
     <>
       <div className="container lg:max-w-1000 my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center">
-        <div className="w-52 flex items-center">
-          <img className="object-cover w-16" src={ThaiSmile} alt="" />
-          <span className="pl-4 text-lg font-semibold">Thai Smile</span>
-        </div>
+        <Logo id={flight.AirlineID} flight={flight.FlightNumber} />
         <div className="flex items-center justify-center space-x-4">
-          <ul className="text-right">
-            <li className="font-bold text-xl">
-              {moment(flight.DepartureTime).format("HH:mm")}
-            </li>
-            <li>{iata(flight.OriginAirportID)}</li>
-            <li>{name(flight.OriginAirportID)}</li>
-          </ul>
-          <ul className="flex items-center">
-            <li className="">
-              <FaPlane />
-            </li>
-            <li className="h-px bg-primary mx-2 w-12 md:w-24 lg:w-56"></li>
-            <li>
-              <MdLocationOn />
-            </li>
-          </ul>
-          <ul>
-            <li className="font-bold text-xl">
-              {moment(flight.ArrivalTime).format("HH:mm")}
-            </li>
-            <li>{iata(flight.DestinationAirportID)}</li>
-            <li>{name(flight.DestinationAirportID)}</li>
-          </ul>
+          <TimeAndAirport
+            className="text-right"
+            time={flight.DepartureTime}
+            iata={iata(flight.OriginAirportID)}
+            name={name(flight.OriginAirportID)}
+          />
+          <LineIcon />
+          <TimeAndAirport
+            time={flight.ArrivalTime}
+            iata={iata(flight.DestinationAirportID)}
+            name={name(flight.DestinationAirportID)}
+          />
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
-          <li className="text-red-500 font-bold">
-            <span className="text-sm">B</span>
-            <span className="text-2xl">1,293.09</span>
-          </li>
-          <li className="text-xs">Price for one passenger</li>
+          <Price price="1,092" />
           <Link to="">
             <li>
               <button
@@ -107,4 +109,5 @@ export const FlightDetail = ({ v, flight, airports }) => {
       </div>
     </>
   );
+  else return <><div className="p-8 rounded bg-red-200 text-red-800 font-black text-3xl">Flight is null</div></>;
 };
