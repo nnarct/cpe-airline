@@ -24,11 +24,7 @@ export const Flight = () => {
     infant: 0,
     class: "Economy",
   });
-  const verify = () => {
-    if (values.date.startDate === null || values.date.endDate === null)
-      return false;
-    return true;
-  };
+
   const [airports, setAirports] = useState([]);
   useEffect(() => {
     const getAirports = async () => {
@@ -42,7 +38,7 @@ export const Flight = () => {
   }, []);
 
   const handleSubmit = () => {
-    if (!verify()) {
+    if (values.date.startDate === null || values.date.endDate === null) {
       Swal.fire({
         title: "Oops!",
         text: "Please select date",
@@ -51,7 +47,15 @@ export const Flight = () => {
       });
       return;
     }
-    if (values.date.startDate === null || values.date.endDate === null) return;
+    if (values.from === values.to) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Please select different ORIGIN and DESTINATION airport",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
     const v = {
       from: values.from,
       to: values.to,
@@ -107,7 +111,6 @@ export const Flight = () => {
               isReturn={isReturn}
             />
           </div>
-          {/* {isReturn ? <Card>return</Card> : null} */}
         </div>
         <div className="flex justify-end">
           <button
