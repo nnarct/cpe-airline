@@ -1,4 +1,3 @@
-
 const shortMonth = [
   "Jan",
   "Feb",
@@ -18,3 +17,10 @@ export const formatDate = (date) => {
   return d.getDate() + " " + shortMonth[d.getMonth()] + " " + d.getFullYear();
 };
 
+export const airportName = (airport, iata) => {
+  if (airport !== "") {
+    let name = airport.replace(" International", "");
+    name = name.replace(" Airport", "");
+    return name + " (" + iata + ")";
+  }
+};

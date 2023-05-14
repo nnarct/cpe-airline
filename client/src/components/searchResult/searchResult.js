@@ -2,7 +2,7 @@ import Axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatDate } from "./function";
+import { airportName, formatDate } from "./function";
 import { FlightDetail } from "./flightdetail";
 import { Head } from "./components";
 import { SelectedFlight } from "./selectedFlight";
@@ -24,40 +24,17 @@ export const SearchResult = () => {
     departureFlightID: params.get("departureFlightID"),
   };
 
-  const [Flights, setFlights] = useState([]);
-  const [airports, setAirports] = useState([]);
+  const [flights, setFlights] = useState([{ Origin: "" }]);
   useEffect(() => {
-    const getAirports = async () => {
-      const res = await fetch("http://localhost:3001/airportList");
-      const data = await res.json();
-      const err = data.Error;
-      if (err) console.log(err);
-      setAirports(data.Data);
-    };
-    getAirports();
     Axios.post("http://localhost:3001/search/SearchFlights", v).then(
       (res, err) => {
         if (err) console.log(err);
+        console.log(res.data);
         if (res.data.Status === "Success") setFlights(res.data.Flights);
         else console.log(res.data.Error);
       }
     );
   }, []);
-
-  const airportName = (id) => {
-    if (airports) {
-      const airport = airports.find(
-        (airport) => airport.AirportID === Number(id)
-      );
-      if (airport) {
-        airport.Name = airport.Name.replace(" International", "");
-        airport.Name = airport.Name.replace(" Airport", "");
-        return airport.Name + " (" + airport.IATA + ")";
-      }
-      return "-"; //not found airport list
-    }
-    return "unknown airport";
-  };
   const prevDay = (e) => {
     e.preventDefault();
 
@@ -169,13 +146,13 @@ export const SearchResult = () => {
   return (
     <>
       <div className="bg-gray-100 min-h-screen w-screen flex flex-col items-center">
-        <Head
-          from={airportName(v.from)}
-          to={airportName(v.to)}
-          departure={formatDate(v.departure)}
-        />
-        {v.departureFlightID !== "null" ? (
-          <SelectedFlight id={v.departureFlightID} airports={airports} />
+        {/* <Head
+            from={airportName(flights[0].Origin, flights[0].OriIATA)}
+            to={airportName(flights[0].Destination, flights[0].DesIATA)}
+            departure={formatDate(v.departure)}
+          /> */}
+        {v.departureFlightID && v.departureFlightID !== "null" ? (
+          <SelectedFlight id={v.departureFlightID} />
         ) : (
           <div>
             <button
@@ -193,11 +170,9 @@ export const SearchResult = () => {
           </div>
         )}
 
-        {Flights &&
-          Flights.map((flight, i) => {
-            return (
-              <FlightDetail key={i} airports={airports} v={v} flight={flight} />
-            );
+        {flights &&
+          flights.map((flight, i) => {
+            return <FlightDetail key={i} v={v} flight={flight} />;
           })}
       </div>
     </>
