@@ -11,7 +11,7 @@ export const SearchResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const v = {
+  let v = {
     from: params.get("from"),
     to: params.get("to"),
     departure: params.get("departure"),
@@ -26,6 +26,10 @@ export const SearchResult = () => {
 
   const [flights, setFlights] = useState([{ Origin: "" }]);
   useEffect(() => {
+    if(v.departureFlightID) {
+      v.arrival = params.get("departure");
+      v.departure = params.get("arrival");
+    }
     Axios.post("http://localhost:3001/search/SearchFlights", v).then(
       (res, err) => {
         if (err) console.log(err);

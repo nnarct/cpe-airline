@@ -33,7 +33,9 @@ export const FlightDetail = ({ v, flight }) => {
             "&departureFlightID=" +
             v.departureFlightID +
             "&returnFlightID=" +
-            flight.FlightID
+            flight.FlightID + 
+            "&class=" +
+            v.class
         );
       else
         navigate(
