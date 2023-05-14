@@ -1,24 +1,7 @@
 import moment from "moment";
 import { FaPlane } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
-import AirAsia from "../../assets/airlinesLogo/airAsia.png";
-import ThaiLionair from "../../assets/airlinesLogo/thaiLionair.png";
-import ThaiAirways from "../../assets/airlinesLogo/thaiAirways.png";
-import NokAir from "../../assets/airlinesLogo/nokAir.png";
-import ThaiSmile from "../../assets/airlinesLogo/thaiSmile.png";
-import BangkokAirways from "../../assets/airlinesLogo/bangkokAirways.png";
-import VietjetAir from "../../assets/airlinesLogo/vietjetAir.png";
-
-const airlineLogo = (name) => {
-  if (name === "Bangkok Airways") return BangkokAirways;
-  if (name === "Nok Air") return NokAir;
-  if (name === "Thai AirAsia") return AirAsia;
-  if (name === "Thai Airways") return ThaiAirways;
-  if (name === "Thai Lion Air") return ThaiLionair;
-  if (name === "Thai Smile") return ThaiSmile;
-  if (name === "Thai Vietjet Air") return VietjetAir;
-  return null;
-};
+import { airlineLogo } from "./function";
 
 export const Logo = ({ airlineName, flight }) => {
   return (
@@ -43,6 +26,7 @@ export const TimeAndAirport = ({ time, iata, name, className }) => {
     <>
       <ul className={className}>
         <li className="font-bold text-2xl">{moment(time).format("HH:mm")}</li>
+        <li>{moment(time).format("ddd DD MMM")}</li>
         <li>{iata}</li>
         <li>{name}</li>
       </ul>
