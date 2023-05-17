@@ -43,7 +43,6 @@ export const EditProfile = () => {
     Axios.post("http://localhost:3001/editProfile", values).then((res, err) => {
       if (err) console.log(err);
       if (res.data.Status === "Edit user successfully! :)") {
-        // alert(res.data.Status);
         setUser(values);
         setIsEditing(false);
       } else {
