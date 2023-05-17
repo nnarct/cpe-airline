@@ -72,6 +72,7 @@ export const Flight = () => {
       arrival: values.date.endDate,
       class: values.class,
     };
+    sessionStorage.clear();
     navigate(
       "/search?from=" +
         v.from +
