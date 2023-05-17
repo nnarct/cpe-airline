@@ -2,8 +2,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { LineIcon, Logo, Price, TimeAndAirport } from "./components";
-import { useEffect } from "react";
-export const FlightDetail = ({ v, flight, airports }) => {
+export const FlightDetail = ({ v, flight }) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
 
@@ -34,7 +33,9 @@ export const FlightDetail = ({ v, flight, airports }) => {
             "&departureFlightID=" +
             v.departureFlightID +
             "&returnFlightID=" +
-            flight.FlightID
+            flight.FlightID + 
+            "&class=" +
+            v.class
         );
       else
         navigate(
@@ -78,47 +79,31 @@ export const FlightDetail = ({ v, flight, airports }) => {
     return;
   };
 
-  const iata = (id) => {
-    if (airports) {
-      const airport = airports.find(
-        (airport) => airport.AirportID === Number(id)
-      );
-      if (airport) return airport.IATA;
-    } else return "-";
-  };
-
-  const name = (id) => {
-    if (airports) {
-      const airport = airports.find(
-        (airport) => airport.AirportID === Number(id)
-      );
-      if (airport) {
-        const name = airport.Name.replace(" International", "").replace(
-          " Airport",
-          ""
-        );
-        if (name === "Suvarnabhumi" || name === "Don Mueang") return "Bangkok";
-        return name;
-      }
+  const name = (name) => {
+    if (name) {
+      let sname = name.replace(" International", "").replace(" Airport", "");
+      if (sname === "Suvarnabhumi" || sname === "Don Mueang") return "Bangkok";
+      return sname;
     }
+    return "-";
   };
 
   return (
     <>
       <div className="container lg:max-w-1000 my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center">
-        <Logo id={flight.AirlineID} flight={flight.FlightNumber} />
+        <Logo airlineName={flight.AirlineName} flight={flight.FlightNumber} />
         <div className="flex items-center justify-center space-x-4">
           <TimeAndAirport
             className="text-right"
             time={flight.DepartureTime}
-            iata={iata(flight.OriginAirportID)}
-            name={name(flight.OriginAirportID)}
+            iata={flight.OriIATA}
+            name={name(flight.Origin)}
           />
           <LineIcon />
           <TimeAndAirport
             time={flight.ArrivalTime}
-            iata={iata(flight.DestinationAirportID)}
-            name={name(flight.DestinationAirportID)}
+            iata={flight.DesIATA}
+            name={name(flight.Destination)}
           />
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
