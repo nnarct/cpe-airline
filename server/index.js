@@ -40,6 +40,7 @@ import { searchFlights } from "./users/searchFlight/searchFlight.js";
 import { getFlight } from "./users/searchFlight/getFlight.js";
 import { flightInfo } from "./users/searchFlight/flightInfo.js";
 import { insertContact } from "./users/searchFlight/insertContact.js";
+import { getPayment } from "./users/searchFlight/getPayment.js";
 
 const app = express();
 app.use(express.json());
@@ -59,6 +60,7 @@ export const db = mysql.createConnection({
   password: "",
   database: "cpeairline",
 });
+
 
 // authentication
 app.get("/", verifyUser, verifyUserRes);
@@ -100,6 +102,9 @@ app.post("/search/SearchFlights", searchFlights);
 app.post("/search/getFlight", getFlight);
 app.post("/contact/flightInfo", flightInfo);
 app.post("/contact/insert", insertContact);
+
+app.post("/getPayment", getPayment);
+
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
