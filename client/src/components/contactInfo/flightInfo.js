@@ -21,7 +21,6 @@ export const FlightInfo = ({ pass, classType }) => {
       (res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Success") {
-          console.log(res.data);
           if (data.isReturn === "0") setDep(res.data.DepFlight);
           else {
             setDep(res.data.DepFlight);
