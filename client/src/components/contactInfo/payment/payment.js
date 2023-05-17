@@ -145,7 +145,7 @@ export const Payment = () => {
   const paymentForm = useRef(null);
   const params = new URLSearchParams(location.search);
   const price = 1000;
-  const [type, setType] = useState({});
+  const [type, setType] = useState({Name: "Visa", PaymentID: 1});
   const [payments, setPayments] = useState([]);
   useEffect(() => {
     Axios.post("http://localhost:3001/getPayment").then((res, err) => {
