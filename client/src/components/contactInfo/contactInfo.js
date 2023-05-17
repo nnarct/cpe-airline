@@ -86,7 +86,6 @@ export const ContactInfo = () => {
       const nationality = form[`nationality${i}`].value;
       const gender = genders[i - 1];
       const dob = value.find((v) => v.id === i);
-      console.log(dob);
       if (!dob) {
         Swal.fire({
           icon: "error",
@@ -98,7 +97,6 @@ export const ContactInfo = () => {
         });
         return;
       }
-      console.log(value);
       if (
         fname === "" ||
         lname === "" ||
