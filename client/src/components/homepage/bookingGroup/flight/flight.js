@@ -55,6 +55,15 @@ export const Flight = () => {
         confirmButtonText: "OK",
       });
       return;
+    } 
+    if (values.adult + values.child + values.infant > 9) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Maximum number of passengers is 9",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
     }
     const v = {
       from: values.from,
