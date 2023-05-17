@@ -13,7 +13,9 @@ const Wrap = ({ children }) => {
 export const Error = () => {
   return (
     <>
-      <Wrap>// Todo - woon - implement error page here</Wrap>
+      <Wrap>
+        {/* Todo - woon - implement error page here */}
+      </Wrap>
     </>
   );
 };
