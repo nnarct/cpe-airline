@@ -2,16 +2,21 @@ import Axios from "axios";
 import Datepicker from "react-tailwindcss-datepicker";
 import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "../navbar";
 import { FlightInfo } from "./flightInfo";
-import { InputFrom, inp } from "./input";
-import { PassengerInfo } from "./passengerInfo";
-import { ContactSection, PageWrapper } from "./wrapper";
+import {
+  InputFrom,
+  inp,
+  ContactSection,
+  PageWrapper,
+  PassengerInfo,
+} from "./components";
 
 // Todo - restrict access to logged in users only
 
 export const ContactInfo = () => {
+  const navigate = useNavigate();
   const info = useRef(null);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -29,7 +34,7 @@ export const ContactInfo = () => {
   const [value, setValue] = useState(
     pass.map((p, j) => {
       return {
-        i: j + 1,
+        id: j + 1,
         fname: "",
         lname: "",
         nationality: "",
@@ -38,9 +43,25 @@ export const ContactInfo = () => {
       };
     })
   );
+
+  useEffect(() => {
+    if (
+      sessionStorage.contact !== null &&
+      sessionStorage.contact !== undefined
+    ) {
+      setContact(JSON.parse(sessionStorage.contact));
+    }
+    if (
+      sessionStorage.passenger !== null &&
+      sessionStorage.passenger !== undefined
+    ) {
+      setValue(JSON.parse(sessionStorage.passenger));
+    }
+  }, []);
+
   const handleValueChange = (index, newValue) => {
     const newArray = value.map((item) => {
-      if (item.i === index) return { ...item, dob: newValue };
+      if (item.id === index) return { ...item, dob: newValue };
       return item;
     });
     setValue(newArray);
@@ -64,9 +85,9 @@ export const ContactInfo = () => {
       const lname = form[`lname${i}`].value;
       const nationality = form[`nationality${i}`].value;
       const gender = genders[i - 1];
-      let dob = value.find((v) => v.i === i);
-      if (dob) dob = dob.dob;
-      else {
+      const dob = value.find((v) => v.id === i);
+      console.log(dob);
+      if (!dob) {
         Swal.fire({
           icon: "error",
           title: "Sorry...",
@@ -77,12 +98,13 @@ export const ContactInfo = () => {
         });
         return;
       }
+      console.log(value);
       if (
         fname === "" ||
         lname === "" ||
         dob.startDate === null ||
         nationality === "" ||
-        gender === undefined
+        gender === ""
       ) {
         Swal.fire({
           icon: "error",
@@ -101,18 +123,16 @@ export const ContactInfo = () => {
         id: i,
         firstname: fname,
         lastname: lname,
-        dob: dob.startDate,
+        dob: dob.dob,
         nationality: nationality,
         gender: gender,
       });
     }
-    Axios.post("http://localhost:3001/contact/insert", {
-      contact,
-      values,
-    }).then((res, err) => {
-      if (err) console.log(err);
-      else console.log("nice");
-    });
+    sessionStorage.removeItem("contact");
+    sessionStorage.removeItem("passenger");
+    sessionStorage.setItem("contact", JSON.stringify(contact));
+    sessionStorage.setItem("passenger", JSON.stringify(values));
+    navigate("/payment" + location.search);
   };
 
   return (
@@ -127,6 +147,7 @@ export const ContactInfo = () => {
                 name="cfirstname"
                 type="text"
                 className={inp}
+                defaultValue={contact.firstname}
                 onChange={(e) =>
                   setContact({ ...contact, firstname: e.target.value })
                 }
@@ -137,6 +158,7 @@ export const ContactInfo = () => {
                 name="clastname"
                 type="text"
                 className={inp}
+                defaultValue={contact.lastname}
                 onChange={(e) =>
                   setContact({ ...contact, lastname: e.target.value })
                 }
@@ -147,6 +169,7 @@ export const ContactInfo = () => {
                 name="cphone"
                 type="text"
                 className={inp}
+                defaultValue={contact.phone}
                 onChange={(e) =>
                   setContact({ ...contact, phone: e.target.value })
                 }
@@ -157,6 +180,7 @@ export const ContactInfo = () => {
                 name="cemail"
                 type="text"
                 className={inp}
+                defaultValue={contact.email}
                 onChange={(e) =>
                   setContact({ ...contact, email: e.target.value })
                 }
@@ -171,6 +195,7 @@ export const ContactInfo = () => {
                         name={`fname${i + 1}`}
                         type="text"
                         className={inp}
+                        defaultValue={value[i]?.firstname}
                       />
                     </InputFrom>
                     <InputFrom label="Last Name">
@@ -178,6 +203,7 @@ export const ContactInfo = () => {
                         name={`lname${i + 1}`}
                         type="text"
                         className={inp}
+                        defaultValue={value[i]?.lastname}
                       />
                     </InputFrom>
                     <InputFrom label="Nationality">
@@ -185,6 +211,7 @@ export const ContactInfo = () => {
                         name={`nationality${i + 1}`}
                         type="text"
                         className={inp}
+                        defaultValue={value[i]?.nationality}
                       />
                     </InputFrom>
                     <InputFrom label="Date of birth">
@@ -193,6 +220,14 @@ export const ContactInfo = () => {
                         useRange={false}
                         minDate={new Date("1900-01-02")}
                         maxDate={new Date()}
+                        value={
+                          value[i]
+                            ? {
+                                startDate: value[i].dob.startDate,
+                                endDate: value[i].dob.endDate,
+                              }
+                            : null
+                        }
                         placeholder="DD-MM-YYYY"
                         displayFormat={"DD-MM-YYYY"}
                         inputClassName={inp}
