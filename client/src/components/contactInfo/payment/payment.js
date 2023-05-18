@@ -196,12 +196,15 @@ export const Payment = () => {
           CVV: form["cvv"].value,
         };
       }
-      console.log(booking);
       Axios.post("http://localhost:3001/insertBooking", booking).then(
         (res, err) => {
           if (err) console.log(err);
-          console.log(res.data);
           if (res.data.Error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops! Sorry",
+              text: "Something went wrong, please contact admin..",
+            });
             console.log(res.data.Error);
             return;
           }
@@ -213,11 +216,15 @@ export const Payment = () => {
               timer: 4000,
               timerProgressBar: true,
               confirmButtonColor: "#3085d6",
-            }).then(result => {
-              if(result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-                navigate("/invoice?id="+ res.data.ID);
+            }).then((result) => {
+              if (
+                result.isConfirmed ||
+                result.dismiss === Swal.DismissReason.timer
+              ) {
+                sessionStorage.clear();
+                navigate("/invoice?id=" + res.data.ID);
               }
-            })
+            });
           }
         }
       );
