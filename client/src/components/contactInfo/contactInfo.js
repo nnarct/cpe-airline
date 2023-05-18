@@ -121,7 +121,7 @@ export const ContactInfo = () => {
         id: i,
         firstname: fname,
         lastname: lname,
-        dob: dob.dob,
+        dob: JSON.stringify(dob.dob),
         nationality: nationality,
         gender: gender,
       });
