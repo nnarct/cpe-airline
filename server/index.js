@@ -39,7 +39,7 @@ import { AmadeusSearchFlights } from "./users/amadeus.js";
 import { searchFlights } from "./users/searchFlight/searchFlight.js";
 import { getFlight } from "./users/searchFlight/getFlight.js";
 import { flightInfo } from "./users/searchFlight/flightInfo.js";
-import { insertContact } from "./users/searchFlight/insertContact.js";
+import { insertBooking } from "./users/searchFlight/insertBooking.js";
 import { getPayment } from "./users/searchFlight/getPayment.js";
 
 const app = express();
@@ -101,7 +101,7 @@ app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
 app.post("/search/getFlight", getFlight);
 app.post("/contact/flightInfo", flightInfo);
-app.post("/contact/insert", insertContact);
+app.post("/insertBooking", insertBooking);
 
 app.post("/getPayment", getPayment);
 
