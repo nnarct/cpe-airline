@@ -35,6 +35,7 @@ module.exports = {
         38: "9.5rem",
       },
       maxWidth: {
+        "screen-sidebar": "calc(100vw - 13rem)",
         1000: "1000px",
       },
       colors: {
