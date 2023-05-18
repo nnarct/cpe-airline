@@ -26,8 +26,7 @@ export const AirportList = () => {
   const editAirport = (id) => {
     Swal.fire({
       title: "Edit Airport",
-      text: `Airport ID${id}`,
-      html: `<div class="">You are editing airport ID
+      html: `<div>You are editing airport ID
                 <span class="font-bold">${id}</span>
                 <span class="text-blue-500 font-bold">${
                   airports.find((a) => a.AirportID === id).IATA
