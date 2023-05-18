@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { Navbar } from "../../navbar";
 import { Sidebar } from "../sidebar/index.js";
 import { MyFlight } from "../myFlight/myFlight.js";
 import { EditProfile } from "./editProfile";
 
 export const UserProfile = () => {
-  const { id } = useParams();
   const [content, setContent] = useState("My Profile");
   return (
     <>
