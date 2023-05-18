@@ -1,22 +1,139 @@
+import Swal from "sweetalert2";
+import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
-
+import { RiDeleteBin6Line } from "react-icons/ri";
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
-
+  const getAirlines = async () => {
+    const res = await fetch("http://localhost:3001/system/airlineList");
+    const data = await res.json();
+    setAirlines(data.Data);
+  };
   useEffect(() => {
-    const getAirlines = async () => {
-      const res = await fetch("http://localhost:3001/system/airlineList");
-      const data = await res.json();
-      setAirlines(data.Data);
-    };
     getAirlines();
   }, []);
-  const editAirline = (e) => {
-    console.log(e);
+  const editAirline = (id) => {
+    Swal.fire({
+      title: "Edit Airline",
+      text: `Airline ID${id}`,
+      html: `<div class="">You are editing airline ID 
+                <span class="text-red-500 font-bold">${id}</span>
+              </div>
+            <div class="flex items-center justify-center">
+              <label htmlFor="Name" class="w-24 block">Name</label>
+              <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Name" value="${
+                airlines.find((a) => a.AirlineID === id).Name
+              }">
+            </div>
+            <div class="flex items-center justify-center">
+              <label htmlFor="link" class="w-24 block">Link</label>
+              <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Link" value="${
+                airlines.find((a) => a.AirlineID === id).Link
+              }">
+            </div>`,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Confirm",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+      focusConfirm: false,
+      preConfirm: () => {
+        const name = document.getElementById("swal-input1").value;
+        const link = document.getElementById("swal-input2").value;
+        if (!name) {
+          Swal.showValidationMessage("Please enter a name");
+        }
+        if (!link) {
+          Swal.showValidationMessage("Please enter a link");
+        }
+        return { Name: name, Link: link };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Axios.post("http://localhost:3001/system/editAirline", {
+          id: id,
+          Name: result.value.Name,
+          Link: result.value.Link,
+        }).then((res, err) => {
+          if (err)
+            Swal.fire({
+              title: "Error!",
+              text: err,
+              icon: "error",
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          else {
+            Swal.fire({
+              title: "Success!",
+              text: res.data.Status,
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+              showConfirmButton: true,
+            });
+            getAirlines();
+          }
+        });
+      }
+    });
+  };
+  const deleteAirline = (id) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Are you sure?",
+      html: `You are deleting airline ID ${id}, <span class="font-semibold text-red-500">${
+        airlines.find((a) => a.AirlineID === id).Name
+      }</span>
+      <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+      showValidationMessage: "no",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Confirm",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed)
+        Axios.post("http://localhost:3001/system/deleteAirline", {
+          id: id,
+        }).then((res, err) => {
+          if (err)
+            Swal.fire({
+              title: "Error!",
+              text: err,
+              icon: "error",
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          if (res.data.Status)
+            Swal.fire({
+              title: "Success!",
+              text: res.data.Status,
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+              showConfirmButton: true,
+            });
+          else if (res.data.Error)
+            Swal.fire({
+              title: "Error!",
+              text: res.data.Error,
+              icon: "error",
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          getAirlines();
+        });
+    });
   };
 
   return (
@@ -28,8 +145,8 @@ export const AirlineList = () => {
             <Edit />
             <Th className="w-1/12">ID</Th>
             <Th>Name</Th>
-            <Th>Logo Path</Th>
             <Th>Link</Th>
+            <Th>Delete</Th>
           </THead>
           <tbody>
             {airlines &&
@@ -39,7 +156,9 @@ export const AirlineList = () => {
                     <td
                       className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
                       onClick={(e) => editAirline(airline.AirlineID)}
-                    ></td>
+                    >
+                      <AiOutlineEdit className="mx-auto" />
+                    </td>
                     <td className="border px-3 py-2 text-center">
                       {airline.AirlineID ? airline.AirlineID : "-"}
                     </td>
@@ -47,9 +166,6 @@ export const AirlineList = () => {
                       {airline.Name ? airline.Name : "-"}
                     </td>
 
-                    <td className="border px-3 py-2">
-                      {airline.LogoImage ? airline.LogoImage : "-"}
-                    </td>
                     <td className="border px-3 py-2">
                       {airline.Link ? (
                         <a
@@ -63,6 +179,12 @@ export const AirlineList = () => {
                       ) : (
                         "-"
                       )}
+                    </td>
+                    <td
+                      className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => deleteAirline(airline.AirlineID)}
+                    >
+                      <RiDeleteBin6Line className="mx-auto" />
                     </td>
                   </tr>
                 );
