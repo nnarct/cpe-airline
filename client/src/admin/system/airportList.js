@@ -7,22 +7,111 @@ import { Content } from "./components/content";
 import { Header } from "./components/header";
 import { Table, THead, Th, Edit } from "./components/table";
 import { AiOutlineEdit } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
   const [popup, setPopup] = useState(false);
   const [isDel, setIsDel] = useState(1);
   const [addAirport, setAddAirport] = useState(false);
+  const getAirports = async () => {
+    const res = await fetch("http://localhost:3001/system/airportList");
+    const data = await res.json();
+    setAirports(data.Data);
+  };
   useEffect(() => {
-    const getAirports = async () => {
-      const res = await fetch("http://localhost:3001/system/airportList");
-      const data = await res.json();
-      setAirports(data.Data);
-    };
     getAirports();
   }, []);
 
-  const editAirport = (e) => {};
+  const editAirport = (id) => {
+    Swal.fire({
+      title: "Edit Airport",
+      text: `Airport ID${id}`,
+      html: `<div class="">You are editing airport ID
+                <span class="font-bold">${id}</span>
+                <span class="text-blue-500 font-bold">${
+                  airports.find((a) => a.AirportID === id).IATA
+                }</span>
+              </div>
+            <div class="flex items-center justify-center py-1">
+              <label htmlFor="name" class="w-24 block">Name</label>
+              <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Name" value="${
+                airports.find((a) => a.AirportID === id).Name
+              }">
+            </div>
+            <div class="flex items-center justify-center py-1">
+              <label htmlFor="iata" class="w-24 block">IATA</label>
+              <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="IATA" value="${
+                airports.find((a) => a.AirportID === id).IATA
+              }">
+            </div>
+            <div class="flex items-center justify-center py-1">
+              <label htmlFor="state" class="w-24 block">State</label>
+              <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="State" value="${
+                airports.find((a) => a.AirportID === id).State
+              }">
+            </div>
+            <div class="flex items-center justify-center py-1">
+              <label htmlFor="province" class="w-24 block">Province</label>
+              <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Province" value="${
+                airports.find((a) => a.AirportID === id).Province
+              }">
+            </div>`,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      confirmButtonColor: "#2563eb",
+      cancelButtonText: "Cancel",
+      focusConfirm: false,
+      reverseButtons: true,
+      preConfirm: () => {
+        const Name = document.getElementById("swal-input1").value;
+        const IATA = document.getElementById("swal-input2").value;
+        const State = document.getElementById("swal-input3").value;
+        const Province = document.getElementById("swal-input4").value;
+        if (!Name) Swal.showValidationMessage(`Please enter airport name`);
+        else if (!IATA) Swal.showValidationMessage(`Please enter airport IATA`);
+        else if (!State)
+          Swal.showValidationMessage(`Please enter airport state`);
+        else if (!Province)
+          Swal.showValidationMessage(`Please enter airport province`);
+        return { Name: Name, IATA: IATA, State: State, Province: Province };
+      },
+    }).then((result) => {
+      if (result.isConfirmed)
+        Axios.post(
+          "http://localhost:3001/system/editAirport",
+          result.value
+        ).then((res, err) => {
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err,
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          else if (res.data.Status === "Edit airport successfully! :)")
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: res.data.Status,
+              timer: 3000,
+              timerProgressBar: true,
+              confirmButtonColor: "#2563eb",
+            });
+          else if (res.data.Error)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res.data.Error,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+          getAirports();
+        });
+    });
+  };
 
   const deleteAirport = () => {
     setPopup(false);
@@ -85,7 +174,7 @@ export const AirportList = () => {
                       className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
                       onClick={(e) => editAirport(airport.AirportID)}
                     >
-                      e
+                      <AiOutlineEdit className="mx-auto" />
                     </td>
                     <td className="border p-2 text-center">
                       {airport.AirportID ? airport.AirportID : "-"}
@@ -104,13 +193,13 @@ export const AirportList = () => {
                       {airport.Province ? airport.Province : "-"}
                     </td>
                     <td
-                      className="border p-2 text-center font-bold select-none hover:bg-red-500 cursor-pointer hover:ring ring-red-200 active:bg-red-500/50"
+                      className="border p-2 text-center font-bold select-none cursor-pointer hover:bg-gray-200"
                       onClick={() => {
                         setPopup(true);
                         setIsDel(airport.AirportID);
                       }}
                     >
-                      X
+                      <RiDeleteBin6Line className="mx-auto" />
                     </td>
                   </tr>
                 );
