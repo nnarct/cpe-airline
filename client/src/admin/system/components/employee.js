@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { Label } from "./employeeLabel";
 import { AiOutlineEdit } from "react-icons/ai";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { isPhoneNumber } from "../../../feature/verification/phone";
 
 const InputStyle =
@@ -123,7 +123,7 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
             window.location.reload();
           } else
             Swal.fire({
-              icone: "error",
+              icon: "error",
               title: "Sorry...",
               text: res.data.Error,
             });
@@ -155,15 +155,15 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
             <div className="flex justify-evenly h-[45px]">
               <span
                 onClick={() => handleEdit()}
-                className="w-1/2 flex justify-center items-center bg-green-500 h-[45px]  opacity-50 hover:opacity-100 h-full w-full"
+                className="w-1/2 flex justify-center items-center bg-green-500 h-[45px] hover:ring ring-green-300 h-full w-full"
               >
                 <BsCheckCircleFill />
               </span>
               <span
                 onClick={() => setEditThisRow(0)}
-                className="w-1/2 flex justify-center items-center bg-red-500  h-[45px] opacity-50 hover:opacity-100 h-full w-full"
+                className="w-1/2 flex justify-center items-center bg-red-500  h-[45px] hover:ring ring-red-300 h-full w-full"
               >
-                <BsCheckCircleFill />
+                <BsXCircleFill />
               </span>
             </div>
           </td>
