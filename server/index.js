@@ -41,6 +41,7 @@ import { getFlight } from "./users/searchFlight/getFlight.js";
 import { flightInfo } from "./users/searchFlight/flightInfo.js";
 import { insertBooking } from "./users/searchFlight/insertBooking.js";
 import { getPayment } from "./users/searchFlight/getPayment.js";
+import { getInvoice } from "./users/searchFlight/getInvoice.js";
 
 const app = express();
 app.use(express.json());
@@ -104,6 +105,7 @@ app.post("/contact/flightInfo", flightInfo);
 app.post("/insertBooking", insertBooking);
 
 app.post("/getPayment", getPayment);
+app.post("/getInvoice", getInvoice);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
