@@ -42,6 +42,8 @@ import { flightInfo } from "./users/searchFlight/flightInfo.js";
 import { insertBooking } from "./users/searchFlight/insertBooking.js";
 import { getPayment } from "./users/searchFlight/getPayment.js";
 import { getInvoice } from "./users/searchFlight/getInvoice.js";
+import { deleteAirline } from "./admin/delete/deleteAirline.js";
+import { editAirport } from "./admin/edit/editAirport.js";
 
 const app = express();
 app.use(express.json());
@@ -84,10 +86,12 @@ app.get("/system/passengerList", passengerList);
 
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
+app.post("/system/editAirport", editAirport);
 
 app.post("/system/insertAirport", insertAirport);
 
 app.post("/system/deleteAirport", deleteAirport);
+app.post("/system/deleteAirline", deleteAirline);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
