@@ -23,8 +23,8 @@ import { flightList } from "./admin/flightList.js";
 import { passengerList } from "./admin/passengerList.js";
 import { userList } from "./admin/userList.js";
 
-import { editEmployee } from "./admin/editEmployee.js";
-import { editAirline } from "./admin/editAirline.js";
+import { editEmployee } from "./admin/edit/editEmployee.js";
+import { editAirline } from "./admin/edit/editAirline.js";
 
 import { deleteAirport } from "./admin/deleteAirport.js";
 
@@ -61,7 +61,6 @@ export const db = mysql.createConnection({
   password: "",
   database: "cpeairline",
 });
-
 
 // authentication
 app.get("/", verifyUser, verifyUserRes);
