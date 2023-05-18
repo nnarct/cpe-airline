@@ -76,14 +76,15 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
       FirstName.current.value = employee.FirstName;
       return false;
     }
-    if (values.LastName === "") {Swal.fire({
-      icon: "warning",
-      title: "Sorry...",
-      text: "Last Name can't be NULL",
-      timer: 3000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+    if (values.LastName === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "Last Name can't be NULL",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       setValues({ ...values, LastName: employee.LastName });
       LastName.current.value = employee.LastName;
       return false;
@@ -94,7 +95,7 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
     if (values.TelNo === "" || values.TelNo === null) {
       setValues({ ...values, TelNo: null });
     } else if (isPhoneNumber(values.TelNo) === false) {
-      {Swal.fire({
+      Swal.fire({
         icon: "warning",
         title: "Sorry...",
         text: "Phone number is invalid",
@@ -120,12 +121,12 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
           if (res.data.Status === "Edit employee successfully! :)") {
             setEditThisRow(0);
             window.location.reload();
-          } else 
-          Swal.fire({
-            icone: "error",
-            title: "Sorry...",
-            text: res.data.Error,
-          })
+          } else
+            Swal.fire({
+              icone: "error",
+              title: "Sorry...",
+              text: res.data.Error,
+            });
         })
         .then((err) => {
           if (err) console.log(err);
