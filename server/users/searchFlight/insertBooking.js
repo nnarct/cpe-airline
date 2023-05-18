@@ -128,12 +128,12 @@ export const insertBooking = (req, res) => {
                   }
                 );
               });
-              return res.json({ Status: "Success" });
+              return res.json({ Status: "Success" , ID: invoiceID});
             }
           }
         );
       } else {
-        return res.json({ Status: "Success" });
+        return res.json({ Status: "Success" , ID: invoiceID});
       }
     }
   });

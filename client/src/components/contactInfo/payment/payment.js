@@ -95,7 +95,7 @@ const Credit = ({ exp, setExp }) => {
             className="w-12 p-1 m-1 border rounded outline-none hover:ring active:ring-blue-200/80"
             name="expMonth"
             value={exp?.month}
-            onChange={(e) => setExp({...exp, month: e.target.value})}
+            onChange={(e) => setExp({ ...exp, month: e.target.value })}
           >
             {[...Array(12).keys()].map((i) => {
               return (
@@ -112,7 +112,7 @@ const Credit = ({ exp, setExp }) => {
             className="w-12 p-1 m-1 border rounded outline-none hover:ring active:ring-blue-200/80"
             name="expYear"
             value={exp?.year}
-            onChange={(e) => setExp({...exp, year: String(e.target.value)})}
+            onChange={(e) => setExp({ ...exp, year: String(e.target.value) })}
           >
             {[...Array(7).keys()].map((i) => {
               return (
@@ -160,6 +160,7 @@ export const Payment = () => {
   }, []);
 
   const handleSubmit = (e) => {
+    // Todo - validation
     e.preventDefault();
     if (
       sessionStorage.passenger !== null &&
@@ -191,7 +192,7 @@ export const Payment = () => {
           PaymentID: type.PaymentID,
           BillTo: form["cardHolder"].value,
           CardNumber: form["cardNumber"].value,
-          ExpDate: exp.month+'/'+exp.year,
+          ExpDate: exp.month + "/" + exp.year,
           CVV: form["cvv"].value,
         };
       }
@@ -210,12 +211,16 @@ export const Payment = () => {
               title: res.data.Status,
               text: "Your booking has been made!",
               timer: 4000,
+              timerProgressBar: true,
               confirmButtonColor: "#3085d6",
-            });
+            }).then(result => {
+              if(result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+                navigate("/invoice?id="+ res.data.ID);
+              }
+            })
           }
         }
       );
-      // Todo - post to database
     } else {
       Swal.fire({
         icon: "error",
@@ -223,9 +228,8 @@ export const Payment = () => {
         text: "Something went wrong! Return to home page in 4 seconds.",
         timer: 4000,
         timerProgressBar: true,
-      }).then((res) => {
-        if (res.dismiss === Swal.DismissReason.timer)
-          console.log("I was closed by the timer");
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) navigate("/");
       });
     }
   };
