@@ -16,6 +16,7 @@ import { SearchResultPage } from "./pages/searchResultPage";
 import { Error } from "./pages/error";
 import { ContactInfo } from "./components/contactInfo/contactInfo";
 import { Payment } from "./components/contactInfo/payment/payment";
+import { Invoice } from "./components/contactInfo/payment/invoice";
 export const App = () => {
   Axios.defaults.withCredentials = true;
   const [auth, setAuth] = useState(false);
@@ -43,12 +44,14 @@ export const App = () => {
             <Route path="/contact" element={<ContactInfo />} />
             <Route path="/myProfile/:id" element={<UserProfile />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/invoice" element={<Invoice />} />
           </>
         ) : (
           <>
             <Route path="/contact" element={<Error />} />
             <Route path="/myProfile" element={<Error />} />
             <Route path="/payment" element={<Error />} />
+            <Route path="/invoice" element={<Error />} />
           </>
         )}
         <Route path="/homepage" element={<DashboardRouter />} />
