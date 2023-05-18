@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MyProfile } from "./myProfile";
@@ -26,7 +27,15 @@ export const EditProfile = () => {
       (res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Success") setUser(res.data.Data);
-        else alert(res.data.Error);
+        else
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: res.data.Error,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
       }
     );
   }, []);
@@ -46,7 +55,13 @@ export const EditProfile = () => {
         setUser(values);
         setIsEditing(false);
       } else {
-        alert(res.data.Error);
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: res.data.Error,
+          timer: 3000,
+          timerProgressBar: true,
+        });
         setIsEditing(false);
       }
     });

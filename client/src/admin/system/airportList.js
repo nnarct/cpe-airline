@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { AddAirport } from "./components/addAirport";
 import { Popup } from "./../../components/modal/popup";
@@ -27,11 +28,26 @@ export const AirportList = () => {
     setPopup(false);
     Axios.post("http://localhost:3001/system/deleteAirport", { id: isDel })
       .then((res) => {
-        if (res.data.Status === "Delete airport successfully! :)") {
-          alert(res.data.Status);
-        } else {
-          alert(res.data.Error);
-        }
+        if (res.data.Status === "Delete airport successfully! :)")
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.Status,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        else
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res.data.Error,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonText: "Close",
+          });
       })
       .then((err) => {
         if (err) console.log(err);

@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, ErrorMessage } from "./myProfileComps";
@@ -29,7 +30,14 @@ export const ChangePassword = () => {
       values.newPass === "" ||
       values.newPass2 === ""
     ) {
-      alert("Please fill in all fields.");
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "Please fill in all fields.",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       return null;
     }
     if (values.newPass !== values.newPass2) {
@@ -47,13 +55,32 @@ export const ChangePassword = () => {
     Axios.post("http://localhost:3001/user/changePassword", values).then(
       (res, err) => {
         if (err) console.log(err);
-        else if (res.data.Status === "Change password successfully! :)") {
-          alert(res.data.Status);
-        } else if (res.data.Error === "Current password is not correct.") {
+        else if (res.data.Status === "Change password successfully! :)")
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Change password successfully! :)",
+            timer: 3000,
+            timerProgressBar: true,
+          });
+        else if (res.data.Error === "Current password is not correct.") {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Current password is not correct.",
+            timer: 3000,
+            timerProgressBar: true,
+          });
           setCorrect(false);
-        } else {
-          alert(res.data.Error);
-        }
+        } else
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: res.data.Error,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
       }
     );
   };

@@ -1,4 +1,6 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
+
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Star } from "../../admin/components/star";
@@ -20,9 +22,7 @@ export const Login = () => {
         setAuth(true);
         if (redirect === "/search") navigate(-1);
         navigate("/");
-      } else {
-        setAuth(false);
-      }
+      } else setAuth(false);
     });
   });
   const verifyValues = () => {
@@ -47,9 +47,7 @@ export const Login = () => {
           setAuth(true);
           if (redirect === "/search") navigate(-1);
           navigate("/");
-        } else {
-          alert(res.data.Error);
-        }
+        } else Swal.fire("Login Failed", res.data.Error, "error");
       });
     }
   };

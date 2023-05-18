@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useState } from "react";
 import { Star } from "../../components/star";
 export const AddAirport = () => {
@@ -11,15 +12,33 @@ export const AddAirport = () => {
   });
   const handleSubmit = (e) => {
     if (values.IATA.length !== 3) {
-      alert("IATA must be 3 capital characters");
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "IATA must be 3 capital characters",
+        timer: 2000,
+        timerProgressBar: true,
+      });
     } else {
       Axios.post("http://localhost:3001/system/insertAirport", values)
         .then((res) => {
-          if (res.data.Status === "Create new airport successfully! :)") {
-            alert(res.data.Status);
-          } else {
-            alert(res.data.Error);
-          }
+          if (res.data.Status === "Create new airport successfully! :)")
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: res.data.Status,
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          else
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res.data.Error,
+              timer: 5000,
+              timerProgressBar: true,
+            });
         })
         .then((err) => {
           if (err) console.log(err);
