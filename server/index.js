@@ -25,6 +25,7 @@ import { userList } from "./admin/userList.js";
 
 import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
+import { editUser } from "./admin/edit/editUser.js";
 
 import { deleteAirport } from "./admin/deleteAirport.js";
 
@@ -87,6 +88,7 @@ app.get("/system/passengerList", passengerList);
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
 app.post("/system/editAirport", editAirport);
+app.post("/system/editUser", editUser);
 
 app.post("/system/insertAirport", insertAirport);
 
