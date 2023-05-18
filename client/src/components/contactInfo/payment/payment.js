@@ -50,7 +50,7 @@ const PromptPay = () => {
   );
 };
 
-const Credit = () => {
+const Credit = ({ exp, setExp }) => {
   // Todo - validation
   return (
     <>
@@ -93,11 +93,13 @@ const Credit = () => {
             required
             type="text"
             className="w-12 p-1 m-1 border rounded outline-none hover:ring active:ring-blue-200/80"
-            name="expDate"
+            name="expMonth"
+            value={exp?.month}
+            onChange={(e) => setExp({...exp, month: e.target.value})}
           >
             {[...Array(12).keys()].map((i) => {
               return (
-                <option key={i} value={i + 1}>
+                <option key={i} value={String(i + 1).padStart(2, "0")}>
                   {String(i + 1).padStart(2, "0")}
                 </option>
               );
@@ -108,7 +110,9 @@ const Credit = () => {
             required
             type="text"
             className="w-12 p-1 m-1 border rounded outline-none hover:ring active:ring-blue-200/80"
-            name="expDate"
+            name="expYear"
+            value={exp?.year}
+            onChange={(e) => setExp({...exp, year: String(e.target.value)})}
           >
             {[...Array(7).keys()].map((i) => {
               return (
@@ -145,7 +149,8 @@ export const Payment = () => {
   const paymentForm = useRef(null);
   const params = new URLSearchParams(location.search);
   const price = 1000;
-  const [type, setType] = useState({Name: "Visa", PaymentID: 1});
+  const [type, setType] = useState({ Name: "Visa", PaymentID: 1 });
+  const [exp, setExp] = useState({ month: "06", year: "23" });
   const [payments, setPayments] = useState([]);
   useEffect(() => {
     Axios.post("http://localhost:3001/getPayment").then((res, err) => {
@@ -166,12 +171,10 @@ export const Payment = () => {
       const passenger = JSON.parse(sessionStorage.passenger);
       const form = paymentForm.current;
       let booking = {
-        PaymentID: type.PaymentID,
         contact: contact,
         passenger: passenger,
         isReturn: params.get("isReturn"),
         Total: price,
-        Date: new Date(),
         departureFlightID: params.get("departureFlightID"),
       };
       if (params.get("returnFlightID") !== null)
@@ -179,19 +182,39 @@ export const Payment = () => {
 
       if (type.Name === "PromptPay") {
         booking.payment = {
+          PaymentID: type.PaymentID,
           BillTo: contact.firstname + " " + contact.lastname,
           PromtpayNumber: form["PromtpayNumber"].value,
         };
       } else {
         booking.payment = {
+          PaymentID: type.PaymentID,
           BillTo: form["cardHolder"].value,
           CardNumber: form["cardNumber"].value,
-          ExpDate: form["expDate"].value,
+          ExpDate: exp.month+'/'+exp.year,
           CVV: form["cvv"].value,
         };
       }
       console.log(booking);
-
+      Axios.post("http://localhost:3001/insertBooking", booking).then(
+        (res, err) => {
+          if (err) console.log(err);
+          console.log(res.data);
+          if (res.data.Error) {
+            console.log(res.data.Error);
+            return;
+          }
+          if (res.data.Status) {
+            Swal.fire({
+              icon: "success",
+              title: res.data.Status,
+              text: "Your booking has been made!",
+              timer: 4000,
+              confirmButtonColor: "#3085d6",
+            });
+          }
+        }
+      );
       // Todo - post to database
     } else {
       Swal.fire({
@@ -240,10 +263,10 @@ export const Payment = () => {
                 })}
             </select>
           </span>
-          {type === "" ? null : type.Name === "PromptPay" ? (
+          {type.Name === "PromptPay" ? (
             <PromptPay />
           ) : (
-            <Credit />
+            <Credit exp={exp} setExp={setExp} />
           )}
           <div className="text-right border-t py-3 mt-4">
             <span className="font-bold text-xl">Total</span>
