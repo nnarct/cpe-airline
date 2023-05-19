@@ -19,7 +19,6 @@ export const AirlineList = () => {
   const editAirline = (id) => {
     Swal.fire({
       title: "Edit Airline",
-      text: `Airline ID${id}`,
       html: `<div class="">You are editing airline ID 
                 <span class="text-red-500 font-bold">${id}</span>
               </div>
@@ -40,6 +39,7 @@ export const AirlineList = () => {
       showCancelButton: true,
       cancelButtonText: "Cancel",
       focusConfirm: false,
+      // Todo - validate name input , alphabet and . only and maximum 40 characters
       preConfirm: () => {
         const name = document.getElementById("swal-input1").value;
         const link = document.getElementById("swal-input2").value;
