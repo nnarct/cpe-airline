@@ -46,9 +46,7 @@ export const PassengerList = () => {
                 </div>
                 <div class="flex items-center justify-center">
                   <label htmlFor="DOB" class="w-24 block">DOB</label>
-                  <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(
-        new Date()
-      ).format("YYYY-MM-DD")}>
+                  <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(new Date()).format("YYYY-MM-DD")}>
                 </div>
                 <div class="flex items-center justify-center">
                   <label htmlFor="gender" class="w-24 block">Gender</label>
@@ -100,7 +98,6 @@ export const PassengerList = () => {
           "http://localhost:3001/system/editPassenger",
           result.value
         ).then((res, err) => {
-          console.log(res.data);
           if (err)
             Swal.fire({
               icon: "error",
@@ -162,7 +159,7 @@ export const PassengerList = () => {
                     className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
                     onClick={(e) => editPassengers(passenger.PassengerID)}
                   >
-                    <AiOutlineEdit className="mx-auto"/>
+                    <AiOutlineEdit className="mx-auto" />
                   </td>
                   {[
                     passenger?.PassengerID,
