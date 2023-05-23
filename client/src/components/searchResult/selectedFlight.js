@@ -1,18 +1,18 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Logo, TimeAndAirport, Price, LineIcon } from "./components";
+import Swal from "sweetalert2";
 export const SelectedFlight = ({ id }) => {
   const [flight, setFlight] = useState({});
   useEffect(() => {
     Axios.post("http://localhost:3001/search/getFlight", { id }).then(
       (res, err) => {
         if (err) console.log(err);
-        console.log(res.data);
         if (res.data.Status === "Success") setFlight(res.data.Flight[0]);
-        else console.log(res.data.Error);
+        else Swal.fire({ icon: "error", title: res.data.Error });
       }
     );
-  }, []);
+  }, [id]);
 
   const name = (name) => {
     if (name) {
