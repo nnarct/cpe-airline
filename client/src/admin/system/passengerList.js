@@ -73,6 +73,7 @@ export const PassengerList = () => {
       cancelButtonText: "Cancel",
       showLoaderOnConfirm: true,
       preConfirm: () => {
+        // Todo - validate input to match database
         const FirstName = document.getElementById("swal-input1").value;
         const LastName = document.getElementById("swal-input2").value;
         const DOB = document.getElementById("swal-input3").value;
@@ -131,7 +132,7 @@ export const PassengerList = () => {
         });
     });
   };
-  // Todo - delete passenger must effect seat
+  // Todo - delete passenger ** must effect seat
   const deletePassenger = (id) => {
     console.log(id);
   };
@@ -161,7 +162,7 @@ export const PassengerList = () => {
                     className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
                     onClick={(e) => editPassengers(passenger.PassengerID)}
                   >
-                    <AiOutlineEdit />
+                    <AiOutlineEdit className="mx-auto"/>
                   </td>
                   {[
                     passenger?.PassengerID,
