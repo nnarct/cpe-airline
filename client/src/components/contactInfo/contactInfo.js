@@ -1,4 +1,3 @@
-import Axios from "axios";
 import Datepicker from "react-tailwindcss-datepicker";
 import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";

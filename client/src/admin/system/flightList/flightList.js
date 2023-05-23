@@ -1,5 +1,3 @@
-import Axios from "axios";
-import Swal from "sweetalert2";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { Content } from "../components/content";
@@ -9,7 +7,7 @@ import { Table, THead, Th, Edit } from "../components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { getFlights, getPlanes, editFlight} from "./functions";
+import { getFlights, getPlanes, editFlight } from "./functions";
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
   const [airlines, setAirlines] = useState([]);
@@ -21,18 +19,15 @@ export const FlightList = () => {
     addFlight.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-
   useEffect(() => {
     getFlights({ setFlights, setAirlines, setAirports, setLoading });
-    getPlanes({setPlanes});
+    getPlanes({ setPlanes });
   }, []);
-  
-  
+
   // Todo - edit flight
   // Todo - delete flight
   // Todo - Pagination
 
-  
   const deleteFlight = (id) => {};
 
   return (
@@ -81,12 +76,13 @@ export const FlightList = () => {
             {!loading &&
               flights &&
               flights.map((flight, i) => {
-                if(flight.AirlineID)
                 return (
                   <tr key={i}>
                     <td
                       className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-                      onClick={() => editFlight({flight, airlines, airports, planes})}
+                      onClick={() =>
+                        editFlight({ flight, airlines, airports, planes })
+                      }
                     >
                       <AiOutlineEdit className="mx-auto" />
                     </td>

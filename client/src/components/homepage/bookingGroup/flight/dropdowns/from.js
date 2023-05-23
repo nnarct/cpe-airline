@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
 import { FaPlaneDeparture } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
 import { Card } from "../card";
 import { DropHead } from "./components/drophead";
 
