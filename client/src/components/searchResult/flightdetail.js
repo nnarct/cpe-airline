@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { LineIcon, Logo, Price, TimeAndAirport } from "./components";
 export const FlightDetail = ({ v, flight }) => {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies();
+  const [cookies] = useCookies();
 
   const handleSubmit = (e) => {
     e.preventDefault();
