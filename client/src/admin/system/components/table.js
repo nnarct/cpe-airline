@@ -19,7 +19,7 @@ export const Th = ({ children, className, width }) => {
   return (
     <>
       <th
-        className={`p-2 border border-1 border-black whitespace-nowrap ${className} ${width}`}
+        className={`px-1 py-2 border border-1 border-black whitespace-nowrap ${className} ${width}`}
       >
         {children}
       </th>
@@ -38,7 +38,7 @@ export const TBody = ({ children }) => {
 export const Td = ({ e, className }) => {
   return (
     <>
-      <td className={`border px-3 py-2 ${className}`}>{e ? e : "-"}</td>
+      <td className={`border px-1 py-2 ${className}`}>{e ? e : "-"}</td>
     </>
   );
 };
