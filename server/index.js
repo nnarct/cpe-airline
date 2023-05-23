@@ -22,6 +22,7 @@ import { airportList } from "./admin/airportList.js";
 import { flightList } from "./admin/flightList.js";
 import { passengerList } from "./admin/passengerList.js";
 import { userList } from "./admin/userList.js";
+import { planeList } from "./admin/planeList.js";
 
 import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
@@ -85,6 +86,7 @@ app.get("/system/airportList", airportList);
 app.get("/system/flightList", flightList);
 app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
+app.get("/system/planeList", planeList);
 
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
