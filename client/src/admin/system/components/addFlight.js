@@ -67,7 +67,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="AirlineID"
             className="mb-2 border rounded p-1"
           >
-            {airlines.map((airline, i) => {
+            {airlines?.map((airline, i) => {
               return (
                 <option key={`airline${i}`} value={airline.AirlineID}>
                   {airline.AirlineID}-{airline.Name}
@@ -98,7 +98,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="OriginAirport"
             className="mb-2 border rounded p-1"
           >
-            {airports.map((airport, i) => {
+            {airports?.map((airport, i) => {
               return (
                 <option
                   key={`origin${i}`}
@@ -121,7 +121,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="DestinationAirport"
             className="mb-2 border rounded p-1"
           >
-            {airports.map((airport, i) => {
+            {airports?.map((airport, i) => {
               return (
                 <option
                   key={`destination${i}`}
