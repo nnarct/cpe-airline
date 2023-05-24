@@ -124,16 +124,16 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       const select1 = document.getElementById("Airline");
       const select2 = document.getElementById("Plane");
 
-      for (let i = 0; i < planes?.length; i++) {
-        select2.innerHTML += `<option value=${planes[i].PlaneID} ${
-          planes[i].PlaneID === flight.PlaneID
+      for (const plane of planes) {
+        select2.innerHTML += `<option value=${plane.PlaneID} ${
+          plane.PlaneID === flight.PlaneID
             ? "selected"
-            : planes[i].AirlineID === flight.AirlineID
+            : plane.AirlineID === flight.AirlineID
             ? ""
             : "disabled"
         }>
-              (${planes[i].PlaneID}) ${planes[i].PlaneModel} (${
-          planes[i].airline
+              (${plane.PlaneID}) ${plane.PlaneModel} (${
+          plane.airline
         })
             </option>`;
       }
@@ -158,5 +158,37 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         }
       });
     },
+    willClose: () => {
+      const flightNumber = document.getElementById("FlightNumber").value;
+      const airline = document.getElementById("Airline").value;
+      const originAirport = document.getElementById("OriginAirport").value;
+      const destinationAirport = document.getElementById(
+        "DestinationAirport"
+      ).value;
+      const plane = document.getElementById("Plane").value;
+      const depDate = document.getElementById("depDate").value;
+      const depTime = document.getElementById("depTime").value;
+      const arrDate = document.getElementById("arrDate").value;
+      const arrTime = document.getElementById("arrTime").value;
+
+      if(!flightNumber || !airline || !originAirport || !destinationAirport || !plane || !depDate || !depTime || !arrDate || !arrTime) {
+        Swal.showValidationMessage(`Please fill in all fields`);
+      }
+
+      return {
+        id: flight?.FlightID,
+        FlightNumber: flightNumber,
+        AirlineID: Number(airline),
+        OriginAirportID: Number(originAirport),
+        DestinationAirportID: Number(destinationAirport),
+        PlaneID: Number(plane),
+        DepartureTime: `${depDate}T${depTime}`,
+        ArrivalTime: `${arrDate}T${arrTime}`,
+      };
+    }
+  }).then((result) => {
+    if(result.isConfirmed) {
+      // Todo - send request to server
+    }
   });
 };
