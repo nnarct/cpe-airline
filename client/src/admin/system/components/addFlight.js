@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useState } from "react";
 import { Star } from "../../components/star";
 export const AddFlight = ({ airlines, airports }) => {
@@ -14,11 +15,23 @@ export const AddFlight = ({ airlines, airports }) => {
   const handleSubmit = (e) => {
     Axios.post("http://localhost:3001/system/insertFlight", values)
       .then((res) => {
-        if (res.data.Status === "Create new flight successfully! :)") {
-          alert(res.data.Status);
-        } else {
-          alert(res.data.Error);
-        }
+        if (res.data.Status === "Create new flight successfully! :)")
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.Status,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        else
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res.data.Error,
+            timer: 5000,
+            timerProgressBar: true,
+          });
       })
       .then((err) => {
         if (err) console.log(err);
@@ -54,7 +67,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="AirlineID"
             className="mb-2 border rounded p-1"
           >
-            {airlines.map((airline, i) => {
+            {airlines?.map((airline, i) => {
               return (
                 <option key={`airline${i}`} value={airline.AirlineID}>
                   {airline.AirlineID}-{airline.Name}
@@ -85,7 +98,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="OriginAirport"
             className="mb-2 border rounded p-1"
           >
-            {airports.map((airport, i) => {
+            {airports?.map((airport, i) => {
               return (
                 <option
                   key={`origin${i}`}
@@ -108,7 +121,7 @@ export const AddFlight = ({ airlines, airports }) => {
             id="DestinationAirport"
             className="mb-2 border rounded p-1"
           >
-            {airports.map((airport, i) => {
+            {airports?.map((airport, i) => {
               return (
                 <option
                   key={`destination${i}`}

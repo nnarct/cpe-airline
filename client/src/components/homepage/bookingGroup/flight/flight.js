@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { Type } from "./type";
 import { Card } from "./card";
@@ -6,6 +7,8 @@ import { To } from "./dropdowns/to";
 import { DatePick } from "./dropdowns/datepicker";
 import { Passenger } from "./dropdowns/passenger";
 import { useNavigate } from "react-router-dom";
+import { Class } from "./dropdowns/class";
+
 export const Flight = () => {
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(1);
@@ -35,14 +38,41 @@ export const Flight = () => {
   }, []);
 
   const handleSubmit = () => {
-    console.log(values);
-    if (values.date.startDate === null || values.date.endDate === null) return;
+    if (values.date.startDate === null || values.date.endDate === null) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Please select date",
+        icon: "info",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    if (values.from === values.to) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Please select different ORIGIN and DESTINATION airport",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    } 
+    if (values.adult + values.child + values.infant > 9) {
+      Swal.fire({
+        title: "Oops!",
+        text: "Maximum number of passengers is 9",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
     const v = {
       from: values.from,
       to: values.to,
       departure: values.date.startDate,
       arrival: values.date.endDate,
+      class: values.class,
     };
+    sessionStorage.clear();
     navigate(
       "/search?from=" +
         v.from +
@@ -79,7 +109,9 @@ export const Flight = () => {
           <Card className="relative">
             <Passenger values={values} setValues={setValues} />
           </Card>
-          <Card>class</Card>
+          <Card className="relative">
+            <Class values={values} setValues={setValues} />
+          </Card>
           <div
             className={`w-full h-20 flex items-center bg-white  rounded-xl active:ring cursor-pointer sm:col-span-2`}
           >
@@ -89,7 +121,6 @@ export const Flight = () => {
               isReturn={isReturn}
             />
           </div>
-          {/* {isReturn ? <Card>return</Card> : null} */}
         </div>
         <div className="flex justify-end">
           <button

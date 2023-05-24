@@ -3,6 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 export const Footer = () => {
   return (
     <>
+
       <div className="bg-sky-950 py-10">
         <div className="container mx-auto">
           <div className="flex flex-wrap">

@@ -1,6 +1,7 @@
+import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Star } from "../components/star";
 export const LoginAdmin = () => {
@@ -19,7 +20,13 @@ export const LoginAdmin = () => {
           if (res.data.Position === "System") navigate("/system");
           else navigate("/error");
         } else {
-          alert(res.data.Error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res.data.Error,
+          }).then(result => {
+            if(result.isConfirmed) navigate("/homepage");
+          })
         }
       })
       .then((err) => console.log(err));

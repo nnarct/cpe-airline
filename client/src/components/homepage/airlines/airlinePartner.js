@@ -36,11 +36,6 @@ export const AirlinePartner = () => {
             <Airline img={VietjetAir} link="https://www.vietjetair.com/" />
           </div>
         </div>
-
-        {/*
-        <div className="flex flex-col items-center ">
-          
-        </div> */}
       </div>
     </>
   );

@@ -1,8 +1,9 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { Label } from "./employeeLabel";
 import { AiOutlineEdit } from "react-icons/ai";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { isPhoneNumber } from "../../../feature/verification/phone";
 
 const InputStyle =
@@ -50,19 +51,40 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
 
   const verify = () => {
     if (values.username === "") {
-      alert("username can't be NULL");
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "username can't be NULL",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       setValues({ ...values, username: employee.username });
       username.current.value = employee.username;
       return false;
     }
     if (values.FirstName === "") {
-      alert("FirstName can't be NULL");
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "First Name can't be NULL",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       setValues({ ...values, FirstName: employee.FirstName });
       FirstName.current.value = employee.FirstName;
       return false;
     }
     if (values.LastName === "") {
-      alert("LastName can't be NULL");
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "Last Name can't be NULL",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       setValues({ ...values, LastName: employee.LastName });
       LastName.current.value = employee.LastName;
       return false;
@@ -73,7 +95,14 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
     if (values.TelNo === "" || values.TelNo === null) {
       setValues({ ...values, TelNo: null });
     } else if (isPhoneNumber(values.TelNo) === false) {
-      alert("TelNo is not valid");
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "Phone number is invalid",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
       return false;
     }
     if (values.Position === "" || values.Position === null) {
@@ -89,14 +118,15 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
     if (verify()) {
       Axios.post("http://localhost:3001/system/editEmployee", values)
         .then((res) => {
-          console.log(res);
           if (res.data.Status === "Edit employee successfully! :)") {
             setEditThisRow(0);
             window.location.reload();
-            // alert("Edit successfully! :)");
-          } else {
-            alert(res.data.Error);
-          }
+          } else
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: res.data.Error,
+            });
         })
         .then((err) => {
           if (err) console.log(err);
@@ -107,9 +137,14 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
   const changeCurrentTask = () => {
     setEditThisRow(employee.EmployeeID);
     if (editThisRow !== 0) {
-      alert("Please finish the current task first!");
-    } else {
-
+      Swal.fire({
+        icon: "warning",
+        title: "Sorry...",
+        text: "Please finish the current task first!",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
     }
   };
   return (
@@ -120,15 +155,15 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
             <div className="flex justify-evenly h-[45px]">
               <span
                 onClick={() => handleEdit()}
-                className="w-1/2 flex justify-center items-center bg-green-500 h-[45px]  opacity-50 hover:opacity-100 h-full w-full"
+                className="w-1/2 flex justify-center items-center bg-green-500 h-[45px] hover:ring ring-green-300 h-full w-full"
               >
                 <BsCheckCircleFill />
               </span>
               <span
                 onClick={() => setEditThisRow(0)}
-                className="w-1/2 flex justify-center items-center bg-red-500  h-[45px] opacity-50 hover:opacity-100 h-full w-full"
+                className="w-1/2 flex justify-center items-center bg-red-500  h-[45px] hover:ring ring-red-300 h-full w-full"
               >
-                <BsCheckCircleFill />
+                <BsXCircleFill />
               </span>
             </div>
           </td>

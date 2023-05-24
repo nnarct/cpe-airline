@@ -1,11 +1,11 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import Axios from "axios";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import { Homepage } from "./pages/homepage";
 import { Register } from "./components/auth/register";
 import { Login } from "./components/auth/login";
-import { UserProfile } from "./components/userSetting/userProfile";
+import { UserProfile } from "./components/userSetting/myProfile/userProfile";
 import { LoginAdmin } from "./admin/auth/admin-login";
 import { DashboardRouter } from "./admin/pages/dashboardRounter";
 import { ManagerDashboard } from "./admin/pages/managerdashboard";
@@ -13,7 +13,10 @@ import { SystemDashboard } from "./admin/pages/systemdashboard";
 import { AdminDashboard } from "./admin/pages/admindasboard";
 import { ErrorPage } from "./admin/auth/error";
 import { SearchResultPage } from "./pages/searchResultPage";
-
+import { Error } from "./pages/error";
+import { ContactInfo } from "./components/contactInfo/contactInfo";
+import { Payment } from "./components/contactInfo/payment/payment";
+import { Invoice } from "./components/contactInfo/payment/invoice";
 export const App = () => {
   Axios.defaults.withCredentials = true;
   const [auth, setAuth] = useState(false);
@@ -36,8 +39,22 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register auth={auth} />} />
         <Route path="/search" element={<SearchResultPage />} />
+        {auth ? (
+          <>
+            <Route path="/contact" element={<ContactInfo />} />
+            <Route path="/myProfile/:id" element={<UserProfile />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/invoice" element={<Invoice />} />
+          </>
+        ) : (
+          <>
+            <Route path="/contact" element={<Error />} />
+            <Route path="/myProfile" element={<Error />} />
+            <Route path="/payment" element={<Error />} />
+            <Route path="/invoice" element={<Error />} />
+          </>
+        )}
         <Route path="/homepage" element={<DashboardRouter />} />
-        <Route path="/myProfile/:id" element={<UserProfile />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manager" element={<ManagerDashboard />} />
         <Route path="/system" element={<SystemDashboard />} />

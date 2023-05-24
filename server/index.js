@@ -4,6 +4,7 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import Amadeus from "amadeus";
 
 import { verifyUser, verifyUserRes } from "./users/verifyUser.js";
 import { register } from "./users/register.js";
@@ -21,9 +22,12 @@ import { airportList } from "./admin/airportList.js";
 import { flightList } from "./admin/flightList.js";
 import { passengerList } from "./admin/passengerList.js";
 import { userList } from "./admin/userList.js";
+import { planeList } from "./admin/planeList.js";
 
-import { editEmployee } from "./admin/editEmployee.js";
-import { editAirline } from "./admin/editAirline.js";
+import { editEmployee } from "./admin/edit/editEmployee.js";
+import { editAirline } from "./admin/edit/editAirline.js";
+import { editUser } from "./admin/edit/editUser.js";
+import { editPassenger } from "./admin/edit/editPassenger.js";
 
 import { deleteAirport } from "./admin/deleteAirport.js";
 
@@ -34,6 +38,15 @@ import { airportListUser } from "./users/airportList.js";
 import { showProfile } from "./users/showProfile.js";
 import { editProfile } from "./users/editProfile.js";
 import { changePassword } from "./users/changePassword.js";
+import { AmadeusSearchFlights } from "./users/amadeus.js";
+import { searchFlights } from "./users/searchFlight/searchFlight.js";
+import { getFlight } from "./users/searchFlight/getFlight.js";
+import { flightInfo } from "./users/searchFlight/flightInfo.js";
+import { insertBooking } from "./users/searchFlight/insertBooking.js";
+import { getPayment } from "./users/searchFlight/getPayment.js";
+import { getInvoice } from "./users/searchFlight/getInvoice.js";
+import { deleteAirline } from "./admin/delete/deleteAirline.js";
+import { editAirport } from "./admin/edit/editAirport.js";
 
 const app = express();
 app.use(express.json());
@@ -52,7 +65,6 @@ export const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
-  port: 4306,
 });
 
 // authentication
@@ -74,13 +86,18 @@ app.get("/system/airportList", airportList);
 app.get("/system/flightList", flightList);
 app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
+app.get("/system/planeList", planeList);
 
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
+app.post("/system/editAirport", editAirport);
+app.post("/system/editUser", editUser);
+app.post("/system/editPassenger", editPassenger);
 
 app.post("/system/insertAirport", insertAirport);
 
 app.post("/system/deleteAirport", deleteAirport);
+app.post("/system/deleteAirline", deleteAirline);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
@@ -89,6 +106,15 @@ app.get("/airportList", airportListUser);
 app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
+
+app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
+app.post("/search/SearchFlights", searchFlights);
+app.post("/search/getFlight", getFlight);
+app.post("/contact/flightInfo", flightInfo);
+app.post("/insertBooking", insertBooking);
+
+app.post("/getPayment", getPayment);
+app.post("/getInvoice", getInvoice);
 
 app.listen(3001, () => {
   console.log("running on port 3001");

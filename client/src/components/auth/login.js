@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import Swal from "sweetalert2";
+
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Star } from "../../admin/components/star";
 export const Login = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get("redirect");
   Axios.defaults.withCredentials = true;
-
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
 
-  const [auth, setAuth] = useState(false);
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
-      if (err) setAuth(false); // You are not authenticated
       if (res.data.Status === "Success") {
-        setAuth(true);
+        if (redirect === "/search") navigate(-1);
         navigate("/");
-      } else {
-        setAuth(false);
       }
     });
   });
@@ -41,12 +41,19 @@ export const Login = () => {
       Axios.post("http://localhost:3001/login", values).then((res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Successfully login") {
-          setAuth(true);
-          // window.location.reload(false);
+          Swal.fire({
+            title: "Login Success",
+            text: "Welcome back!",
+            icon: "success",
+            timer: 1500,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          if (redirect === "/search") navigate(-1);
           navigate("/");
-        } else {
-          alert(res.data.Error);
+          return;
         }
+        Swal.fire("Login Failed", res.data.Error, "error");
       });
     }
   };

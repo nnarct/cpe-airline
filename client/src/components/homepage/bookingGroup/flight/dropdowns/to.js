@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
 import { FaPlaneArrival } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
 import { Card } from "../card";
 import { DropHead } from "./components/drophead";
 
@@ -78,8 +77,8 @@ export const To = ({ airports, values, setValues }) => {
                     <li
                       key={i}
                       className={`px-2 hover:bg-blue-100 ${
-                        airport.AirportID === values.to ? "bg-gray-300" : ""
-                      }`}
+                        airport.AirportID === values.to ? "bg-blue-300" : ""
+                      } transition duration-100 ease-in-out`}
                       onClick={() =>
                         setValues({ ...values, to: airport.AirportID })
                       }

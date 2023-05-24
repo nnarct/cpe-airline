@@ -16,6 +16,28 @@ module.exports = {
       maxHeight: {
         calc: "calc(100vh - 3rem)",
       },
+      width: {
+        38: "9.5rem",
+        100: "25rem",
+        110: "27.5rem",
+        120: "30rem",
+      },
+      minWidth: {
+        20: "5rem",
+        22: "5.5rem",
+        24: "6rem",
+        26: "6.5rem",
+        28: "7rem",
+        30: "7.5rem",
+        32: "8rem",
+        34: "8.5rem",
+        36: "9rem",
+        38: "9.5rem",
+      },
+      maxWidth: {
+        "screen-sidebar": "calc(100vw - 13rem)",
+        1000: "1000px",
+      },
       colors: {
         primary: "#0D3E5E",
         lightblue: "#E9EDEF",

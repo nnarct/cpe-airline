@@ -1,10 +1,10 @@
+import Axios from "axios";
+import Swal from "sweetalert2";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Axios from "axios";
-
 import { isPhoneNumber } from "./../../feature/verification/phone";
 import { isName } from "./../../feature/verification/name";
-export const Register = ({ auth }) => { 
+export const Register = ({ auth }) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     firstName: "",
@@ -37,16 +37,28 @@ export const Register = ({ auth }) => {
     return true;
   };
 
- 
   const handleSubmit = (e) => {
     if (verifyValues() === true) {
       Axios.post("http://localhost:3001/register", values)
         .then((res) => {
-          if (res.data.Status === "Create new user successfully! :)") {
-            navigate("/login");
-          } else {
-            alert(res.data.Error);
-          }
+          if (res.data.Status === "Create new user successfully! :)")
+            Swal.fire({
+              icon: "success",
+              title: "Register Success",
+              text: "We will take you to login page soon",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+            }).then((res) => navigate("/login"));
+          else
+            Swal.fire({
+              icon: "error",
+              title: "Register Failed",
+              text: res.data.Error,
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+            });
         })
         .then((err) => {
           if (err) console.log(err);
@@ -56,7 +68,7 @@ export const Register = ({ auth }) => {
 
   return (
     <>
-      {auth===true ? (
+      {auth === true ? (
         <Navigate to="/" />
       ) : (
         <form

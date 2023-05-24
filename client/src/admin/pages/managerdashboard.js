@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AdminNavbar } from "../components/navbar";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
@@ -11,9 +11,7 @@ export const ManagerDashboard = () => {
       if (res.data.Status === "Success") {
         if (res.data.Info.Position === "Admin") navigate("/admin");
         if (res.data.Info.Position === "System") navigate("/system");
-      } else {
-       navigate("/admin/login");
-      }
+      } else navigate("/admin/login");
     });
   });
   return (
