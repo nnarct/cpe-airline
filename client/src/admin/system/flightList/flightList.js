@@ -1,12 +1,8 @@
-import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { AddFlight } from "../components/addFlight";
 import { Table, THead, Th, Edit } from "../components/table";
-import { AiOutlineEdit } from "react-icons/ai";
-import { RiDeleteBin6Line } from "react-icons/ri";
-
 import { getFlights, getPlanes } from "./functions";
 import { Flight } from "./oneFlight";
 export const FlightList = () => {
@@ -30,11 +26,6 @@ export const FlightList = () => {
   // Todo - delete flight
   // Todo - Pagination
 
-  // const handleAirline = (e) => {
-  //   if (e.target.value === "none")
-  //     setAirlineGroup({ status: false, airline: "" });
-  //   else setAirlineGroup({ status: true, airline: e.target.value });
-  // };
   const [selectedAirline, setSelectedAirline] = useState({
     status: false,
     airline: "",
