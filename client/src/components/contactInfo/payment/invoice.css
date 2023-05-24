@@ -1,0 +1,88 @@
+body{
+}
+.Container{
+    width: 50%;
+    height: 40%;
+    min-width: 646px;
+    min-height: 456px;
+    margin: auto;
+    margin-top: 5%;
+    overflow: hidden;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0px 5px 21px 0px rgba(128, 128, 128, 0.2);
+    -moz-box-shadow: 0px 5px 21px  rgba(128, 128, 128, 0.2);
+    box-shadow: 0px 5px 21px 0px rgba(128, 128, 128, 128, 0.2);
+    background: linear-gradient(to right, #f4b661, #f16160);
+    display: flex;
+
+}
+.Left{
+  background-color: #f4b661;
+  width: 39%;
+  height: 457px;
+  border-radius: 5px 0 0 5px;
+  color: #ffffff;
+}
+.Info-box-{
+  margin-top: 35px;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+.Receipt{
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 26px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #facc8c;
+}
+.Receipt span{
+  font-weight: 500px;
+  font-size: 21px;
+}
+.Entry{
+  border-bottom: 1px solid #facc8c;
+  height: 15%;
+  overflow: hidden;
+  padding-top: 15px;
+}
+.Entry i{
+  margin-top: 4px;
+  margin-right: 13px;
+  float: left;
+  color: #b4d8fc;
+}
+.Entry p{
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 26px;
+  margin-top: 0px !important;
+  float: left;
+}
+.span {
+  font-weight: 500;
+  font-size: 16px;
+}
+.Entry:last-child {
+  border-bottom: none;
+}
+
+.Right{
+  background-color: #fefefe;
+  width: 61%;
+  height: 100%;
+  float: right;
+  border-radius: 0 5px 5px 0;
+}
+.Content{
+  margin-top: 50px;
+}
+.H4{
+  font-weight: 300;
+  font-size: 13px;
+  color: #96a2ad;
+}
+.Header h4{
+  text-align: right;
+  margin-top: 10px;
+}
