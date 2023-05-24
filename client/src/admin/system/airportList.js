@@ -157,12 +157,12 @@ export const AirportList = () => {
         <Table>
           <THead>
             <Edit />
-            <Th className="w-14">AirportID</Th>
+            <Th className="w-22">AirportID</Th>
             <Th>Name</Th>
-            <Th>IATA</Th>
+            <Th className="w-22">IATA</Th>
             <Th>State</Th>
-            <Th>Province</Th>
-            <Th>Delete</Th>
+            <Th className="w-48">Province</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {airports &&

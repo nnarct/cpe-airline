@@ -46,7 +46,9 @@ export const PassengerList = () => {
                 </div>
                 <div class="flex items-center justify-center">
                   <label htmlFor="DOB" class="w-24 block">DOB</label>
-                  <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(new Date()).format("YYYY-MM-DD")}>
+                  <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(
+        new Date()
+      ).format("YYYY-MM-DD")}>
                 </div>
                 <div class="flex items-center justify-center">
                   <label htmlFor="gender" class="w-24 block">Gender</label>
@@ -140,16 +142,16 @@ export const PassengerList = () => {
         <Table>
           <THead>
             <Edit />
-            <Th className="w-14">PassengerID</Th>
+            <Th className="w-14">ID</Th>
             <Th>FirstName</Th>
             <Th>LastName</Th>
-            <Th>DOB</Th>
-            <Th>Gender</Th>
-            <Th>Nationality</Th>
-            <Th>BookingID</Th>
+            <Th className="w-36">DOB</Th>
+            <Th className="w-28">Gender</Th>
+            <Th className="w-32">Nationality</Th>
+            <Th className="w-28">BookingID</Th>
             {/* <Th>AddOnsID</Th>
             <Th>SeatID</Th> */}
-            <Th>Delete</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {passengers?.map((passenger, i) => {

@@ -189,12 +189,12 @@ export const UserList = () => {
         <Table className="container">
           <THead>
             <Edit />
-            <Th className="w-14">UserID</Th>
+            <Th className="w-16">UserID</Th>
             <Th>FirstName</Th>
             <Th>LastName</Th>
-            <Th>Email</Th>
-            <Th>TelNo</Th>
-            <Th>Delete</Th>
+            <Th className="min-w-fit w-72">Email</Th>
+            <Th className="w-36">TelNo</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {users &&
