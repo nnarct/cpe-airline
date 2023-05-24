@@ -48,6 +48,8 @@ import { getInvoice } from "./users/searchFlight/getInvoice.js";
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { editAirport } from "./admin/edit/editAirport.js";
 
+import { verifyOwner, verifyOwnerRes } from "./users/searchFlight/verifyowner.js";
+
 const app = express();
 app.use(express.json());
 app.use(
@@ -115,6 +117,7 @@ app.post("/insertBooking", insertBooking);
 
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
+app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
