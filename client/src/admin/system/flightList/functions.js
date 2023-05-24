@@ -1,51 +1,59 @@
 import Swal from "sweetalert2";
 import moment from "moment";
-export const getFlights = async ({setFlights, setAirlines, setAirports,setLoading}) => {
-    try {
-      const res = await fetch("http://localhost:3001/system/flightList");
-      const data = await res.json();
-      if (data.Error)
-        Swal.fire({
-          icon: "error",
-          title: data.Error,
-          html: `<div class="text-red-900 bg-red-200 rounded py-1 px-4 mx-auto w-fit">${
-            data.SQL || ""
-          }</div>`,
-        });
-      setFlights(data.Data);
-      setAirlines(data.Airlines);
-      setAirports(data.Airports);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+export const getFlights = async ({
+  setFlights,
+  setAirlines,
+  setAirports,
+  setLoading,
+}) => {
+  try {
+    const res = await fetch("http://localhost:3001/system/flightList");
+    const data = await res.json();
+    if (data.Error)
+      Swal.fire({
+        icon: "error",
+        title: data.Error,
+        html: `<div class="text-red-900 bg-red-200 rounded py-1 px-4 mx-auto w-fit">${
+          data.SQL || ""
+        }</div>`,
+      });
+    setFlights(data.Data);
+    setAirlines(data.Airlines);
+    setAirports(data.Airports);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
+export const getPlanes = async ({ setPlanes }) => {
+  try {
+    const res = await fetch("http://localhost:3001/system/planeList");
+    const data = await res.json();
+    setPlanes(data.Data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-export const getPlanes = async ({setPlanes}) => {
-    try {
-      const res = await fetch("http://localhost:3001/system/planeList");
-      const data = await res.json();
-      setPlanes(data.Data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+export const deleteFlight = (id) => {
+    
+};
 
-  export const editFlight = ({flight, airlines, airports, planes}) => {
-    const id = flight.FlightID ;
-    const depDate = flight?.DepartureTime.split("T")[0];
-    const depTime = moment(new Date(flight?.DepartureTime)).format("HH:mm");
-    const arrDate = flight?.ArrivalTime.split("T")[0];
-    const arrTime = moment(new Date(flight?.ArrivalTime)).format("HH:mm");
-    Swal.fire({
-      title: "Edit Flight",
-      html: `<div class="">You are editing flight ID
+export const editFlight = ({ flight, airlines, airports, planes }) => {
+  const id = flight.FlightID;
+  const depDate = flight?.DepartureTime.split("T")[0];
+  const depTime = moment(new Date(flight?.DepartureTime)).format("HH:mm");
+  const arrDate = flight?.ArrivalTime.split("T")[0];
+  const arrTime = moment(new Date(flight?.ArrivalTime)).format("HH:mm");
+  Swal.fire({
+    title: "Edit Flight",
+    html: `<div class="">You are editing flight ID
       <span class="text-red-500 font-bold">${id}</span>
       <span class="text-blue-500 font-bold pr-2">${flight?.oriIATA}-${
-        flight?.desIATA
-      }</span>
+      flight?.desIATA
+    }</span>
     </div>
     <form>
       <div class="flex items-center justify-center">
@@ -77,7 +85,7 @@ export const getPlanes = async ({setPlanes}) => {
           return `<option key=${i} value=${flight.OriginAirportID} ${
             a.AirportID === flight.OriginAirportID ? "selected" : ""
           }>
-              (${a.AirportID}) ${a.IATA}
+              (${a.AirportID}) ${a.IATA} ${a.Name}
             </option>`;
         })}
         </select>
@@ -91,7 +99,7 @@ export const getPlanes = async ({setPlanes}) => {
           return `<option key=${i} value=${flight.DestinationAirportID} ${
             a.AirportID === flight.DestinationAirportID ? "selected" : ""
           }>
-              (${a.AirportID}) ${a.IATA}
+              (${a.AirportID}) ${a.IATA} ${a.Name}
             </option>`;
         })}
         </select>
@@ -112,43 +120,43 @@ export const getPlanes = async ({setPlanes}) => {
         </select>
     </form>`,
 
-      didOpen: () => {
-        const select1 = document.getElementById("Airline");
-        const select2 = document.getElementById("Plane");
+    didOpen: () => {
+      const select1 = document.getElementById("Airline");
+      const select2 = document.getElementById("Plane");
 
-        for (let i = 0; i < planes?.length; i++) {
-          select2.innerHTML += `<option value=${planes[i].PlaneID} ${
-            planes[i].PlaneID === flight.PlaneID
-              ? "selected"
-              : planes[i].AirlineID === flight.AirlineID
-              ? ""
-              : "disabled"
-          }>
+      for (let i = 0; i < planes?.length; i++) {
+        select2.innerHTML += `<option value=${planes[i].PlaneID} ${
+          planes[i].PlaneID === flight.PlaneID
+            ? "selected"
+            : planes[i].AirlineID === flight.AirlineID
+            ? ""
+            : "disabled"
+        }>
               (${planes[i].PlaneID}) ${planes[i].PlaneModel} (${
-            planes[i].airline
-          })
+          planes[i].airline
+        })
             </option>`;
+      }
+      select1.addEventListener("input", (e) => {
+        select2.innerHTML = "";
+        const selectedValue = select1.value;
+        const correctPlanes = planes?.filter(
+          (p) => p.AirlineID === Number(selectedValue)
+        );
+        const otherPlanes = planes?.filter(
+          (p) => p.AirlineID !== Number(selectedValue)
+        );
+        for (let i = 0; i < correctPlanes.length; i++) {
+          select2.innerHTML += `<option ${i === 0 ? "selected" : ""} value=${
+            correctPlanes[i].PlaneID
+          }>(${correctPlanes[i].PlaneID}) ${correctPlanes[i].PlaneModel} ${
+            correctPlanes[i].airline
+          }}</option>`;
         }
-        select1.addEventListener("input", (e) => {
-          select2.innerHTML = "";
-          const selectedValue = select1.value;
-          const correctPlanes = planes?.filter(
-            (p) => p.AirlineID === Number(selectedValue)
-          );
-          const otherPlanes = planes?.filter(
-            (p) => p.AirlineID !== Number(selectedValue)
-          );
-          for (let i = 0; i < correctPlanes.length; i++) {
-            select2.innerHTML += `<option ${i === 0 ? "selected" : ""} value=${
-              correctPlanes[i].PlaneID
-            }>(${correctPlanes[i].PlaneID}) ${correctPlanes[i].PlaneModel} ${
-              correctPlanes[i].airline
-            }}</option>`;
-          }
-          for (const otherPlane of otherPlanes) {
-            select2.innerHTML += `<option disabled value=${otherPlane.PlaneID}>(${otherPlane.PlaneID}) ${otherPlane.PlaneModel} ${otherPlane.airline}</option>`;
-          }
-        });
-      },
-    });
-  };
+        for (const otherPlane of otherPlanes) {
+          select2.innerHTML += `<option disabled value=${otherPlane.PlaneID}>(${otherPlane.PlaneID}) ${otherPlane.PlaneModel} ${otherPlane.airline}</option>`;
+        }
+      });
+    },
+  });
+};
