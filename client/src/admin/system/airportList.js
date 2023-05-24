@@ -73,7 +73,7 @@ export const AirportList = () => {
           Swal.showValidationMessage(`Please enter airport state`);
         else if (!Province)
           Swal.showValidationMessage(`Please enter airport province`);
-        return { Name: Name, IATA: IATA, State: State, Province: Province };
+        return { Name, IATA, State, Province };
       },
     }).then((result) => {
       if (result.isConfirmed)
