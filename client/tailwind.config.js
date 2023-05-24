@@ -17,6 +17,7 @@ module.exports = {
         calc: "calc(100vh - 3rem)",
       },
       width: {
+        22: "5.5rem",
         38: "9.5rem",
         100: "25rem",
         110: "27.5rem",
