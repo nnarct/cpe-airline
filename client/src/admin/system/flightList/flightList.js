@@ -7,7 +7,7 @@ import { Table, THead, Th, Edit } from "../components/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { getFlights, getPlanes, editFlight } from "./functions";
+import { getFlights, getPlanes } from "./functions";
 import { Flight } from "./oneFlight";
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
@@ -62,6 +62,7 @@ export const FlightList = () => {
   };
 
   const handleDateChange = (event) => {
+    console.log(event.target.value);
     event.target.value !== "ALL"
       ? setSelectedDate({ status: true, date: event.target.value })
       : setSelectedDate({ status: false, date: "" });
@@ -73,6 +74,11 @@ export const FlightList = () => {
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
+    if (
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    )
+      return false;
     return true;
   });
 
@@ -89,32 +95,29 @@ export const FlightList = () => {
           </button>
         </Header>
         <Header>
-          <table className="w-full text-base font-normal border-collapse">
+          <table className="text-base font-normal">
             <thead className="">
-              <tr className="">
-                <th className="">
-                  <div className="font-normal py-1 bg-primary/20 my-auto border border-slate-900 rounded-tl-xl">
-                    Airline :{" "}
-                  </div>
+              <tr className="rounded-t-xl">
+                <th className="font-semibold text-gray-600 text-sm text-left pl-2">
+                  Airline :
                 </th>
-                <th className="">
-                  <div className="font-normal py-1 bg-primary/20 my-auto border border-x-0 border-slate-900 ">
-                    From :{" "}
-                  </div>
+                <th className="font-semibold text-gray-600 text-sm text-left pl-2">
+                  From :
                 </th>
-                <th className="">
-                  <div className="font-normal py-1 bg-primary/20 my-auto border border-slate-900 rounded-tr-xl">
-                    To :{" "}
-                  </div>
+                <th className="font-semibold text-gray-600 text-sm text-left pl-2">
+                  To :
+                </th>
+                <th className="font-semibold text-gray-600 text-sm text-left pl-2">
+                  Date :
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="">
+                <td className="pr-3">
                   <select
                     id="airlineFilter"
-                    className="w-full border border-t-0 text-base px-2 py-1 border-slate-900 rounded-bl-xl"
+                    className="w-full border text-base px-2 py-1 border-primary/50"
                     onChange={handleAirlineChange}
                   >
                     <option value="ALL">All</option>
@@ -128,9 +131,9 @@ export const FlightList = () => {
                     {/* Add more airline options as needed */}
                   </select>
                 </td>
-                <td className=" ">
+                <td className="pr-3">
                   <select
-                    className="w-full border border-t-0 border-x-0 text-base px-2 py-1 border-slate-900"
+                    className="w-full border text-base px-2 py-1 border-primary/50"
                     id="fromFilter"
                     onChange={handleFromChange}
                   >
@@ -145,9 +148,9 @@ export const FlightList = () => {
                     {/* Add more location options as needed */}
                   </select>
                 </td>
-                <td className="">
+                <td className="pr-3">
                   <select
-                    className="w-full border border-t-0 text-base px-2 py-1 border-slate-900 rounded-br-xl"
+                    className="w-full border text-base px-2 py-1 border-primary/50"
                     id="toFilter"
                     onChange={handleToChange}
                   >
@@ -162,6 +165,14 @@ export const FlightList = () => {
                     {/* Add more location options as needed */}
                   </select>
                 </td>
+                <td className="pr-3">
+                  <input
+                    className="w-full border text-base px-2 py-1 border-primary/50"
+                    type="date"
+                    id="dateFilter"
+                    onChange={handleDateChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
@@ -170,14 +181,14 @@ export const FlightList = () => {
           <THead>
             <Edit />
             <Th className="w-20"> FlightID</Th>
-            <Th>Flight No.</Th>
+            <Th className="w-40">Flight No.</Th>
             <Th className="w-20">From</Th>
             <Th className="w-20">To</Th>
-            <Th className="w-40">Departure time</Th>
-            <Th className="w-40">Arrival time</Th>
+            <Th>Departure time</Th>
+            <Th>Arrival time</Th>
             <Th>Airline</Th>
             <Th className="w-20">Plane ID</Th>
-            <Th>Delete</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {loading &&
