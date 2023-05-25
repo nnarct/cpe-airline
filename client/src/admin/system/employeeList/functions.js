@@ -75,37 +75,36 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
     showCancelButton: true,
     focusCancel: true,
     preConfirm: () => {
-      const firstname = document.getElementById("FirstName").value;
-      const lastname = document.getElementById("LastName").value;
+      const firstName = document.getElementById("FirstName").value;
+      const lastName = document.getElementById("LastName").value;
       const email = document.getElementById("Email").value;
       let TelNo = document.getElementById("TelNo").value;
       const position = document.getElementById("Position").value;
       const airlineID = document.getElementById("AirlineID").value;
 
-      if (!firstname) Swal.showValidationMessage("Please enter FirstName");
-      else if (!lastname) Swal.showValidationMessage("Please enter LastName");
+      if (!firstName) Swal.showValidationMessage("Please enter FirstName");
+      else if (!lastName) Swal.showValidationMessage("Please enter LastName");
       else if (!email) Swal.showValidationMessage("Please enter Email");
-      else if (!position) Swal.showValidationMessage("Please enter Positon");
+      else if (!position) Swal.showValidationMessage("Please enter Position");
       else if (position === "Admin" && !airlineID)
         Swal.showValidationMessage("Please enter AirlineID");
       if (TelNo === "") TelNo = null;
       else if (TelNo) {
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))
           return Swal.showValidationMessage("Email is invalid");
         if (TelNo && !/^\d{10}$/.test(TelNo))
           return Swal.showValidationMessage("Phone number is invalid");
       }
 
-      const val = {
+      return {
         id: employee?.EmployeeID,
-        FirstName: firstname,
-        LastName: lastname,
+        FirstName: firstName,
+        LastName: lastName,
         Email: email,
-        TelNo: TelNo,
+        TelNo,
         Position: position,
         AirlineID: airlineID,
       };
-      return val;
     },
   }).then((result) => {
     if (result.isConfirmed) {
@@ -209,7 +208,7 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
     html: `<form>
       <div class="flex items-center justify-center">
         <label htmlFor="username" class="w-32 block">username<span class="text-red-500">*</span></label>
-        <input autocomplete="off" id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
+        <input autofill="off" id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="FirstName" class="w-32 block">First Name<span class="text-red-500">*</span></label>
@@ -249,6 +248,10 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
         <input autocomplete="off" type="password" id="Password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
       </div>
     </form>`,
+    onOpen: () => {
+      Swal.getInput("username").prop("autofill", true);
+    },
+
     didOpen: () => {
       const position = document.getElementById("Position");
       const airlineInput = document.getElementById("airlineInput");
@@ -274,7 +277,7 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
         return Swal.showValidationMessage("First name is required");
       if (!LastName) return Swal.showValidationMessage("Last name is required");
       if (!Email) return Swal.showValidationMessage("Email is required");
-      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email))
+      else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(Email))
         return Swal.showValidationMessage("Email is invalid");
       if (TelNo && !/^\d{10}$/.test(TelNo))
         return Swal.showValidationMessage("Phone number is invalid");
