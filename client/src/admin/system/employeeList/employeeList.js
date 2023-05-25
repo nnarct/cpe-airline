@@ -3,19 +3,18 @@ import { AddAdmin } from "../admin-register";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Edit, THead, Table, Th } from "../components/table";
-import { getEmployeeList } from "./editEmployee";
+import { getEmployeeList } from "./functions";
 import { Employee } from "./oneEmployee";
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
-
+  const [airlines, setAirlines] = useState([]);
   useEffect(() => {
-    getEmployeeList(setEmployees);
+    getEmployeeList(setEmployees,setAirlines);
   }, []);
 
   const [modal, setAddAdminModal] = useState(false);
   // Todo - edit employee
   // Todo - delete employee
-
   return (
     <>
       <Content>
@@ -43,8 +42,8 @@ export const EmployeeList = () => {
             <Th>Delete</Th>
           </THead>
           <tbody>
-            {employees?.map((employee, i) => {
-              return <Employee {...employee} />;
+            {employees && employees?.map((employee, i) => {
+              return <Employee employee={employee} key={i} airlines={airlines}/>;
             })}
           </tbody>
         </Table>
