@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Table, THead, Th, Edit } from "../components/table";
-import { getPassengers } from "./functions";
+import { getPassengers, getPassengersGroupByBookingID } from "./functions";
 import { Passenger } from "./onePassenger";
 
 export const PassengerList = () => {
@@ -12,11 +12,36 @@ export const PassengerList = () => {
     getPassengers({ setPassengers });
   }, []);
 
+  const handleGroupBy = (e) => {
+    console.log(e.target.value)
+    if (e.target.value === 1) {
+      getPassengers({ setPassengers });
+    } else {
+      getPassengersGroupByBookingID({ setPassengers });
+    }
+  }
   // Todo - delete passenger ** must effect seat
   return (
     <>
       <Content>
         <Header>All Passengers</Header>
+        <Header>
+          <div className="flex w-full items-center space-x-2">
+            <span className="whitespace-nowrap font-semibold text-gray-600 text-sm text-left pl-2">
+              Group By :
+            </span>
+            <select onChange={handleGroupBy} className="border text-base px-2 py-1 border-primary/50">
+              <option value={1}>
+                Passenger ID
+              </option>
+              <option
+                value={2}
+              >
+                Booking ID
+              </option>
+            </select>
+          </div>
+        </Header>
         <Table>
           <THead>
             <Edit />
@@ -33,7 +58,7 @@ export const PassengerList = () => {
           </THead>
           <tbody>
             {passengers?.map((passenger, i) => {
-              return <Passenger passenger={passenger}/>;
+              return <Passenger passenger={passenger} />;
             })}
           </tbody>
         </Table>

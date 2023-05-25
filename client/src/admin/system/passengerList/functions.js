@@ -2,10 +2,18 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import moment from "moment";
 
-export const getPassengers = async ({setPassengers}) => {
+export const getPassengers = async ({ setPassengers }) => {
   const res = await fetch("http://localhost:3001/system/passengerList");
   const data = await res.json();
   setPassengers(data.Data);
+};
+export const getPassengersGroupByBookingID = async ({ setPassengers }) => {
+  const res = await fetch(
+    "http://localhost:3001/system/passengerListGroupByBookingID"
+  );
+  const data = await res.json();
+  setPassengers(data.Data);
+  console.log(data.Data);
 };
 export const editPassenger = (passenger) => {
   const fselected = passenger?.Gender === "female" ? "selected" : "";
@@ -14,7 +22,9 @@ export const editPassenger = (passenger) => {
   Swal.fire({
     title: "Edit Passenger",
     html: `<div class="">You are editing passenger ID
-              <span class="text-red-500 font-bold">${passenger.PassengerID}</span>
+              <span class="text-red-500 font-bold">${
+                passenger.PassengerID
+              }</span>
               <span class="text-blue-500 font-bold pr-2">${
                 passenger?.FirstName
               } ${passenger?.LastName}</span>
@@ -122,51 +132,49 @@ export const editPassenger = (passenger) => {
 
 export const deletePassenger = (passenger) => {
   Swal.fire({
-      icon: "warning",
-      title: "Are you sure?",
-      html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${
-        passenger.Name
-      }</span>
+    icon: "warning",
+    title: "Are you sure?",
+    html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${passenger.Name}</span>
       <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-      showValidationMessage: "no",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      confirmButtonText: "Confirm",
-      cancelButtonText: "Cancel",
-    }).then((result) => {
-      if (result.isConfirmed)
-        Axios.post("http://localhost:3001/system/deletePassenger", {
-          id: passenger.PassengerID,
-        }).then((res, err) => {
-          if (err)
-            Swal.fire({
-              title: "Error!",
-              text: err,
-              icon: "error",
-              timer: 2000,
-              timerProgressBar: true,
-              showConfirmButton: false,
-            });
-          if (res.data.Status)
-            Swal.fire({
-              title: "Success!",
-              text: res.data.Status,
-              icon: "success",
-              timer: 2000,
-              timerProgressBar: true,
-              confirmButtonColor: "#3085d6",
-              confirmButtonText: "OK",
-              showConfirmButton: true,
-            });
-          else if (res.data.Error)
-            Swal.fire({
-              title: "Error!",
-              text: res.data.Error,
-              icon: "error",
-              timer: 2000,
-              timerProgressBar: true,
-              showConfirmButton: false,
-            });
-        });
-    });
-  };
+    showValidationMessage: "no",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed)
+      Axios.post("http://localhost:3001/system/deletePassenger", {
+        id: passenger.PassengerID,
+      }).then((res, err) => {
+        if (err)
+          Swal.fire({
+            title: "Error!",
+            text: err,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        if (res.data.Status)
+          Swal.fire({
+            title: "Success!",
+            text: res.data.Status,
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK",
+            showConfirmButton: true,
+          });
+        else if (res.data.Error)
+          Swal.fire({
+            title: "Error!",
+            text: res.data.Error,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+      });
+  });
+};
