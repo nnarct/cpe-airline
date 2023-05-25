@@ -71,92 +71,95 @@ export const Register = ({ auth }) => {
       {auth === true ? (
         <Navigate to="/" />
       ) : (
-        <form
-          className="flex flex-col text-left items-center justify-center space-y-2 w-60 bg-slate-50 m-auto mt-20 rounded p-5"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <h1 className="text-3xl">Register</h1>
-          <label htmlFor="firstName" className="w-full bg-red-300">
-            First Name
-          </label>
-          <input
-            required
-            type="text"
-            placeholder="suay"
-            name="firstName"
-            className="px-2 w-full"
-            onChange={(e) => {
-              setValues({ ...values, firstName: e.target.value });
+        <div className="w-screen h-screen bg-red-200 flex items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600">
+          <form
+            className="flex flex-col text-left items-center justify-center space-y-2 w-100 bg-slate-50 m-auto mt-20 rounded p-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
             }}
-          />
-          <label htmlFor="lastName" className="w-full bg-red-300">
-            Last Name
-          </label>
-          <input
-            required
-            type="text"
-            placeholder="mak"
-            name="lastName"
-            className="px-2 w-full"
-            onChange={(e) => {
-              setValues({ ...values, lastName: e.target.value });
-            }}
-          />
-          <label htmlFor="email" className="w-full bg-red-300">
-            Email
-          </label>
-          <input
-            required
-            type="email"
-            placeholder="nan@example.com"
-            name="email"
-            className="px-2 w-full"
-            onChange={(e) => {
-              setValues({ ...values, email: e.target.value });
-            }}
-          />
-          <label htmlFor="telNo" className="w-full bg-red-300">
-            Tel Phone
-          </label>
-          <input
-            required
-            type="tel"
-            placeholder="0885557777"
-            name="telNO"
-            className="px-2 w-full"
-            onChange={(e) => {
-              setValues({ ...values, telNo: e.target.value });
-            }}
-          />
-          <label htmlFor="password" className="w-full bg-red-300">
-            Password
-          </label>
-          <input
-            required
-            type="password"
-            placeholder="*******"
-            name="password"
-            className="px-2 w-full"
-            onChange={(e) => {
-              setValues({ ...values, password: e.target.value });
-            }}
-          />
-          <button
-            className="cursor-pointer active:opacity-70 bg-blue-500 text-white rounded px-5 py-1 hover:opacity-40"
-            type="submit"
           >
-            Register
-          </button>
-          <p className=""> Already ave account? </p>
-          <Link to="/login">
-            <p className="text-blue-400 cursor-pointer hover:opacity-50">
-              Login
-            </p>
-          </Link>
-        </form>
+            <h1 className="text-3xl font-semibold">Register</h1>
+            <label htmlFor="firstName" className="w-full ">
+              FirstName
+            </label>
+            <input
+              required
+              type="text"
+              placeholder="Jonathan"
+              name="firstName"
+              className="px-2 w-full block border border-grey-light rounded-full"
+              onChange={(e) => {
+                setValues({ ...values, firstName: e.target.value });
+              }}
+            />
+            <label htmlFor="lastName" className="w-full">
+              LastName
+            </label>
+            <input
+              required
+              type="text"
+              placeholder="Smith"
+              name="lastName"
+              className="px-2 w-full block border border-grey-light rounded-full"
+              onChange={(e) => {
+                setValues({ ...values, lastName: e.target.value });
+              }}
+            />
+            <label htmlFor="email" className="w-full">
+              Email
+            </label>
+            <input
+              required
+              type="email"
+              placeholder="example@mail.com"
+              name="email"
+              className="px-2 w-full block border border-grey-light rounded-full"
+              onChange={(e) => {
+                setValues({ ...values, email: e.target.value });
+              }}
+            />
+            <label htmlFor="telNo" className="w-full">
+              Tel Phone
+            </label>
+            <input
+              required
+              type="tel"
+              placeholder="0885557777"
+              name="telNO"
+              className="px-2 w-full block border border-grey-light rounded-full"
+              onChange={(e) => {
+                setValues({ ...values, telNo: e.target.value });
+              }}
+            />
+            <label htmlFor="password" className="w-full">
+              Password
+            </label>
+            <input
+              required
+              type="password"
+              placeholder="type your password"
+              name="password"
+              className="px-2 w-full block border border-grey-light rounded-full"
+              onChange={(e) => {
+                setValues({ ...values, password: e.target.value });
+              }}
+            />
+            <button
+              className="cursor-pointer active:opacity-70 bg-blue-500 text-white rounded-full px-5 py-1 hover:opacity-40 w-full"
+              type="submit"
+            >
+              Register
+            </button>
+            <p className=""> Already ave account? </p>
+            <Link to="/login">
+              <p className="text-blue-400 cursor-pointer hover:opacity-50">
+                Login
+              </p>
+            </Link>
+          </form>
+        </div>
+
       )}
     </>
   );
