@@ -35,10 +35,10 @@ export const AirlineList = () => {
               }">
             </div>`,
       confirmButtonColor: "#3085d6",
-      confirmButtonText: "Confirm",
+      confirmButtonText: "Save",
       showCancelButton: true,
       cancelButtonText: "Cancel",
-      focusConfirm: false,
+      focusCancel: true,
       // Todo - validate name input , alphabet and . only and maximum 40 characters
       preConfirm: () => {
         const name = document.getElementById("swal-input1").value;
@@ -91,12 +91,13 @@ export const AirlineList = () => {
       html: `You are deleting airline ID ${id}, <span class="font-semibold text-red-500">${
         airlines.find((a) => a.AirlineID === id).Name
       }</span>
-      <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+      <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
       showValidationMessage: "no",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       confirmButtonText: "Confirm",
       cancelButtonText: "Cancel",
+      focusCancel: true,
     }).then((result) => {
       if (result.isConfirmed)
         Axios.post("http://localhost:3001/system/deleteAirline", {

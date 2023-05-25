@@ -37,8 +37,7 @@ export const editAirport = (airport) => {
     confirmButtonText: "Save",
     confirmButtonColor: "#2563eb",
     cancelButtonText: "Cancel",
-    focusConfirm: false,
-    reverseButtons: true,
+    focusCancel: true,
     preConfirm: () => {
       const Name = document.getElementById("swal-input1").value;
       const IATA = document.getElementById("swal-input2").value;
@@ -95,12 +94,13 @@ export const deleteAirport = (airport) => {
     html: `You are deleting Airport ${airport.AirportID}, <span class="font-semibold text-red-500">${
       airport.Name
     }</span>
-    <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
     showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deleteAirport", {

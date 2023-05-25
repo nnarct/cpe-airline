@@ -39,7 +39,7 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
               <div class="flex items-center justify-center">
                 <label htmlFor="Email" class="w-24 block">Email</label>
                 <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Email" value="${
-                  employee?.Email
+                  employee?.Email || ""
                 }">
               </div>
               <div class="flex items-center justify-center">
@@ -70,6 +70,11 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
               </div>
               </form>
           `,
+    confirmButtonText: "Save",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#3b82f6",
+    showCancelButton: true,
+    focusCancel: true,
     preConfirm: () => {
       const FirstName = document.getElementById("#swal-input1").value;
       const LastName = document.getElementById("#swal-input2").value;
@@ -145,12 +150,13 @@ export const deleteEmployee = (setEmployees, setAirlines, employee) => {
     icon: "warning",
     title: "Are you sure?",
     html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${employee.username}</span>
-  <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-2">This action cannot be undone !</div>`,
+  <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
     showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deleteEmployee", {

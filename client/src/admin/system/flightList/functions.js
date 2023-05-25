@@ -117,7 +117,10 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
         </select>
     </form>`,
-
+        confirmButtonText: "Save",
+        showCancelButton: true,
+        focusCancel: true,
+        confirmButtonColor: "#3b82f6",
     didOpen: () => {
       const select1 = document.getElementById("Airline");
       const select2 = document.getElementById("Plane");

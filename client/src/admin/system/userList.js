@@ -58,9 +58,9 @@ export const UserList = () => {
       showCancelButton: true,
       confirmButtonText: "Save",
       cancelButtonText: "Cancel",
-      focusConfirm: false,
+      focusCancel: true,
       confirmButtonColor: "#3085d6",
-      reverseButtons: true,
+        
       preConfirm: () => {
         const FirstName = document.getElementById("FirstName").value;
         const LastName = document.getElementById("LastName").value;
@@ -145,7 +145,7 @@ export const UserList = () => {
       showCancelButton: true,
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
-      focusConfirm: false,
+      focusCancel: true,
       confirmButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed)
