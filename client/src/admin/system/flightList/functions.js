@@ -244,5 +244,5 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       })
     }
     },
-  });
+  );
 };
