@@ -12,14 +12,15 @@ import { FlightList } from "../system/flightList/flightList";
 import { UserList } from "../system/userList";
 import { PassengerList } from "../system/passengerList/passengerList";
 import { Dashboard } from "../system/dashboard";
-import { PlaneList } from "../system/planeList";
+import { PlaneList } from "../system/planeList/planeList";
 
 export const SystemDashboard = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState([]);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const c = params.get("content");
+  let c = params.get("content");
+  if (c == null) c = "Dashboard";
   const [content, setContent] = useState(c);
   useEffect(() => {
     Axios.get("http://localhost:3001/emauth").then((res, err) => {
