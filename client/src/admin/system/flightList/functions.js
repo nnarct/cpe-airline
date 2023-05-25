@@ -170,11 +170,20 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       const depTime = document.getElementById("depTime").value;
       const arrDate = document.getElementById("arrDate").value;
       const arrTime = document.getElementById("arrTime").value;
-
-      if(!flightNumber || !airline || !originAirport || !destinationAirport || !plane || !depDate || !depTime || !arrDate || !arrTime) {
-        Swal.showValidationMessage(`Please fill in all fields`);
-      }
-
+      // if(!flightNumber || !airline || !originAirport || !destinationAirport || !plane || !depDate || !depTime || !arrDate || !arrTime) {
+      //   Swal.showValidationMessage(`Please fill in all fields`);
+      // }
+      if (!flightNumber) Swal.ValidationMessage('Please enter flight number');
+      else if (!airline) Swal.ValidationMessage('Please enter airline name');
+      else if (!originAirport) Swal.ValidationMessage('Please enter origin airport name');
+      else if (!destinationAirport) Swal.ValidationMessage('Please enter destination airport name');
+      else if (!plane) Swal.ValidationMessage('Please enter plane');
+      else if (!depDate) Swal.ValidationMessage('Please enter departure date');
+      else if (!depTime) Swal.ValidationMessage('Please enter departure time');
+      else if (!arrDate) Swal.ValidationMessage('Please enter arrival date');
+      else if (!arrTime) Swal.ValidationMessage('Please enter arrival time');
+      else if (originAirport === destinationAirport) Swal.ValidationMessage('Origin and destination airports cannot be the same. Please select again.');
+      else if ((arrTime) <= (depTime)) Swal.ValidationMessage('Arrival time must be later than departure time');
       return {
         id: flight?.FlightID,
         FlightNumber: flightNumber,
