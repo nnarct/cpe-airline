@@ -3,7 +3,7 @@ import { AddAdmin } from "../admin-register";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Edit, THead, Table, Th } from "../components/table";
-import { getEmployeeList } from "./editEmployee";
+import { getEmployeeList } from "./functions";
 import { Employee } from "./oneEmployee";
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -44,7 +44,7 @@ export const EmployeeList = () => {
           </THead>
           <tbody>
             {employees?.map((employee, i) => {
-              return <Employee {...employee} />;
+              return <Employee employee={employee} key={i}/>;
             })}
           </tbody>
         </Table>

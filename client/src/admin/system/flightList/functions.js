@@ -37,9 +37,7 @@ export const getPlanes = async ({ setPlanes }) => {
   }
 };
 
-export const deleteFlight = (id) => {
-    
-};
+export const deleteFlight = (id) => {};
 
 export const editFlight = ({ flight, airlines, airports, planes }) => {
   const id = flight.FlightID;
@@ -77,29 +75,29 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         </select>
       </div>
       <div class="flex items-center justify-center">
-        <label htmlFor="OriginAirport" class="w-24 block">From</label>
-        <select id="OriginAirport" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
-          flight?.OriginAirportID
-        }">
-        ${airports?.map((a, i) => {
-          return `<option key=${i} value=${flight.OriginAirportID} ${
-            a.AirportID === flight.OriginAirportID ? "selected" : ""
-          }>
-              (${a.AirportID}) ${a.IATA} ${a.Name}
-            </option>`;
-        })}
-        </select>
+      <label htmlFor="OriginAirport" class="w-24 block">From</label>
+      <select id="OriginAirportSelect" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
+        flight.OriginAirportID
+      }">
+      ${airports?.map((a, i) => {
+        return `<option key=${i} value=${a.AirportID} ${
+          a.AirportID === flight.OriginAirportID ? "selected" : ""
+        }>
+            (${a.AirportID}) ${a.IATA} ${a.Name}
+          </option>`;
+      })}
+      </select>
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="DestinationAirport" class="w-24 block">To</label>
-        <select id="DestinationAirport" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
-          flight?.DestinationAirportID
+        <select id="DestinationAirportSelect" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
+          flight.DestinationAirportID
         }">
         ${airports?.map((a, i) => {
-          return `<option key=${i} value=${flight.DestinationAirportID} ${
+          return `<option key=${i} value=${a.AirportID} ${
             a.AirportID === flight.DestinationAirportID ? "selected" : ""
           }>
-              (${a.AirportID}) ${a.IATA} ${a.Name}
+              ${a.AirportID}. ${a.IATA} ${a.Name}
             </option>`;
         })}
         </select>
@@ -132,9 +130,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
             ? ""
             : "disabled"
         }>
-              (${plane.PlaneID}) ${plane.PlaneModel} (${
-          plane.airline
-        })
+              (${plane.PlaneID}) ${plane.PlaneModel} (${plane.airline})
             </option>`;
       }
       select1.addEventListener("input", (e) => {
@@ -158,46 +154,56 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         }
       });
     },
-    willClose: () => {
+    preConfirm: () => {
       const flightNumber = document.getElementById("FlightNumber").value;
       const airline = document.getElementById("Airline").value;
-      const originAirport = document.getElementById("OriginAirport").value;
+      const originAirport = document.getElementById("OriginAirportSelect").value;
       const destinationAirport = document.getElementById(
-        "DestinationAirport"
+        "DestinationAirportSelect"
       ).value;
       const plane = document.getElementById("Plane").value;
       const depDate = document.getElementById("depDate").value;
       const depTime = document.getElementById("depTime").value;
       const arrDate = document.getElementById("arrDate").value;
       const arrTime = document.getElementById("arrTime").value;
-      // if(!flightNumber || !airline || !originAirport || !destinationAirport || !plane || !depDate || !depTime || !arrDate || !arrTime) {
-      //   Swal.showValidationMessage(`Please fill in all fields`);
-      // }
-      if (!flightNumber) Swal.ValidationMessage('Please enter flight number');
-      else if (!airline) Swal.ValidationMessage('Please enter airline name');
-      else if (!originAirport) Swal.ValidationMessage('Please enter origin airport name');
-      else if (!destinationAirport) Swal.ValidationMessage('Please enter destination airport name');
-      else if (!plane) Swal.ValidationMessage('Please enter plane');
-      else if (!depDate) Swal.ValidationMessage('Please enter departure date');
-      else if (!depTime) Swal.ValidationMessage('Please enter departure time');
-      else if (!arrDate) Swal.ValidationMessage('Please enter arrival date');
-      else if (!arrTime) Swal.ValidationMessage('Please enter arrival time');
-      else if (originAirport === destinationAirport) Swal.ValidationMessage('Origin and destination airports cannot be the same. Please select again.');
-      else if ((arrTime) <= (depTime)) Swal.ValidationMessage('Arrival time must be later than departure time');
-      return {
-        id: flight?.FlightID,
-        FlightNumber: flightNumber,
-        AirlineID: Number(airline),
-        OriginAirportID: Number(originAirport),
-        DestinationAirportID: Number(destinationAirport),
-        PlaneID: Number(plane),
-        DepartureTime: `${depDate}T${depTime}`,
-        ArrivalTime: `${arrDate}T${arrTime}`,
-      };
-    }
-  }).then((result) => {
-    if(result.isConfirmed) {
-      // Todo - send request to server
-    }
+
+      if (!flightNumber)
+        Swal.showValidationMessage("Please enter flight number");
+      else if (!airline)
+        Swal.showValidationMessage("Please select airline name");
+      else if (!originAirport)
+        Swal.showValidationMessage("Please select origin airport name");
+      else if (!destinationAirport)
+        Swal.showValidationMessage("Please select destination airport name");
+      else if (!plane) Swal.showValidationMessage("Please select plane");
+      else if (!depDate)
+        Swal.showValidationMessage("Please select departure date");
+      else if (!depTime)
+        Swal.showValidationMessage("Please select departure time");
+      else if (!arrDate)
+        Swal.showValidationMessage("Please select arrival date");
+      else if (!arrTime)
+        Swal.showValidationMessage("Please select arrival time");
+      else if (originAirport === destinationAirport) {
+        console.log(originAirport, destinationAirport);
+        Swal.showValidationMessage(
+          "Origin and destination airports cannot be the same. Please select again."
+        );
+      } else if (arrTime <= depTime)
+        Swal.showValidationMessage(
+          "Arrival time must be later than departure time"
+        );
+      else
+        return {
+          id: flight?.FlightID,
+          FlightNumber: flightNumber,
+          AirlineID: Number(airline),
+          OriginAirportID: Number(originAirport),
+          DestinationAirportID: Number(destinationAirport),
+          PlaneID: Number(plane),
+          DepartureTime: `${depDate}T${depTime}`,
+          ArrivalTime: `${arrDate}T${arrTime}`,
+        };
+    },
   });
 };
