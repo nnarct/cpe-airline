@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AdminNavbar } from "../components/navbar";
 import { Sidebar } from "../system/sidebar/sidebar";
 import { EmployeeList } from "../system/employeeList/employeeList";
-import { AirlineList } from "../system/airlineList";
+import { AirlineList } from "../system/airlineList/airlineList";
 import { AirportList } from "../system/airportList/airportList";
 import { FlightList } from "../system/flightList/flightList";
 import { UserList } from "../system/userList";
