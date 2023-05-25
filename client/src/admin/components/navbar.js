@@ -1,8 +1,9 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-export const AdminNavbar = ({info}) => {
+import Logo from "./../../assets/logo/logo.png";
+export const AdminNavbar = ({ info }) => {
+  const navigate = useNavigate();
   // const [adminAuth, setAdminAuth] = useState(false);
   // const [info, setInfo] = useState(null);
   // const navigate = useNavigate();
@@ -31,7 +32,12 @@ export const AdminNavbar = ({info}) => {
     <>
       <div className="flex h-12 bg-cyan-950 text-white flex justify-center">
         <div className="container border-white flex justify-between items-center">
-          <p>Logo</p>
+          <img
+            alt="logo"
+            src={Logo}
+            className="py-2 object-contain h-full cursor-pointer"
+            onClick={() => navigate("/")}
+          />
           <div className="flex items-center space-x-2 text-base">
             <p>O</p>
             <span className="hover: bg-cyan-800 cursor-pointer rounded px-2 py-1">
