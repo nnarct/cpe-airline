@@ -28,7 +28,7 @@ export const Passenger = ({passenger}) => {
       })}
       <td
         className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
-        onClick={(e) => deletePassenger(passenger.PassengerID)}
+        onClick={(e) => deletePassenger(passenger)}
       >
         <RiDeleteBin6Line className="mx-auto" />
       </td>

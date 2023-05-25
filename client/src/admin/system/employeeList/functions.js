@@ -61,4 +61,54 @@ export const editEmployee = (employee,airlines) => {
   });
 };
 
-export const deleteEmployee = (id) => {};
+export const deleteEmployee = (employee) => {
+Swal.fire({
+  icon: "warning",
+  title: "Are you sure?",
+  html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${
+    employee.Name
+  }</span>
+  <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+  showValidationMessage: "no",
+  showCancelButton: true,
+  confirmButtonColor: "#d33",
+  confirmButtonText: "Confirm",
+  cancelButtonText: "Cancel",
+}).then((result) => {
+  if (result.isConfirmed)
+    Axios.post("http://localhost:3001/system/deleteEmployee", {
+      id: employee.EmployeeID,
+    }).then((res, err) => {
+      if (err)
+        Swal.fire({
+          title: "Error!",
+          text: err,
+          icon: "error",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+      if (res.data.Status)
+        Swal.fire({
+          title: "Success!",
+          text: res.data.Status,
+          icon: "success",
+          timer: 2000,
+          timerProgressBar: true,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+          showConfirmButton: true,
+        });
+      else if (res.data.Error)
+        Swal.fire({
+          title: "Error!",
+          text: res.data.Error,
+          icon: "error",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+    });
+});
+};
+
