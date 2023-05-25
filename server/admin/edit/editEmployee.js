@@ -3,8 +3,7 @@ import { db } from "../../index.js";
 export const editEmployee = (req, res) => {
   const sql =
     "UPDATE employee SET FirstName = ?, LastName = ?, Email = ?, TelNo = ?, Position = ?, AirlineID = ? WHERE EmployeeID =?";
-  console.log(req.body)
-    db.query(
+  db.query(
     sql,
     [
       req.body.FirstName,
