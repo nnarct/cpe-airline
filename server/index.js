@@ -61,6 +61,7 @@ import {
 import { editPlane } from "./admin/edit/editPlane.js";
 
 
+import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 
 const app = express();
 app.use(express.json());
@@ -137,6 +138,7 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getUserBooking", getUserBooking);
 
 app.listen(3001, () => {
   console.log("running on port 3001");

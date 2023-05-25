@@ -12,7 +12,7 @@ export const editEmployee = (req, res) => {
       req.body.TelNo,
       req.body.Position,
       req.body.AirlineID,
-      req.body.id,
+      req.body.id
     ],
     (err, result) => {
       if (err) {
