@@ -7,15 +7,14 @@ import { getEmployeeList } from "./functions";
 import { Employee } from "./oneEmployee";
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
-
+  const [airlines, setAirlines] = useState([]);
   useEffect(() => {
-    getEmployeeList(setEmployees);
+    getEmployeeList(setEmployees,setAirlines);
   }, []);
 
   const [modal, setAddAdminModal] = useState(false);
   // Todo - edit employee
   // Todo - delete employee
-
   return (
     <>
       <Content>
@@ -43,8 +42,8 @@ export const EmployeeList = () => {
             <Th>Delete</Th>
           </THead>
           <tbody>
-            {employees?.map((employee, i) => {
-              return <Employee employee={employee} key={i}/>;
+            {employees && employees?.map((employee, i) => {
+              return <Employee employee={employee} key={i} airlines={airlines}/>;
             })}
           </tbody>
         </Table>
