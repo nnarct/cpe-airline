@@ -75,8 +75,144 @@ export const ContactInfo = () => {
     });
     setGenders(newArray);
   };
+
+  const cfname = contact.fname;
+
+  const email = contact.email;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{10}$/;
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(contact.firstname);
+    if (contact.firstname === undefined || contact.firstname === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter your contact firstname",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if (contact.firstname > 40) {
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please fill contact firstname less than 40",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if(/\d/.test(contact.firstname)){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter a valid first name",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+
+    if(contact.lastname === undefined || contact.lastname === ""){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter your contact lastname",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if (contact.lastname > 40) {
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please fill contact lastname less than 40",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if(/\d/.test(contact.lastname)){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter a valid last name",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+
+    if(contact.email ===undefined || contact.email === ""){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter your email",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if(!emailRegex.test(contact.email)){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter a valid email address",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if(contact.email >30){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please fill email less than 40",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if(contact.phone === undefined || contact.phone === ""){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter your phone",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    else if(!phoneRegex.test(contact.phone)){
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Please enter a valid phone number (10 digits)",
+        confirmButtonColor: "#3085d6",
+        timer: 4000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+
+
+
     const form = info.current;
     let values = [];
     for (let i = 1; i <= pass.length; i++) {
@@ -113,8 +249,74 @@ export const ContactInfo = () => {
         });
         return;
       } else {
-        // Todo - validate contact fields must not empty
-        // Todo - validate all field
+        if (fname.length > 40) {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please fill Passenger firstname less than 40",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+        else if(/\d/.test(fname)){
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please enter a valid first name",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+        if (lname.length > 40) {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please fill Passenger lastname less than 40",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+        else if(/\d/.test(lname)){
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please enter a valid last name",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+
+        if (nationality.length > 60) {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please fill Passenger nationality less than 40",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+        else if(/\d/.test(nationality)){
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Please enter a valid nationality",
+            confirmButtonColor: "#3085d6",
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          return;
+        }
+
       }
       values.push({
         id: i,
@@ -220,9 +422,9 @@ export const ContactInfo = () => {
                         value={
                           value[i]
                             ? {
-                                startDate: value[i].dob.startDate,
-                                endDate: value[i].dob.endDate,
-                              }
+                              startDate: value[i].dob.startDate,
+                              endDate: value[i].dob.endDate,
+                            }
                             : null
                         }
                         placeholder="DD-MM-YYYY"
