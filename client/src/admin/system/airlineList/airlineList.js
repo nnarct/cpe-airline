@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Table, THead, Th, Edit } from "../components/table";
-import { getAirlines } from "./functions";
+import { addAirline, getAirlines } from "./functions";
 import { Airline } from "./oneAirline";
 export const AirlineList = () => {
   const [airlines, setAirlines] = useState([]);
@@ -13,7 +13,15 @@ export const AirlineList = () => {
   return (
     <>
       <Content>
-        <Header>Airline List</Header>
+        <Header>
+          <span>Airline List</span>
+          <button
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
+            onClick={() => addAirline(setAirlines)}
+          >
+            Add Airline +
+          </button>
+        </Header>
         <Table>
           <THead>
             <Edit />

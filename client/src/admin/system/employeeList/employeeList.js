@@ -16,7 +16,6 @@ export const EmployeeList = () => {
   return (
     <>
       <Content>
-        {/* <AddAdmin status={modal} setStatus={setAddAdminModal} /> */}
         <Header>
           <span>Employee List</span>
           <button

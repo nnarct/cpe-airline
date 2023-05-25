@@ -121,3 +121,72 @@ export const deleteAirline = (airline, setAirlines) => {
       });
   });
 };
+
+export const addAirline = (setAirlines) => {
+  Swal.fire({
+    title: "Add New Airline",
+    html: `<form>
+          <div class="flex items-center justify-center">
+            <label htmlFor="Name" class="w-24 block">Name</label>
+            <input id="Name" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Name">
+          </div>
+          <div class="flex items-center justify-center">
+            <label htmlFor="link" class="w-24 block">Link</label>
+            <input id="Link" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Link">
+          </div>
+          </form>`,
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "Add",
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
+    focusCancel: true,
+    preConfirm: () => {
+      const name = document.getElementById("Name").value;
+      const link = document.getElementById("Link").value;
+      if (!name) Swal.showValidationMessage("Please enter a name");
+      if (!link) Swal.showValidationMessage("Please enter a link");
+      return { Name: name, Link: link };
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Axios.post(
+        "http://localhost:3001/system/insertAirline",
+        result.value
+      ).then((res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: err,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          return;
+        }
+        if (res.data.Error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: res.data.Error,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          return;
+        }
+        if (res.data.Status) {
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: res.data.Status,
+            timer: 2000,
+            timerProgressBar: true,
+            confirmButtonColor: "#3085d6",
+          });
+          getAirlines(setAirlines);
+        }
+      });
+    }
+  });
+};
