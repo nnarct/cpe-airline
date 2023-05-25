@@ -38,7 +38,6 @@ export const getPlanes = async ({ setPlanes }) => {
   }
 };
 
-export const deleteFlight = (id) => {};
 
 export const editFlight = ({ flight, airlines, airports, planes }) => {
   const id = flight.FlightID;
@@ -245,4 +244,9 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     }
     },
   );
+};
+
+export const deleteFlight = (id) => {
+  // todo - popup to make sure u wanna deelte the flight
+  //if cnfirm - send request to daabase to delete to flight where flight id =id
 };
