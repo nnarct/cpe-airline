@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import moment from "moment";
+import Axios from "axios";
 export const getFlights = async ({
   setFlights,
   setAirlines,
@@ -158,7 +159,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         }
       });
     },
-    willClose: () => {
+    preConfirm: () => {
       const flightNumber = document.getElementById("FlightNumber").value;
       const airline = document.getElementById("Airline").value;
       const originAirport = document.getElementById("OriginAirport").value;
@@ -175,7 +176,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         Swal.showValidationMessage(`Please fill in all fields`);
       }
 
-      return {
+      const val = {
         id: flight?.FlightID,
         FlightNumber: flightNumber,
         AirlineID: Number(airline),
@@ -185,10 +186,43 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         DepartureTime: `${depDate}T${depTime}`,
         ArrivalTime: `${arrDate}T${arrTime}`,
       };
+      return val;
     }
   }).then((result) => {
     if(result.isConfirmed) {
       // Todo - send request to server
+
+      Axios.post(
+        "http://localhost:3001/system/editFlight",
+        result.value
+      ).then((res,err) => {
+        if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err,
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+        else if (res.data.Status === "Edit flight successfully! :)")
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: res.data.Status,
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonColor: "#2563eb",
+        });
+        else if (res.data.Error)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: res.data.Error,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      })
     }
   });
 };
