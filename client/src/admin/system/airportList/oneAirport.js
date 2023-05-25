@@ -1,11 +1,11 @@
 import { AiOutlineEdit } from "react-icons/ai";
 import { editAirport,deleteAirport } from "./functions";
 import { RiDeleteBin6Line } from "react-icons/ri";
-export const Airport = ({airport, set}) => {
+export const Airport = ({airport}) => {
   return ( <tr >
   <td
     className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
-    onClick={(e) => editAirport(airport.AirportID)}
+    onClick={(e) => editAirport(airport)}
   >
     <AiOutlineEdit className="mx-auto" />
   </td>
