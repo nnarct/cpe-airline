@@ -5,12 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 // components
 import { AdminNavbar } from "../components/navbar";
 import { Sidebar } from "../system/sidebar/sidebar";
-import { EmployeeList } from "../system/employeeList";
+import { EmployeeList } from "../system/employeeList/employeeList";
 import { AirlineList } from "../system/airlineList";
 import { AirportList } from "../system/airportList";
 import { FlightList } from "../system/flightList/flightList";
 import { UserList } from "../system/userList";
-import { PassengerList } from "../system/passengerList";
+import { PassengerList } from "../system/passengerList/passengerList";
 import { Dashboard } from "../system/dashboard";
 import { PlaneList } from "../system/planeList";
 
