@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import moment from "moment";
+import Axios from "axios";
 export const getFlights = async ({
   setFlights,
   setAirlines,
@@ -193,17 +194,55 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         Swal.showValidationMessage(
           "Arrival time must be later than departure time"
         );
-      else
-        return {
-          id: flight?.FlightID,
-          FlightNumber: flightNumber,
-          AirlineID: Number(airline),
-          OriginAirportID: Number(originAirport),
-          DestinationAirportID: Number(destinationAirport),
-          PlaneID: Number(plane),
-          DepartureTime: `${depDate}T${depTime}`,
-          ArrivalTime: `${arrDate}T${arrTime}`,
-        };
+
+      const val = {
+        id: flight?.FlightID,
+        FlightNumber: flightNumber,
+        AirlineID: Number(airline),
+        OriginAirportID: Number(originAirport),
+        DestinationAirportID: Number(destinationAirport),
+        PlaneID: Number(plane),
+        DepartureTime: `${depDate}T${depTime}`,
+        ArrivalTime: `${arrDate}T${arrTime}`,
+      };
+      return val;
+    }
+  }).then((result) => {
+    if(result.isConfirmed) {
+      // Todo - send request to server
+
+      Axios.post(
+        "http://localhost:3001/system/editFlight",
+        result.value
+      ).then((res,err) => {
+        if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err,
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+        else if (res.data.Status === "Edit flight successfully! :)")
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: res.data.Status,
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonColor: "#2563eb",
+        });
+        else if (res.data.Error)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: res.data.Error,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      })
+    }
     },
   });
 };

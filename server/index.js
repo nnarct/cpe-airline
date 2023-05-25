@@ -29,6 +29,7 @@ import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
 
+
 import { deleteAirport } from "./admin/deleteAirport.js";
 
 import { insertAirport } from "./admin/insertAirport.js";
@@ -47,8 +48,9 @@ import { getPayment } from "./users/searchFlight/getPayment.js";
 import { getInvoice } from "./users/searchFlight/getInvoice.js";
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { editAirport } from "./admin/edit/editAirport.js";
-
+import { editFlight } from "./admin/edit/editFlight.js";
 import { verifyOwner, verifyOwnerRes } from "./users/searchFlight/verifyowner.js";
+
 
 const app = express();
 app.use(express.json());
@@ -95,6 +97,7 @@ app.post("/system/editAirline", editAirline);
 app.post("/system/editAirport", editAirport);
 app.post("/system/editUser", editUser);
 app.post("/system/editPassenger", editPassenger);
+app.post("/system/editFlight", editFlight);
 
 app.post("/system/insertAirport", insertAirport);
 
