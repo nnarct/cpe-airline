@@ -33,7 +33,7 @@ export const PassengerList = () => {
           </THead>
           <tbody>
             {passengers?.map((passenger, i) => {
-              return <Passenger {...passenger}/>;
+              return <Passenger passenger={passenger}/>;
             })}
           </tbody>
         </Table>
