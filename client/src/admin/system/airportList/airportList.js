@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { AddAirport } from "../admin/system/components/addAirport";
-import { Content } from "../admin/system/components/content";
-import { Header } from "../admin/system/components/header";
-import { Table, THead, Th, Edit } from "../admin/system/components/table";
+import { AddAirport } from "../components/addAirport";
+import { Content } from "../components/content";
+import { Header } from "../components/header";
+import { Table, THead, Th, Edit } from "../components/table";
 import { Airport } from "./oneAirport";
 
 export const AirportList = () => {
