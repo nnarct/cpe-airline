@@ -20,7 +20,10 @@ import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
 import { airportList } from "./admin/airportList.js";
 import { flightList } from "./admin/flightList.js";
-import { passengerList } from "./admin/passengerList.js";
+import {
+  passengerList,
+  passengerListGroupByBooking,
+} from "./admin/passengerList.js";
 import { userList } from "./admin/userList.js";
 import { planeList } from "./admin/planeList.js";
 
@@ -28,7 +31,6 @@ import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
-
 
 import { deleteAirport } from "./admin/deleteAirport.js";
 
@@ -51,8 +53,10 @@ import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
 import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { editAirport } from "./admin/edit/editAirport.js";
 import { editFlight } from "./admin/edit/editFlight.js";
-import { verifyOwner, verifyOwnerRes } from "./users/searchFlight/verifyowner.js";
-
+import {
+  verifyOwner,
+  verifyOwnerRes,
+} from "./users/searchFlight/verifyowner.js";
 
 const app = express();
 app.use(express.json());
@@ -92,6 +96,7 @@ app.get("/system/airportList", airportList);
 app.get("/system/flightList", flightList);
 app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
+app.get("/system/passengerListGroupByBookingID", passengerListGroupByBooking);
 app.get("/system/planeList", planeList);
 
 app.post("/system/editEmployee", editEmployee);
