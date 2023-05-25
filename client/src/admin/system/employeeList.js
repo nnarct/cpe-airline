@@ -46,7 +46,7 @@ export const EmployeeList = () => {
                   }">
                 </div>
                 <div class="flex items-center justify-center">
-                  <label htmlFor="FirLastNamestName" class="w-24 block">LastName</label>
+                  <label htmlFor="LastName" class="w-24 block">LastName</label>
                   <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${
                     employee?.LastName
                   }">
