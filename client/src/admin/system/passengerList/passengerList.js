@@ -55,7 +55,7 @@ export const PassengerList = () => {
           </THead>
           <tbody>
             {passengers?.map((passenger, i) => {
-              return <Passenger passenger={passenger} />;
+              return <Passenger passenger={passenger} key={passenger.PassengerID || i}/>;
             })}
           </tbody>
         </Table>

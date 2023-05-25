@@ -201,6 +201,7 @@ export const FlightList = () => {
               filteredFlights.map((flight, i) => {
                 return (
                   <Flight
+                    key={flight.FlightID || i}
                     flight={flight}
                     airlines={airlines}
                     airports={airports}
