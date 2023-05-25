@@ -42,7 +42,7 @@ export const App = () => {
         {auth ? (
           <>
             <Route path="/contact" element={<ContactInfo />} />
-            <Route path="/myProfile/:id" element={<UserProfile />} />
+            <Route path="/myProfile" element={<UserProfile />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/invoice" element={<Invoice />} />
           </>
