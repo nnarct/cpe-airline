@@ -49,6 +49,7 @@ import { getInvoice } from "./users/searchFlight/getInvoice.js";
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
 import { deletePassenger } from "./admin/delete/deletePassenger.js";
+import { deleteAirport } from "./admin/delete/deleteAirport.js";
 import { editAirport } from "./admin/edit/editAirport.js";
 import { editFlight } from "./admin/edit/editFlight.js";
 import { verifyOwner, verifyOwnerRes } from "./users/searchFlight/verifyowner.js";
@@ -107,6 +108,7 @@ app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
 app.post("/system/deleteEmployee", deleteEmployee);
 app.post("/system/deletePassenger", deletePassenger);
+app.post("/system/deletePassenger", deleteAirport);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
