@@ -7,7 +7,9 @@ export const Employee = ({ setEmployees, setAirlines, employee, airlines }) => {
       <tr>
         <td
           className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-          onClick={(e) => editEmployee(setEmployees, setAirlines, employee,airlines)}
+          onClick={(e) =>
+            editEmployee(setEmployees, setAirlines, employee, airlines)
+          }
         >
           <AiOutlineEdit className="mx-auto" />
         </td>
@@ -22,7 +24,7 @@ export const Employee = ({ setEmployees, setAirlines, employee, airlines }) => {
         ].map((item, i) => {
           return (
             <td key={i} className="border px-3 py-2 text-center">
-              {item || "-"}
+              <span className="line-clamp-1">{item || "-"}</span>
             </td>
           );
         })}
