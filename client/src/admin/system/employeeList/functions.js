@@ -208,7 +208,7 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
     html: `<form>
       <div class="flex items-center justify-center">
         <label htmlFor="username" class="w-32 block">username<span class="text-red-500">*</span></label>
-        <input autofill="off" id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
+        <input id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="FirstName" class="w-32 block">First Name<span class="text-red-500">*</span></label>
@@ -248,10 +248,6 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
         <input autocomplete="off" type="password" id="Password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
       </div>
     </form>`,
-    onOpen: () => {
-      Swal.getInput("username").prop("autofill", true);
-    },
-
     didOpen: () => {
       const position = document.getElementById("Position");
       const airlineInput = document.getElementById("airlineInput");
