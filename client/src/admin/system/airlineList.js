@@ -146,7 +146,7 @@ export const AirlineList = () => {
             <Th className="w-1/12">ID</Th>
             <Th>Name</Th>
             <Th>Link</Th>
-            <Th>Delete</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {airlines &&
