@@ -1,10 +1,40 @@
-import { useState } from "react";
+import Axios from 'axios';
+import { useEffect,useState } from "react";
 import { Transaction } from "./transaction";
 import { Menu } from "./menu";
 
 export const MyFlight = () => {
+  const [Bookings, setBookings] = useState([]);
+ 
+  useEffect(() => {
+    Axios.post("http://localhost:3001/getUserBooking").then((res, err) => {
+        if(err) 
+          console.log(err);
+        else if(res.data.Error) 
+          console.log(res.data.Error);
+        else if(res.data.Status) 
+          setBookings(res.data.Data);
+      })
+  }, []);
+
   // initialize the state to show the upcoming flights section by default
   const [selectedSection, setSelectedSection] = useState("Upcoming Flights");
+
+  const filteredUpcomingFlights = Bookings.filter((b) => {
+    if(new Date(b.DepartureTime) < new Date()) 
+      return false;
+    return true;
+  });
+
+  const filteredDepartedFlights = Bookings.filter((b) => {
+    if(new Date(b.DepartureTime) > new Date())
+      return false;
+    return true;
+  });
+
+  const filteredCanceledFlights = Bookings.filter((b) => {
+
+  });
 
   return (
     <>
@@ -30,9 +60,9 @@ export const MyFlight = () => {
             </ul>
           </div>
 
-          {selectedSection === "Upcoming Flights" && <Transaction />}
-          {selectedSection === "Departed Flights" && <Transaction />}
-          {selectedSection === "Canceled Flights" && <Transaction />}
+          {selectedSection === "Upcoming Flights" && <Transaction flights={filteredUpcomingFlights}/>}
+          {selectedSection === "Departed Flights" && <Transaction flights={filteredDepartedFlights}/>}
+          {selectedSection === "Canceled Flights" && <Transaction flights={filteredCanceledFlights}/>}
         </div>
       </div>
     </>
