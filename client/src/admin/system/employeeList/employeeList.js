@@ -39,7 +39,7 @@ export const EmployeeList = () => {
             <Th>TelNo</Th>
             <Th>Position</Th>
             <Th>Airline ID</Th>
-            <Th>Delete</Th>
+            <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {employees && employees?.map((employee, i) => {

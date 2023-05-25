@@ -29,10 +29,13 @@ import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
 
-
-import { deleteAirport } from "./admin/deleteAirport.js";
-
 import { insertAirport } from "./admin/insertAirport.js";
+
+import { deleteAirline } from "./admin/delete/deleteAirline.js";
+import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
+import { deletePassenger } from "./admin/delete/deletePassenger.js";
+import { deleteAirport } from "./admin/delete/deleteAirport.js";
+import { deletePlane } from "./admin/delete/deletePlane.js";
 
 import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
@@ -46,12 +49,11 @@ import { flightInfo } from "./users/searchFlight/flightInfo.js";
 import { insertBooking } from "./users/searchFlight/insertBooking.js";
 import { getPayment } from "./users/searchFlight/getPayment.js";
 import { getInvoice } from "./users/searchFlight/getInvoice.js";
-import { deleteAirline } from "./admin/delete/deleteAirline.js";
-import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
-import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { editAirport } from "./admin/edit/editAirport.js";
 import { editFlight } from "./admin/edit/editFlight.js";
 import { verifyOwner, verifyOwnerRes } from "./users/searchFlight/verifyowner.js";
+import { editPlane } from "./admin/edit/editPlane.js";
+
 
 
 const app = express();
@@ -100,6 +102,7 @@ app.post("/system/editAirport", editAirport);
 app.post("/system/editUser", editUser);
 app.post("/system/editPassenger", editPassenger);
 app.post("/system/editFlight", editFlight);
+app.post("/system/editPlane", editPlane);
 
 app.post("/system/insertAirport", insertAirport);
 
@@ -107,6 +110,8 @@ app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
 app.post("/system/deleteEmployee", deleteEmployee);
 app.post("/system/deletePassenger", deletePassenger);
+app.post("/system/deleteAirport", deleteAirport);
+app.post("/system/deletePlane", deletePlane);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
