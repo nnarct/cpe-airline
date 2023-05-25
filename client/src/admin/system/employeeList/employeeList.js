@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { AddAdmin } from "../admin-register";
 import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Edit, THead, Table, Th } from "../components/table";
-import { getEmployeeList } from "./functions";
+import { getEmployeeList, addEmployee } from "./functions";
 import { Employee } from "./oneEmployee";
 export const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -12,20 +11,19 @@ export const EmployeeList = () => {
     getEmployeeList(setEmployees,setAirlines);
   }, []);
 
-  const [modal, setAddAdminModal] = useState(false);
   // Todo - edit employee
   // Todo - delete employee
   return (
     <>
       <Content>
-        <AddAdmin status={modal} setStatus={setAddAdminModal} />
+        {/* <AddAdmin status={modal} setStatus={setAddAdminModal} /> */}
         <Header>
           <span>Employee List</span>
           <button
             className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
-            onClick={() => setAddAdminModal(true)}
+            onClick={() => addEmployee(setEmployees,setAirlines,airlines)}
           >
-            Add Admin +
+            Add Employee +
           </button>
         </Header>
 
@@ -42,8 +40,8 @@ export const EmployeeList = () => {
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
-            {employees && employees?.map((employee, i) => {
-              return <Employee employee={employee} key={i} airlines={airlines}/>;
+            {employees?.map((employee, i) => {
+              return <Employee setEmployees={setEmployees} setAirlines={setAirlines} employee={employee} key={i} airlines={airlines}/>;
             })}
           </tbody>
         </Table>

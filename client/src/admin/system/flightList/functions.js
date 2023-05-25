@@ -208,8 +208,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     }
   }).then((result) => {
     if(result.isConfirmed) {
-      // Todo - send request to server
-
       Axios.post(
         "http://localhost:3001/system/editFlight",
         result.value

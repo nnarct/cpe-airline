@@ -1,8 +1,7 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
 
-
-export const getEmployeeList = async (setEmployees,setAirlines) => {
+export const getEmployeeList = async (setEmployees, setAirlines) => {
   try {
     const res = await fetch("http://localhost:3001/system/employeeList");
     const data = await res.json();
@@ -13,34 +12,47 @@ export const getEmployeeList = async (setEmployees,setAirlines) => {
   }
 };
 
-export const editEmployee = (employee,airlines) => {
-  console.log(airlines);
+export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
   Swal.fire({
     title: "Edit Employee",
     html: `<div class="">You are editing employee ID
-              <span class="text-red-500 font-bold">${employee?.EmployeeID}</span>
-              <span class="text-blue-500 font-bold pr-2">${employee?.FirstName} ${employee?.LastName}</span>
+              <span class="text-red-500 font-bold">${
+                employee?.EmployeeID
+              }</span>
+              <span class="text-blue-500 font-bold pr-2">${
+                employee?.FirstName
+              } ${employee?.LastName}</span>
             </div>
             <form>
               <div class="flex items-center justify-center">
                 <label htmlFor="FirstName" class="w-24 block">FirstName</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="FirstName" value="${employee?.FirstName}">
+                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="FirstName" value="${
+                  employee?.FirstName
+                }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="LastName" class="w-24 block">LastName</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${employee?.LastName}">
+                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${
+                  employee?.LastName
+                }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="Email" class="w-24 block">Email</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Email" value="${employee?.Email}">
+                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Email" value="${
+                  employee?.Email
+                }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="TelNo" class="w-24 block">TelNo</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="TelNo" value="${employee?.TelNo}">
+                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="TelNo" value="${
+                  employee?.TelNo || ""
+                }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="Position" class="w-24 block">Position</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Position" value="${employee?.Position}">
+                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Position" value="${
+                  employee?.Position
+                }">
               </div>
               <div class="flex items-center justify-center">
               <label htmlFor="AirlineID" class="w-24 block">Airline ID</label>
@@ -48,67 +60,273 @@ export const editEmployee = (employee,airlines) => {
                 employee?.AirlineID
               }">
               ${airlines?.map((a, i) => {
-              return `<option key=${i} value=${a.AirlineID} ${
-                a.AirlineID === employee.AirlineID ? "selected" : ""
-              }>
+                return `<option key=${i} value=${a.AirlineID} ${
+                  a.AirlineID === employee.AirlineID ? "selected" : ""
+                }>
                   ${a.AirlineID}. ${a.Name}
                 </option>`;
               })}
               </select>
               </div>
               </form>
-          `,  
+          `,
+    preConfirm: () => {
+      const FirstName = document.getElementById("#swal-input1").value;
+      const LastName = document.getElementById("#swal-input2").value;
+      const Email = document.getElementById("#swal-input3").value;
+      let TelNo = document.getElementById("#swal-input4").value;
+      const Position = document.getElementById("#swal-input5").value;
+      const AirlineID = document.getElementById("#AirlineID").value;
+      if (!FirstName || !LastName || !Email || !Position) {
+        Swal.showValidationMessage(`Please enter all fields`);
+      }
+      if (TelNo === "") TelNo = null;
+      else if (TelNo) {
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email))
+          return Swal.showValidationMessage("Email is invalid");
+        if (TelNo && !/^\d{10}$/.test(TelNo))
+          return Swal.showValidationMessage("Phone number is invalid");
+      }
+      return {
+        id: employee.EmployeeID,
+        FirstName,
+        LastName,
+        Email,
+        TelNo,
+        Position,
+        AirlineID,
+      };
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Axios.post(
+        "http://localhost:3001/system/editEmployee",
+        result.value
+      ).then((res, err) => {
+        if (err) {
+          Swal.fire({
+            title: "Error!",
+            text: err,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          return;
+        }
+        if (res.data.Status) {
+          Swal.fire({
+            title: "Success!",
+            text: res.data.Status,
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          }).then(() => {
+            getEmployeeList(setEmployees, setAirlines);
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: res.data.Status,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        }
+      });
+    }
   });
 };
 
-export const deleteEmployee = (employee) => {
-Swal.fire({
-  icon: "warning",
-  title: "Are you sure?",
-  html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${
-    employee.Name
-  }</span>
-  <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-  showValidationMessage: "no",
-  showCancelButton: true,
-  confirmButtonColor: "#d33",
-  confirmButtonText: "Confirm",
-  cancelButtonText: "Cancel",
-}).then((result) => {
-  if (result.isConfirmed)
-    Axios.post("http://localhost:3001/system/deleteEmployee", {
-      id: employee.EmployeeID,
-    }).then((res, err) => {
-      if (err)
-        Swal.fire({
-          title: "Error!",
-          text: err,
-          icon: "error",
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-      if (res.data.Status)
-        Swal.fire({
-          title: "Success!",
-          text: res.data.Status,
-          icon: "success",
-          timer: 2000,
-          timerProgressBar: true,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK",
-          showConfirmButton: true,
-        });
-      else if (res.data.Error)
-        Swal.fire({
-          title: "Error!",
-          text: res.data.Error,
-          icon: "error",
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-    });
-});
+export const deleteEmployee = (setEmployees, setAirlines, employee) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Are you sure?",
+    html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${employee.username}</span>
+  <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-2">This action cannot be undone !</div>`,
+    showValidationMessage: "no",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed)
+      Axios.post("http://localhost:3001/system/deleteEmployee", {
+        id: employee.EmployeeID,
+      }).then((res, err) => {
+        if (err)
+          Swal.fire({
+            title: "Error!",
+            text: err,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        if (res.data.Status)
+          Swal.fire({
+            title: "Success!",
+            text: res.data.Status,
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK",
+            showConfirmButton: true,
+          }).then(() => {
+            getEmployeeList(setEmployees, setAirlines);
+          });
+        else if (res.data.Error)
+          Swal.fire({
+            title: "Error!",
+            text: res.data.Error,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+      });
+  });
 };
 
+export const addEmployee = (setEmployees, setAirlines, airlines) => {
+  Swal.fire({
+    title: "Add New Employee",
+    html: `<form>
+      <div class="flex items-center justify-center">
+        <label htmlFor="username" class="w-32 block">username<span class="text-red-500">*</span></label>
+        <input autocomplete="off" id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="FirstName" class="w-32 block">First Name<span class="text-red-500">*</span></label>
+        <input id="FirstName" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="first name">
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="LastName" class="w-32 block">Last Name<span class="text-red-500">*</span></label>
+        <input id="LastName" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="last name">
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="TelNo" class="w-32 block">Phone No.</label>
+        <input id="TelNo" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="0887772222">
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="Email" type="email" class="w-32 block">Email<span class="text-red-500">*</span></label>
+        <input id="Email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="example@mail.com">
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="Position" class="w-32 block">Position<span class="text-red-500">*</span></label>
+        <select id="Position" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-4">
+          <option value="System">System admin</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <div id="airlineInput" class="flex items-center justify-center">
+        <label htmlFor="Airline" class="w-32 block">Airline<span class="text-red-500">*</span></label>
+        <select id="Airline" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-4">>
+          ${airlines?.map((a, i) => {
+            return `<option key=${i} value=${a.AirlineID}>
+              ${a.AirlineID}. ${a.Name}
+            </option>`;
+          })}
+        </select>
+      </div>
+      <div class="flex items-center justify-center">
+        <label htmlFor="Password" class="w-32 block">Password<span class="text-red-500">*</span></label>
+        <input autocomplete="off" type="password" id="Password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
+      </div>
+    </form>`,
+    didOpen: () => {
+      const position = document.getElementById("Position");
+      const airlineInput = document.getElementById("airlineInput");
+      airlineInput.classList.add("hidden");
+      position.addEventListener("input", (e) => {
+        if (e.target.value === "Admin") airlineInput.classList.remove("hidden");
+        else airlineInput.classList.add("hidden");
+      });
+    },
+    preConfirm: () => {
+      const username = document.getElementById("username").value;
+      const FirstName = document.getElementById("FirstName").value;
+      const LastName = document.getElementById("LastName").value;
+      const TelNo = document.getElementById("TelNo").value;
+      const Email = document.getElementById("Email").value;
+      const Position = document.getElementById("Position").value;
+      const AirlineID =
+        Position === "Admin" ? document.getElementById("Airline").value : null;
+      const Password = document.getElementById("Password").value;
+
+      if (!username) return Swal.showValidationMessage("Username is required");
+      if (!FirstName)
+        return Swal.showValidationMessage("First name is required");
+      if (!LastName) return Swal.showValidationMessage("Last name is required");
+      if (!Email) return Swal.showValidationMessage("Email is required");
+      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email))
+        return Swal.showValidationMessage("Email is invalid");
+      if (TelNo && !/^\d{10}$/.test(TelNo))
+        return Swal.showValidationMessage("Phone number is invalid");
+      else if (TelNo && TelNo[0] !== "0")
+        return Swal.showValidationMessage("Phone number must start with 0");
+      if (!Position) return Swal.showValidationMessage("Position is required");
+      if (!Password) return Swal.showValidationMessage("Password is required");
+
+      const val = {
+        username,
+        firstName: FirstName,
+        lastName: LastName,
+        TelNo,
+        email: Email,
+        position: Position,
+        airlineID: AirlineID,
+        password: Password,
+      };
+      return val;
+    },
+    showCancelButton: true,
+    confirmButtonText: "Add",
+    reverseButtons: true,
+    confirmButtonColor: "#3085d6",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Axios.post("http://localhost:3001/admin/register", result.value).then(
+        (res, err) => {
+          if (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: err,
+              timer: 5000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            return;
+          }
+          if (res.data.Error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: res.data.Error,
+              timer: 5000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            return;
+          }
+          if (res.data.Status) {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: res.data.Status,
+              timer: 5000,
+              timerProgressBar: true,
+              confirmButtonText: "Close",
+              confirmButtonColor: "#3085d6",
+            }).then(() => getEmployeeList(setEmployees, setAirlines));
+            return;
+          }
+        }
+      );
+    }
+  });
+};

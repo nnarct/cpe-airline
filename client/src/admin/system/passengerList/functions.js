@@ -13,7 +13,6 @@ export const getPassengersGroupByBookingID = async ({ setPassengers }) => {
   );
   const data = await res.json();
   setPassengers(data.Data);
-  console.log(data.Data);
 };
 export const editPassenger = (passenger) => {
   const fselected = passenger?.Gender === "female" ? "selected" : "";
@@ -134,13 +133,14 @@ export const deletePassenger = (passenger) => {
   Swal.fire({
     icon: "warning",
     title: "Are you sure?",
-    html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${passenger.Name}</span>
-      <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${passenger.FirstName}</span>
+      <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
     showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deletePassenger", {
