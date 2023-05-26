@@ -1,5 +1,6 @@
 import Axios from "axios";
 import moment from "moment";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FlightDetail } from "./flightdetail";
@@ -9,7 +10,7 @@ export const SearchResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  let v = {
+  const v = {
     from: params.get("from"),
     to: params.get("to"),
     departure: params.get("departure"),
@@ -24,22 +25,40 @@ export const SearchResult = () => {
 
   const [flights, setFlights] = useState([{ Origin: "" }]);
   useEffect(() => {
-    if(v.departureFlightID) {
-      v.arrival = params.get("departure");
-      v.departure = params.get("arrival");
-    }
-    Axios.post("http://localhost:3001/search/SearchFlights", v).then(
-      (res, err) => {
-        if (err) console.log(err);
-        console.log(res.data);
-        if (res.data.Status === "Success") setFlights(res.data.Flights);
-        else console.log(res.data.Error);
+    Axios.get("http://localhost:3001").then((res, err) => {
+      if (err || res.data.Status !== "Success") navigate("/");
+      else {
+        if (v.departureFlightID) {
+          v.arrival = params.get("departure");
+          v.departure = params.get("arrival");
+        }
+        Axios.post("http://localhost:3001/search/SearchFlights", v).then(
+          (res, err) => {
+            if (err)
+              Swal.fire({
+                icon: "error",
+                text: err,
+                title: "Error",
+                showConfirmButton: true,
+                timer: 5000,
+              }).then(() => navigate("/"));
+            if (res.data.Status === "Success") setFlights(res.data.Flights);
+            else
+              Swal.fire({
+                icon: "error",
+                text: res.data.Status,
+                title: "Error",
+                showConfirmButton: true,
+                timer: 5000,
+              }).then(() => navigate("/"));
+          }
+        );
       }
-    );
-  }, [v.from, v.to]);
+    });
+  }, [v, params, navigate]);
+
   const prevDay = (e) => {
     e.preventDefault();
-
     const date = new Date(v.departure);
     const limit = new Date("2023-05-29");
     if (date <= limit) return;

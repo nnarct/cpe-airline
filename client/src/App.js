@@ -19,7 +19,7 @@ import { Payment } from "./components/contactInfo/payment/payment";
 import { Invoice } from "./components/contactInfo/payment/invoice";
 export const App = () => {
   Axios.defaults.withCredentials = true;
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState("");
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
       if (err) setAuth(false); // You are not authenticated
