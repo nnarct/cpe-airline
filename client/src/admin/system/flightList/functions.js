@@ -246,7 +246,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     },
   );
 };
-
+// Todo -delete flight
 export const deleteFlight = (id) => {
   // todo - popup to make sure u wanna deelte the flight
   //if cnfirm - send request to daabase to delete to flight where flight id =id

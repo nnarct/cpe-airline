@@ -10,7 +10,7 @@ export const getPlanes = async (setPlanes, setAirlines) => {
     console.log(error);
   }
 };
-
+// Todo - edit plane
 export const editPlane = (plane, airlines) => {
   Swal.fire({
     title: "Edit Plane",
@@ -92,7 +92,7 @@ export const deletePlane = (plane, airlines) => {
       });
   });
 };
-
+//Todo - add plane
 export const addPlane = (airlines) => {
   Swal.fire({
     title: "Add Plane",
