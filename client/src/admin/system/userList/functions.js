@@ -6,7 +6,7 @@ export const getUsers = async (setUsers) => {
   const data = await res.json();
   setUsers(data.Data);
 }
-export const editUser = (user) => {
+export const editUser = (user, setUsers) => {
   Swal.fire({
     title: "Edit User",
     html: `
@@ -97,8 +97,63 @@ export const editUser = (user) => {
               timer: 3000,
               timerProgressBar: true,
             });
-          getUsers();
+          getUsers(setUsers);
         }
       );
+  });
+};
+
+export const deleteUser = (user,setUsers) => {
+  Swal.fire({
+    title: "Delete User",
+    text: `User ID${user.UserID}`,
+    html: `
+    <div>
+      You are deleting user ID
+      <span class="font-bold">${user.UserID}</span>
+      <span class="text-blue-500 font-bold">${
+        user.FirstName
+      } ${user.LastName}</span>
+    </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+    focusCancel: true,
+    confirmButtonColor: "#d33",
+  }).then((result) => {
+    console.log(result);
+    if (result.isConfirmed)
+      Axios.post("http://localhost:3001/system/deleteUser", {
+        id: user.UserID,
+      }).then((res, err) => {
+        if (err)
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        else if (res.data.Status === "Delete user successfully! :)")
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.Status,
+            timer: 3000,
+            timerProgressBar: true,
+            confirmButtonColor: "#2563eb",
+          });
+        else if (res.data.Error)
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res.data.Error,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+        getUsers(setUsers);
+      });
   });
 };

@@ -61,8 +61,8 @@ import {
 } from "./users/searchFlight/verifyowner.js";
 import { editPlane } from "./admin/edit/editPlane.js";
 
-
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
+import { deleteUser } from "./admin/delete/deleteUser.js";
 
 const app = express();
 app.use(express.json());
@@ -122,6 +122,7 @@ app.post("/system/deleteEmployee", deleteEmployee);
 app.post("/system/deletePassenger", deletePassenger);
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deletePlane", deletePlane);
+app.post("/system/deleteUser", deleteUser);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
