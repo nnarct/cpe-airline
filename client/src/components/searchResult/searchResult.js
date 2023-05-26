@@ -2,9 +2,7 @@ import Axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { airportName, formatDate } from "./function";
 import { FlightDetail } from "./flightdetail";
-import { Head } from "./components";
 import { SelectedFlight } from "./selectedFlight";
 
 export const SearchResult = () => {
@@ -38,7 +36,7 @@ export const SearchResult = () => {
         else console.log(res.data.Error);
       }
     );
-  }, []);
+  }, [v.from, v.to]);
   const prevDay = (e) => {
     e.preventDefault();
 
@@ -149,7 +147,7 @@ export const SearchResult = () => {
 
   return (
     <>
-      <div className="bg-gray-100 min-h-screen w-screen flex flex-col items-center">
+      <div className="bg-gray-100 min-h-screen w-screen flex flex-col items-center pb-20">
         {/* <Head
             from={airportName(flights[0].Origin, flights[0].OriIATA)}
             to={airportName(flights[0].Destination, flights[0].DesIATA)}
@@ -170,14 +168,13 @@ export const SearchResult = () => {
               className="bg-blue-300 hover:ring border rounded mx-3 px-3"
             >
               Next Day
-            </button>{" "}
+            </button>
           </div>
         )}
 
-        {flights &&
-          flights.map((flight, i) => {
-            return <FlightDetail key={i} v={v} flight={flight} />;
-          })}
+        {flights?.map((flight, i) => {
+          return <FlightDetail key={flight.FlightID} v={v} flight={flight} />;
+        })}
       </div>
     </>
   );
