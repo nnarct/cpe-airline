@@ -12,7 +12,7 @@ export const FlightList = () => {
   const [airports, setAirports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [planes, setPlanes] = useState([]);
-  const [cookies] = useCookies(['admin']);
+  const [cookies] = useCookies(["admin"]);
   const adminCookie = cookies.admin;
   const addFlight = useRef(null);
   const handleClick = () => {
@@ -20,9 +20,15 @@ export const FlightList = () => {
   };
 
   useEffect(() => {
-    getFlights({ setFlights, setAirlines, setAirports, setLoading, adminCookie });
+    getFlights({
+      setFlights,
+      setAirlines,
+      setAirports,
+      setLoading,
+      adminCookie,
+    });
     getPlanes({ setPlanes });
-  }, []);
+  }, [adminCookie]);
 
   // Todo - delete flight
   // Todo - Pagination
@@ -44,18 +50,19 @@ export const FlightList = () => {
   };
 
   const handleDateChange = (event) => {
-    console.log(event.target.value);
-    event.target.value !== "ALL"
-      ? setSelectedDate({ status: true, date: event.target.value })
-      : setSelectedDate({ status: false, date: "" });
+    if (event.target.value === "ALL")
+      setSelectedDate({ status: false, date: "" });
+    else setSelectedDate({ status: true, date: event.target.value });
   };
 
   const filteredFlights = flights.filter((flight) => {
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    return !(selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date);
+    return !(
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    );
   });
 
   return (
@@ -93,7 +100,9 @@ export const FlightList = () => {
                     id="fromFilter"
                     onChange={handleFromChange}
                   >
-                    <option key={"all"} value="ALL">All</option>
+                    <option key={"all"} value="ALL">
+                      All
+                    </option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -110,7 +119,9 @@ export const FlightList = () => {
                     id="toFilter"
                     onChange={handleToChange}
                   >
-                    <option key={"all"} value="ALL">All</option>
+                    <option key={"all"} value="ALL">
+                      All
+                    </option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -147,7 +158,7 @@ export const FlightList = () => {
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
-          {loading &&
+            {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
                   <tr key={index} className="p-4 animate-pulse">
