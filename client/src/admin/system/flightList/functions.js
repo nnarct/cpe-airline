@@ -117,7 +117,10 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
         </select>
     </form>`,
-
+        confirmButtonText: "Save",
+        showCancelButton: true,
+        focusCancel: true,
+        confirmButtonColor: "#3b82f6",
     didOpen: () => {
       const select1 = document.getElementById("Airline");
       const select2 = document.getElementById("Plane");
@@ -194,7 +197,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
           "Arrival time must be later than departure time"
         );
 
-      const val = {
+      return {
         id: flight?.FlightID,
         FlightNumber: flightNumber,
         AirlineID: Number(airline),
@@ -204,7 +207,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         DepartureTime: `${depDate}T${depTime}`,
         ArrivalTime: `${arrDate}T${arrTime}`,
       };
-      return val;
     }
   }).then((result) => {
     if(result.isConfirmed) {
@@ -243,7 +245,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     },
   );
 };
-
+// Todo -delete flight
 export const deleteFlight = (id) => {
   // todo - popup to make sure u wanna deelte the flight
   //if cnfirm - send request to daabase to delete to flight where flight id =id

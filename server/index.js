@@ -4,7 +4,6 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import Amadeus from "amadeus";
 
 import { verifyUser, verifyUserRes } from "./users/verifyUser.js";
 import { register } from "./users/register.js";
@@ -16,6 +15,10 @@ import { registerAdmin } from "./admin/registerAdmin.js";
 import { loginAdmin } from "./admin/loginAdmin.js";
 import { logoutAdmin } from "./admin/logoutAdmin.js";
 
+// select of non-system admin
+import { selectPassenger } from "./admin/restrict/passenger/select.js";
+
+// list
 import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
 import { airportList } from "./admin/airportList.js";
@@ -27,19 +30,25 @@ import {
 import { userList } from "./admin/userList.js";
 import { planeList } from "./admin/planeList.js";
 
+// edit
 import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
 
-import { insertAirport } from "./admin/insertAirport.js";
+// insert
+import { insertAirport } from "./admin/insert/insertAirport.js";
+import { insertAirline } from "./admin/insert/insertAirline.js";
 
+//delete
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
 import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { deleteAirport } from "./admin/delete/deleteAirport.js";
 import { deletePlane } from "./admin/delete/deletePlane.js";
 
+
+// verify auth
 import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
 import { showProfile } from "./users/showProfile.js";
@@ -60,7 +69,9 @@ import {
 } from "./users/searchFlight/verifyowner.js";
 import { editPlane } from "./admin/edit/editPlane.js";
 
-
+import { getUserBooking } from "./users/myFlight/getUserBooking.js";
+import { deleteUser } from "./admin/delete/deleteUser.js";
+import { selectFlight } from "./admin/restrict/flight/select.js";
 
 const app = express();
 app.use(express.json());
@@ -79,6 +90,10 @@ export const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
+});
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 // authentication
@@ -112,6 +127,7 @@ app.post("/system/editFlight", editFlight);
 app.post("/system/editPlane", editPlane);
 
 app.post("/system/insertAirport", insertAirport);
+app.post("/system/insertAirline", insertAirline);
 
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
@@ -119,6 +135,7 @@ app.post("/system/deleteEmployee", deleteEmployee);
 app.post("/system/deletePassenger", deletePassenger);
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deletePlane", deletePlane);
+app.post("/system/deleteUser", deleteUser);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);
@@ -137,7 +154,11 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getUserBooking", getUserBooking);
 
+// select for non-system admin
+app.post("/selectPassenger", selectPassenger);
+app.post("/selectFlight", selectFlight);
 app.listen(3001, () => {
   console.log("running on port 3001");
 });

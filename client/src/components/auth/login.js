@@ -1,10 +1,11 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
-
+import Logo from "../../assets/logo/logo.png";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Star } from "../../admin/components/star";
-export const Login = () => {
+export const Login = ({ setAuth }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const redirect = params.get("redirect");
@@ -17,6 +18,7 @@ export const Login = () => {
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
       if (res.data.Status === "Success") {
+        setAuth(true);
         if (redirect === "/search") navigate(-1);
         navigate("/");
       }
@@ -41,14 +43,7 @@ export const Login = () => {
       Axios.post("http://localhost:3001/login", values).then((res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Successfully login") {
-          Swal.fire({
-            title: "Login Success",
-            text: "Welcome back!",
-            icon: "success",
-            timer: 1500,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
+          setAuth(true);
           if (redirect === "/search") navigate(-1);
           navigate("/");
           return;
@@ -57,11 +52,15 @@ export const Login = () => {
       });
     }
   };
+  const [see, setSee] = useState(false);
   return (
     <>
-      <div className="w-screen h-screen bg-red-200 flex items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600">
+      <div className="w-screen h-screen bg-red-200 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600">
+        <a href="/">
+          <img src={Logo} alt="" className="cursor-pointer" />
+        </a>
         <form
-          className="w-60 m-auto p-5 flex flex-col items-center justify-center space-y-2 bg-white text-left rounded"
+          className="w-60 mt-5 p-5 flex flex-col items-center justify-center space-y-2 bg-white text-left rounded"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -82,14 +81,22 @@ export const Login = () => {
           <label className="w-full">
             Password <Star />
           </label>
-          <input
-            type="password"
-            placeholder="*******"
-            className="w-full py-1 px-2 border border-gray rounded text-sm focus:ring ring-blue-200 focus:outline-none focus:border-blue-200"
-            onChange={(e) => {
-              setValues({ ...values, password: e.target.value });
-            }}
-          />
+          <span className="relative w-full">
+            <input
+              type={see ? "text" : "password"}
+              placeholder="*******"
+              className="w-full py-1 px-2 border border-gray rounded text-sm focus:ring ring-blue-200 focus:outline-none focus:border-blue-200"
+              onChange={(e) => {
+                setValues({ ...values, password: e.target.value });
+              }}
+            />
+            <span
+              className="absolute right-3 top-[20%] cursor-pointer"
+              onClick={() => setSee(!see)}
+            >
+              {see ? <AiFillEye /> : <AiFillEyeInvisible />}
+            </span>
+          </span>
           <button
             className="bg-indigo-500 text-white rounded px-5 py-1 hover:opacity-40 transition duration-300 ease-in-out"
             type="submit"

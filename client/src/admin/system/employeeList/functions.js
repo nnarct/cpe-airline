@@ -26,31 +26,31 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
             <form>
               <div class="flex items-center justify-center">
                 <label htmlFor="FirstName" class="w-24 block">FirstName</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="FirstName" value="${
+                <input id="FirstName" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="FirstName" value="${
                   employee?.FirstName
                 }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="LastName" class="w-24 block">LastName</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${
+                <input id="LastName" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${
                   employee?.LastName
                 }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="Email" class="w-24 block">Email</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Email" value="${
-                  employee?.Email
+                <input id="Email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Email" value="${
+                  employee?.Email || ""
                 }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="TelNo" class="w-24 block">TelNo</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="TelNo" value="${
+                <input id="TelNo" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="TelNo" value="${
                   employee?.TelNo || ""
                 }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="Position" class="w-24 block">Position</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Position" value="${
+                <input id="Position" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Position" value="${
                   employee?.Position
                 }">
               </div>
@@ -68,33 +68,42 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
               })}
               </select>
               </div>
-              </form>
-          `,
+              </form>`,
+    confirmButtonText: "Save",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#3b82f6",
+    showCancelButton: true,
+    focusCancel: true,
     preConfirm: () => {
-      const FirstName = document.getElementById("#swal-input1").value;
-      const LastName = document.getElementById("#swal-input2").value;
-      const Email = document.getElementById("#swal-input3").value;
-      let TelNo = document.getElementById("#swal-input4").value;
-      const Position = document.getElementById("#swal-input5").value;
-      const AirlineID = document.getElementById("#AirlineID").value;
-      if (!FirstName || !LastName || !Email || !Position) {
-        Swal.showValidationMessage(`Please enter all fields`);
-      }
+      const firstName = document.getElementById("FirstName").value;
+      const lastName = document.getElementById("LastName").value;
+      const email = document.getElementById("Email").value;
+      let TelNo = document.getElementById("TelNo").value;
+      const position = document.getElementById("Position").value;
+      const airlineID = document.getElementById("AirlineID").value;
+
+      if (!firstName) Swal.showValidationMessage("Please enter FirstName");
+      else if (!lastName) Swal.showValidationMessage("Please enter LastName");
+      else if (!email) Swal.showValidationMessage("Please enter Email");
+      else if (!position) Swal.showValidationMessage("Please enter Position");
+      else if (position === "Admin" && !airlineID)
+        Swal.showValidationMessage("Please enter AirlineID");
       if (TelNo === "") TelNo = null;
       else if (TelNo) {
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email))
+        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email))
           return Swal.showValidationMessage("Email is invalid");
         if (TelNo && !/^\d{10}$/.test(TelNo))
           return Swal.showValidationMessage("Phone number is invalid");
       }
+
       return {
-        id: employee.EmployeeID,
-        FirstName,
-        LastName,
-        Email,
+        id: employee?.EmployeeID,
+        FirstName: firstName,
+        LastName: lastName,
+        Email: email,
         TelNo,
-        Position,
-        AirlineID,
+        Position: position,
+        AirlineID: airlineID,
       };
     },
   }).then((result) => {
@@ -145,14 +154,14 @@ export const deleteEmployee = (setEmployees, setAirlines, employee) => {
     icon: "warning",
     title: "Are you sure?",
     html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${employee.username}</span>
-  <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-2">This action cannot be undone !</div>`,
-    showValidationMessage: "no",
+  <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
-    if (result.isConfirmed)
+    if (result.isConfirmed) {
       Axios.post("http://localhost:3001/system/deleteEmployee", {
         id: employee.EmployeeID,
       }).then((res, err) => {
@@ -188,6 +197,7 @@ export const deleteEmployee = (setEmployees, setAirlines, employee) => {
             showConfirmButton: false,
           });
       });
+    }
   });
 };
 
@@ -197,7 +207,7 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
     html: `<form>
       <div class="flex items-center justify-center">
         <label htmlFor="username" class="w-32 block">username<span class="text-red-500">*</span></label>
-        <input autocomplete="off" id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
+        <input id="username" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="username">
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="FirstName" class="w-32 block">First Name<span class="text-red-500">*</span></label>
@@ -262,7 +272,7 @@ export const addEmployee = (setEmployees, setAirlines, airlines) => {
         return Swal.showValidationMessage("First name is required");
       if (!LastName) return Swal.showValidationMessage("Last name is required");
       if (!Email) return Swal.showValidationMessage("Email is required");
-      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email))
+      else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(Email))
         return Swal.showValidationMessage("Email is invalid");
       if (TelNo && !/^\d{10}$/.test(TelNo))
         return Swal.showValidationMessage("Phone number is invalid");

@@ -8,6 +8,5 @@ export const editFlight = (req, res) =>{
       if(err){
         return res.json({Error: "Error while editing flight..."});}
       return res.json({Status: "Edit flight successfully! :)"});
-    })
-  
+    });
   }

@@ -1,17 +1,17 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
-export const getPlanes = async (setPlanes,setAirlines) =>{
-    try {
-        const res = await fetch("http://localhost:3001/system/planeList");
-        const data = await res.json();
-        setPlanes(data.Data);
-        setAirlines(data.Airlines);
-    } catch (error) {
-        console.log(error);
-    }
+export const getPlanes = async (setPlanes, setAirlines) => {
+  try {
+    const res = await fetch("http://localhost:3001/system/planeList");
+    const data = await res.json();
+    setPlanes(data.Data);
+    setAirlines(data.Airlines);
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-export const editPlane = (plane,airlines) => {
+// Todo - edit plane
+export const editPlane = (plane, airlines) => {
   Swal.fire({
     title: "Edit Plane",
     html: `<div class="">You are editing Plane ID
@@ -36,66 +36,67 @@ export const editPlane = (plane,airlines) => {
               </div>
               </div>
               </form>
-          `,  
+          `,
+    confirmButtonText: "Save",
+    showCancelButton: true,
+    focusCancel: true,
+    confirmButtonColor: "#3085d6",
   });
 };
 
-export const deletePlane = (plane,airlines) => {
-    Swal.fire({
-        icon: "warning",
-        title: "Are you sure?",
-        html: `You are deleting plane ${plane.PlaneID}, <span class="font-semibold text-red-500">${
-          plane.PlaneModel
-        }</span>
-        <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-        showValidationMessage: "no",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        confirmButtonText: "Confirm",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed)
-          Axios.post("http://localhost:3001/system/deletePlane", {
-            id: plane.PlaneID,
-          }).then((res, err) => {
-            if (err)
-              Swal.fire({
-                title: "Error!",
-                text: err,
-                icon: "error",
-                timer: 2000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-              });
-            if (res.data.Status)
-              Swal.fire({
-                title: "Success!",
-                text: res.data.Status,
-                icon: "success",
-                timer: 2000,
-                timerProgressBar: true,
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK",
-                showConfirmButton: true,
-              });
-            else if (res.data.Error)
-              Swal.fire({
-                title: "Error!",
-                text: res.data.Error,
-                icon: "error",
-                timer: 2000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-              });
+export const deletePlane = (plane, airlines) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Are you sure?",
+    html: `You are deleting plane ${plane.PlaneID}, <span class="font-semibold text-red-500">${plane.PlaneModel}</span>
+        <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+    focusCancel: true,
+  }).then((result) => {
+    if (result.isConfirmed)
+      Axios.post("http://localhost:3001/system/deletePlane", {
+        id: plane.PlaneID,
+      }).then((res, err) => {
+        if (err)
+          Swal.fire({
+            title: "Error!",
+            text: err,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        if (res.data.Status)
+          Swal.fire({
+            title: "Success!",
+            text: res.data.Status,
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK",
+            showConfirmButton: true,
+          });
+        else if (res.data.Error)
+          Swal.fire({
+            title: "Error!",
+            text: res.data.Error,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
           });
       });
+  });
 };
-
-
+//Todo - add plane
 export const addPlane = (airlines) => {
-    Swal.fire({
-        title: "Add Plane",
-        html: `<div class="">You are adding Plane
+  Swal.fire({
+    title: "Add Plane",
+    html: `<div class="">You are adding Plane
                 </div>
                 <form>
                   <div class="flex items-center justify-center">
@@ -112,9 +113,10 @@ export const addPlane = (airlines) => {
                   </div>
                   </div>
               </form>
-              `,  
-        confirmButtonText: 'Save',
-        showCancelButton: true,
-        reverseButtons: true,
-    });
+              `,
+    confirmButtonText: "Save",
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonColor: "#3085d6",
+  });
 };

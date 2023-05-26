@@ -14,22 +14,21 @@ export const LoginAdmin = () => {
   const [seePass, setSeePass] = useState("password");
   const handleSubmit = () => {
     Axios.post("http://localhost:3001/admin/login", values)
-      .then((res) => {
-        if (res.data.Status === "Successfully login admin") {
+      .then((res, err) => {
+        if (err) console.log(err);
+        if (res.data?.Status === "Successfully login admin") {
           if (res.data.Position === "Admin") navigate("/admin");
           if (res.data.Position === "System") navigate("/system");
-          else navigate("/error");
         } else {
           Swal.fire({
             icon: "error",
             title: "Oops...",
             text: res.data.Error,
-          }).then(result => {
-            if(result.isConfirmed) navigate("/homepage");
-          })
+          }).then((result) => {
+            if (result.isConfirmed) navigate("/homepage");
+          });
         }
       })
-      .then((err) => console.log(err));
   };
 
   useEffect(() => {
