@@ -5,7 +5,7 @@ export const getUsers = async (setUsers) => {
   const res = await fetch("http://localhost:3001/system/userList");
   const data = await res.json();
   setUsers(data.Data);
-}
+};
 export const editUser = (user, setUsers) => {
   Swal.fire({
     title: "Edit User",
@@ -47,10 +47,22 @@ export const editUser = (user, setUsers) => {
       const TelNo = document.getElementById("TelNo").value;
       // Todo - phone number validation
       // Todo - email validation - must be unique from any others in database
-      // Todo - first name and last name validation - must be alphabet only and max 40 characters
-      if (FirstName === "" || LastName === "" || Email === "" || TelNo === "") {
+      if (FirstName === "" || LastName === "" || Email === "" || TelNo === "")
         Swal.showValidationMessage(`Please enter all information.`);
-      }
+      if (!/^[a-zA-Z\s]+$/.test(FirstName) || !/^[a-zA-Z\s]+$/.test(LastName))
+        Swal.showValidationMessage(
+          `First name and last name must be alphabet only.`
+        );
+      if (FirstName.length > 40 || LastName.length > 40)
+        Swal.showValidationMessage(
+          `First name and last name must be less than 40 characters.`
+        );
+      if (TelNo.length !== 10)
+        Swal.showValidationMessage(`Phone number must be 10 numbers.`);
+      if (TelNo[0] !== "0")
+        Swal.showValidationMessage(`Phone number must start with 0.`);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(Email))
+        Swal.showValidationMessage(`Please enter a valid email.`);
       return {
         id: user.UserID,
         FirstName,
@@ -84,7 +96,7 @@ export const editUser = (user, setUsers) => {
           else if (res.data.Error)
             Swal.fire({
               icon: "error",
-              title: "Oops...",
+              title: "Sorry",
               text: res.data.Error,
               timer: 3000,
               timerProgressBar: true,
@@ -103,7 +115,7 @@ export const editUser = (user, setUsers) => {
   });
 };
 
-export const deleteUser = (user,setUsers) => {
+export const deleteUser = (user, setUsers) => {
   Swal.fire({
     title: "Delete User",
     text: `User ID${user.UserID}`,
@@ -111,9 +123,8 @@ export const deleteUser = (user,setUsers) => {
     <div>
       You are deleting user ID
       <span class="font-bold">${user.UserID}</span>
-      <span class="text-blue-500 font-bold">${
-        user.FirstName
-      } ${user.LastName}</span>
+      <span class="text-blue-500 font-bold">${user.FirstName} ${user.LastName}</span>
+      <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>
     </div>
     `,
     showCancelButton: true,
