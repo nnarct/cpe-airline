@@ -131,7 +131,6 @@ export const deleteUser = (user, setUsers) => {
     focusCancel: true,
     confirmButtonColor: "#d33",
   }).then((result) => {
-    console.log(result);
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deleteUser", {
         id: user.UserID,

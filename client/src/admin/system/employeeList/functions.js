@@ -155,7 +155,6 @@ export const deleteEmployee = (setEmployees, setAirlines, employee) => {
     title: "Are you sure?",
     html: `You are deleting employee ${employee.EmployeeID}, <span class="font-semibold text-red-500">${employee.username}</span>
   <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
-    showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",

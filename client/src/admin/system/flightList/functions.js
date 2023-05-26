@@ -197,7 +197,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
           "Arrival time must be later than departure time"
         );
 
-      const val = {
+      return {
         id: flight?.FlightID,
         FlightNumber: flightNumber,
         AirlineID: Number(airline),
@@ -207,7 +207,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         DepartureTime: `${depDate}T${depTime}`,
         ArrivalTime: `${arrDate}T${arrTime}`,
       };
-      return val;
     }
   }).then((result) => {
     if(result.isConfirmed) {

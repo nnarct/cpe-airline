@@ -22,7 +22,6 @@ export const FlightList = () => {
     getPlanes({ setPlanes });
   }, []);
 
-  // Todo - edit flight
   // Todo - delete flight
   // Todo - Pagination
 
@@ -65,12 +64,8 @@ export const FlightList = () => {
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    if (
-      selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date
-    )
-      return false;
-    return true;
+    return !(selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date);
   });
 
   return (
@@ -185,7 +180,7 @@ export const FlightList = () => {
             {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
-                  <tr key={index} className="p-4 animate-pulse">
+                  <tr key={tr} className="p-4 animate-pulse">
                     {[...Array(10)].map((td, i) => {
                       return (
                         <td key={i} className="p-2 border border-1 text-center">
