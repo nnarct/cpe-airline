@@ -9,28 +9,28 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 export const Register = ({ auth }) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    telNo: "",
-    email: "",
-    password: "",
+    FirstName: "",
+    LastName: "",
+    TelNo: "",
+    Email: "",
+    Password: "",
   });
 
   const verifyValues = () => {
     let errText = "";
-    if (!isName(values.firstName))
+    if (!isName(values.FirstName))
       errText += "\u2022Please check your first name.\n";
-    if (!isName(values.lastName))
+    if (!isName(values.LastName))
       errText += "\u2022Please check your last name.\n";
-    if (values.email === null || values.email === "")
-      errText += "\u2022 Please enter your email.\n";
-    if (values.telNo[0] !== "0")
+    if (values.Email === null || values.Email === "")
+      errText += "\u2022 Please enter your Email.\n";
+    if (values.TelNo[0] !== "0")
       errText += "\u2022 Phone number must start with 0.\n";
-    else if (values.telNo.length !== 10)
+    else if (values.TelNo.length !== 10)
       errText += "\u2022 Phone number must be just 10 numbers.\n";
-    else if (!isPhoneNumber(values.telNo))
+    else if (!isPhoneNumber(values.TelNo))
       errText += "\u2022 Wrong phone number format.";
-    if (values.password.length < 8)
+    if (values.Password.length < 8)
       errText += "\u2022 Password must be at least 8 characters.\n";
     if (errText.length > 0) {
       alert(errText);
@@ -60,10 +60,20 @@ export const Register = ({ auth }) => {
               showConfirmButton: false,
               timer: 2000,
               timerProgressBar: true,
+              showCloseButton: true,
             });
         })
         .then((err) => {
-          if (err) console.log(err);
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Register Failed",
+              text: err,
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              showCloseButton: true,
+            });
         });
     }
   };
@@ -85,59 +95,59 @@ export const Register = ({ auth }) => {
             }}
           >
             <h1 className="text-3xl font-semibold">Register</h1>
-            <label htmlFor="firstName" className="w-full ">
+            <label htmlFor="FirstName" className="w-full ">
               FirstName
             </label>
             <input
               required
               type="text"
               placeholder="First Name"
-              name="firstName"
+              name="FirstName"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
-                setValues({ ...values, firstName: e.target.value });
+                setValues({ ...values, FirstName: e.target.value });
               }}
             />
-            <label htmlFor="lastName" className="w-full">
+            <label htmlFor="LastName" className="w-full">
               LastName
             </label>
             <input
               required
               type="text"
               placeholder="Last Name"
-              name="lastName"
+              name="LastName"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
-                setValues({ ...values, lastName: e.target.value });
+                setValues({ ...values, LastName: e.target.value });
               }}
             />
-            <label htmlFor="email" className="w-full">
+            <label htmlFor="Email" className="w-full">
               Email
             </label>
             <input
               required
-              type="email"
+              type="Email"
               placeholder="example@mail.com"
-              name="email"
+              name="Email"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
-                setValues({ ...values, email: e.target.value });
+                setValues({ ...values, Email: e.target.value });
               }}
             />
-            <label htmlFor="telNo" className="w-full">
+            <label htmlFor="TelNo" className="w-full">
               Tel Phone
             </label>
             <input
               required
               type="tel"
               placeholder="0885557777"
-              name="telNO"
+              name="TelNO"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
-                setValues({ ...values, telNo: e.target.value });
+                setValues({ ...values, TelNo: e.target.value });
               }}
             />
-            <label htmlFor="password" className="w-full">
+            <label htmlFor="Password" className="w-full">
               Password
             </label>
             <span className="w-full relative">
@@ -145,13 +155,16 @@ export const Register = ({ auth }) => {
                 required
                 type={see ? "text" : "password"}
                 placeholder="type your password"
-                name="password"
+                name="Password"
                 className="px-2 w-full block border border-grey-light rounded-full"
                 onChange={(e) => {
-                  setValues({ ...values, password: e.target.value });
+                  setValues({ ...values, Password: e.target.value });
                 }}
               />
-              <span className="absolute right-3 top-[20%] cursor-pointer" onClick={() => setSee(!see)}>
+              <span
+                className="absolute right-3 top-[20%] cursor-pointer"
+                onClick={() => setSee(!see)}
+              >
                 {see ? <AiFillEye /> : <AiFillEyeInvisible />}
               </span>
             </span>
@@ -161,7 +174,7 @@ export const Register = ({ auth }) => {
             >
               Register
             </button>
-            <p className=""> Already ave account? </p>
+            <p className=""> Already have an account? </p>
             <Link to="/login">
               <p className="text-blue-400 cursor-pointer hover:opacity-50">
                 Login
