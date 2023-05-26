@@ -1,9 +1,11 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
+import Logo from "../../assets/logo/logo.png";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { isPhoneNumber } from "./../../feature/verification/phone";
 import { isName } from "./../../feature/verification/name";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 export const Register = ({ auth }) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -65,15 +67,18 @@ export const Register = ({ auth }) => {
         });
     }
   };
-
+  const [see, setSee] = useState(false);
   return (
     <>
       {auth === true ? (
         <Navigate to="/" />
       ) : (
-        <div className="w-screen h-screen bg-red-200 flex items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600">
+        <div className="w-screen h-screen bg-red-200 flex items-center bg-gradient-to-tr from-indigo-800 via-purple-800 to-fuchsia-600 flex flex-col justify-center">
+          <a href="/">
+            <img src={Logo} alt="logo" className="cursor-pointer" />
+          </a>
           <form
-            className="flex flex-col text-left items-center justify-center space-y-2 w-100 bg-slate-50 m-auto mt-20 rounded p-5"
+            className="flex flex-col text-left items-center justify-center space-y-2 w-100 bg-slate-50 mt-5 rounded p-5"
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -86,7 +91,7 @@ export const Register = ({ auth }) => {
             <input
               required
               type="text"
-              placeholder="Jonathan"
+              placeholder="First Name"
               name="firstName"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
@@ -99,7 +104,7 @@ export const Register = ({ auth }) => {
             <input
               required
               type="text"
-              placeholder="Smith"
+              placeholder="Last Name"
               name="lastName"
               className="px-2 w-full block border border-grey-light rounded-full"
               onChange={(e) => {
@@ -135,16 +140,21 @@ export const Register = ({ auth }) => {
             <label htmlFor="password" className="w-full">
               Password
             </label>
-            <input
-              required
-              type="password"
-              placeholder="type your password"
-              name="password"
-              className="px-2 w-full block border border-grey-light rounded-full"
-              onChange={(e) => {
-                setValues({ ...values, password: e.target.value });
-              }}
-            />
+            <span className="w-full relative">
+              <input
+                required
+                type={see ? "text" : "password"}
+                placeholder="type your password"
+                name="password"
+                className="px-2 w-full block border border-grey-light rounded-full"
+                onChange={(e) => {
+                  setValues({ ...values, password: e.target.value });
+                }}
+              />
+              <span className="absolute right-3 top-[20%] cursor-pointer" onClick={() => setSee(!see)}>
+                {see ? <AiFillEye /> : <AiFillEyeInvisible />}
+              </span>
+            </span>
             <button
               className="cursor-pointer active:opacity-70 bg-blue-500 text-white rounded-full px-5 py-1 hover:opacity-40 w-full"
               type="submit"
@@ -159,7 +169,6 @@ export const Register = ({ auth }) => {
             </Link>
           </form>
         </div>
-
       )}
     </>
   );
