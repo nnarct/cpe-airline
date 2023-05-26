@@ -20,6 +20,7 @@ export const App = () => {
   Axios.defaults.withCredentials = true;
   const [auth, setAuth] = useState("");
   useEffect(() => {
+    
     Axios.get("http://localhost:3001").then((res, err) => {
       if (err) setAuth(false); // You are not authenticated
       if (res.data.Status === "Success") {
@@ -28,14 +29,15 @@ export const App = () => {
         setAuth(false);
       }
     });
-  });
+    console.log(auth)
+  },[auth]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/error" element={<ErrorPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setAuth={setAuth}/>} />
         <Route path="/register" element={<Register auth={auth} />} />
         <Route path="/search" element={<SearchResultPage />} />
         {auth ? (
