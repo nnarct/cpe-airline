@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "../navbar";
 import { FlightInfo } from "./flightInfo";
+import { BsCheckLg } from "react-icons/bs";
+import { Seatselect } from "./seatselect"
 import {
   InputFrom,
   inp,
@@ -109,7 +111,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    else if(/\d/.test(contact.firstname)){
+    else if (/\d/.test(contact.firstname)) {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -121,7 +123,7 @@ export const ContactInfo = () => {
       return;
     }
 
-    if(contact.lastname === undefined || contact.lastname === ""){
+    if (contact.lastname === undefined || contact.lastname === "") {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -143,7 +145,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    else if(/\d/.test(contact.lastname)){
+    else if (/\d/.test(contact.lastname)) {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -155,7 +157,7 @@ export const ContactInfo = () => {
       return;
     }
 
-    if(contact.email ===undefined || contact.email === ""){
+    if (contact.email === undefined || contact.email === "") {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -166,7 +168,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    else if(!emailRegex.test(contact.email)){
+    else if (!emailRegex.test(contact.email)) {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -177,7 +179,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    else if(contact.email >30){
+    else if (contact.email > 30) {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -188,7 +190,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    if(contact.phone === undefined || contact.phone === ""){
+    if (contact.phone === undefined || contact.phone === "") {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -199,7 +201,7 @@ export const ContactInfo = () => {
       });
       return;
     }
-    else if(!phoneRegex.test(contact.phone)){
+    else if (!phoneRegex.test(contact.phone)) {
       Swal.fire({
         icon: "error",
         title: "Sorry...",
@@ -260,7 +262,7 @@ export const ContactInfo = () => {
           });
           return;
         }
-        else if(/\d/.test(fname)){
+        else if (/\d/.test(fname)) {
           Swal.fire({
             icon: "error",
             title: "Sorry...",
@@ -282,7 +284,7 @@ export const ContactInfo = () => {
           });
           return;
         }
-        else if(/\d/.test(lname)){
+        else if (/\d/.test(lname)) {
           Swal.fire({
             icon: "error",
             title: "Sorry...",
@@ -305,7 +307,7 @@ export const ContactInfo = () => {
           });
           return;
         }
-        else if(/\d/.test(nationality)){
+        else if (/\d/.test(nationality)) {
           Swal.fire({
             icon: "error",
             title: "Sorry...",
@@ -441,41 +443,158 @@ export const ContactInfo = () => {
                       </label>
                       <span className="flex space-x-2 pr-3">
                         <input
-                          type="radio"
-                          htmlFor="gender"
-                          name={`gender${i + 1}`}
-                          onClick={() => handleGender(i + 1, "female")}
+                          name={`lname${i + 1}`}
+                          type="text"
+                          className={inp}
+                          defaultValue={value[i]?.lastname}
                         />
-                        <span>female</span>
-                      </span>
-                      <span className="flex space-x-2 pr-3">
+                      </InputFrom>
+                      <InputFrom label="Nationality">
                         <input
-                          type="radio"
-                          htmlFor="gender"
-                          name={`gender${i + 1}`}
-                          onClick={() => handleGender(i + 1, "male")}
-                          className="p-1"
+                          name={`nationality${i + 1}`}
+                          type="text"
+                          className={inp}
+                          defaultValue={value[i]?.nationality}
                         />
-                        <span>male</span>
-                      </span>
-                    </InputFrom>
-                  </PassengerInfo>
-                );
-              })}
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white px-4 py-1 mt-3 float-right w-fit rounded hover:ring "
-            >
-              Submit
-            </button>
-          </form>
-        </ContactSection>
-        <FlightInfo
-          pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
-          classType={data.c}
-        />
+                      </InputFrom>
+                      <InputFrom label="Date of birth">
+                        <Datepicker
+                          asSingle={true}
+                          useRange={false}
+                          minDate={new Date("1900-01-02")}
+                          maxDate={new Date()}
+                          value={
+                            value[i]
+                              ? {
+                                startDate: value[i].dob.startDate,
+                                endDate: value[i].dob.endDate,
+                              }
+                              : null
+                          }
+                          placeholder="DD-MM-YYYY"
+                          displayFormat={"DD-MM-YYYY"}
+                          inputClassName={inp}
+                          onChange={(e) => handleValueChange(i + 1, e)}
+                        />
+                        <label
+                          id={`gender${i + 1}`}
+                          className="px-3 whitespace-nowrap text-primary"
+                        >
+                          Gender
+                        </label>
+                        <span className="flex space-x-2 pr-3">
+                          <input
+                            type="radio"
+                            htmlFor="gender"
+                            name={`gender${i + 1}`}
+                            onClick={() => handleGender(i + 1, "female")}
+                          />
+                          <span>female</span>
+                        </span>
+                        <span className="flex space-x-2 pr-3">
+                          <input
+                            type="radio"
+                            htmlFor="gender"
+                            name={`gender${i + 1}`}
+                            onClick={() => handleGender(i + 1, "male")}
+                            className="p-1"
+                          />
+                          <span>male</span>
+                        </span>
+                      </InputFrom>
+                    </PassengerInfo>
+                  );
+                })}
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="bg-blue-500 text-white px-4 py-1 mt-3 float-right w-fit rounded hover:ring "
+              >
+                Submit
+              </button>
+            </form>
+          </ContactSection>
+
+          <FlightInfo
+            pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
+            classType={data.c}
+          />
+        </div>
+
+        {/* Add on */}
+        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+          <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
+            <h1 className="text-2xl  bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
+              Travel Protection
+            </h1>
+            <div className="mt-3">
+              <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+                <input id="TravelProtection1" type="radio" value="" name="TravelProtection" class="w-4 h-4 text-blue-600 bggray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label for="TravelProtection1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  <h1>Yes, I want to protect my trip for ฿ 300</h1>
+                  <ul className="text-xs font-normal text-gray-500">
+                    <li className="flex"><BsCheckLg className="mt-1 mr-1"/>Accidental Medical Expenses</li>
+                    <li className="flex"><BsCheckLg className="mt-1 mr-1"/>24/7 Emergency Assistance & Medical Evacuation</li>
+                    <li className="flex"><BsCheckLg className="mt-1 mr-1"/>Loss/Damage of Baggage & other Personal Items</li>
+                    <li className="flex"><BsCheckLg className="mt-1 mr-1"/>Flight & Baggage Delay Cover</li>
+                    <li className="flex"><BsCheckLg className="mt-1 mr-1"/>Personal Accident & much more</li>
+                  </ul>
+                </label>
+              </div>
+              <div className="flex items-center pl-4 rounded dark:border-gray-700">
+                <div className="mt-2">
+                  <input checked id="TravelProtection2" type="radio" value="" name="TravelProtection" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                </div>
+                <div className="ml-2">
+                  <label for="TravelProtection2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <p>No, I do not want to protect my trip.</p>
+                    <p>In case of emergency, I will cover all expenses on my own.</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Baggage */}
+        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+          <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
+            <h1 className="text-2xl  bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
+              Baggage
+            </h1>
+            <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700 mt-3">
+              <input id="Baggage-radio-1" type="radio" value="" name="Baggage-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="Baggage-radio-1" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 ">
+                <p>No checked baggage</p>
+              </label>
+            </div>
+            <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700 mt-2">
+              <input id="Baggage-radio-2" type="radio" value="" name="Baggage-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="Baggage-radio-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row">
+                <p className="basis-3/4">5 kg</p>
+                <p className="mr-3 text-right basis-1/4">฿ 490</p>
+              </label>
+            </div>
+            <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700 mt-2">
+              <input id="Baggage-radio-3" type="radio" value="" name="Baggage-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="Baggage-radio-3" class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row">
+                <p className="basis-3/4">10 kg</p>
+                <p className="mr-3 text-right basis-1/4">฿ 870</p>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* seat */}
+        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+          <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
+            <Seatselect/>
+          </div>
+        </div>
+
+
       </PageWrapper>
+
     </>
   );
 };

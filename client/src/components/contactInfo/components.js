@@ -32,10 +32,8 @@ export const PageWrapper = ({ children }) => {
   return (
     <>
       <div className="bg-slate-100 min-h-calc">
-        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
-          {children}
+        {children}
         </div>
-      </div>
     </>
   );
 };
