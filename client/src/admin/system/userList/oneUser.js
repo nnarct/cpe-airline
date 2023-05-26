@@ -1,7 +1,7 @@
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { editUser } from "./functions";
-export const User = (user) => {
+export const User = ({ user }) => {
   return (
     <>
       <tr>

@@ -12,6 +12,7 @@ export const UserList = () => {
 
   useEffect(() => {
     getUsers(setUsers);
+    console.log(users);
   }, []);
 
   const deleteUser = (id) => {
