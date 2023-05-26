@@ -16,19 +16,19 @@ export const editUser = (user, setUsers) => {
       <span class="text-blue-500 font-bold">${user.LastName}</span>
     </div>
     <form id="editUserForm">
-      <div class="flex items-center justify-center py-1">
+      <div class="flex items-center justify-center">
         <label for="FirstName" class="w-24 block">FirstName</label>
         <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="FirstName" value="${user.FirstName}">
       </div>
-      <div class="flex items-center justify-center py-1">
+      <div class="flex items-center justify-center">
         <label for="LastName" class="w-24 block">LastName</label>
         <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="LastName" value="${user.LastName}">
       </div>
-      <div class="flex items-center justify-center py-1">
+      <div class="flex items-center justify-center">
         <label for="Email" class="w-24 block">Email</label>
         <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Email" value="${user.Email}">
       </div>
-      <div class="flex items-center justify-center py-1">
+      <div class="flex items-center justify-center">
         <label for="TelNo" class="w-24 block">TelNo</label>
         <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="TelNo" value="${user.TelNo}">
       </div>
@@ -164,5 +164,107 @@ export const deleteUser = (user, setUsers) => {
           });
         getUsers(setUsers);
       });
+  });
+};
+
+export const addUser = (setUsers) => {
+  Swal.fire({
+    title: "Add New User",
+    html: `
+    <form>
+      <div class="flex items-center justify-center">
+        <label for="FirstName" class="w-24 block">FirstName</label>
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="FirstName">
+      </div>
+      <div class="flex items-center justify-center">
+        <label for="LastName" class="w-24 block">LastName</label>
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="LastName">
+      </div>
+      <div class="flex items-center justify-center">
+        <label for="Email" class="w-24 block">Email</label>
+        <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Email">
+      </div>
+      <div class="flex items-center justify-center">
+        <label for="TelNo" class="w-24 block">TelNo</label>
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="TelNo">
+      </div>
+      <div class="flex items-center justify-center">
+        <label for="Password" class="w-24 block">Password</label>
+        <input type="password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Password">
+      </div>
+  </form>`,
+    preConfirm: () => {
+      const FirstName = document.getElementById("FirstName").value;
+      const LastName = document.getElementById("LastName").value;
+      const Email = document.getElementById("Email").value;
+      const TelNo = document.getElementById("TelNo").value;
+      const Password = document.getElementById("Password").value;
+      if (!FirstName || !LastName || !Email || !TelNo || !Password)
+        Swal.showValidationMessage(`Please fill in all fields.`);
+      if (!/^[a-zA-Z\s]+$/.test(FirstName) || !/^[a-zA-Z\s]+$/.test(LastName))
+        Swal.showValidationMessage(
+          `First name and last name must be alphabet only.`
+        );
+      if (FirstName.length > 40 || LastName.length > 40)
+        Swal.showValidationMessage(
+          `First name and last name must be less than 40 characters.`
+        );
+      if (TelNo.length !== 10)
+        Swal.showValidationMessage(`Phone number must be 10 numbers.`);
+      if (TelNo[0] !== "0")
+        Swal.showValidationMessage(`Phone number must start with 0.`);
+      if (!/^[0-9]+$/.test(TelNo))
+        Swal.showValidationMessage(`Phone number must be number only.`);
+      if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(Email))
+        Swal.showValidationMessage(`Email is invalid.`);
+      if (Password.length < 8)
+        Swal.showValidationMessage(`Password must be at least 8 characters.`);
+      return { FirstName, LastName, Email, TelNo, Password };
+    },
+    showCancelButton: true,
+    confirmButtonText: "Add",
+    cancelButtonText: "Cancel",
+    focusCancel: true,
+    confirmButtonColor: "#2563eb",
+    reverseButtons: true,
+  }).then((result) => {
+    Axios.post("http://localhost:3001/register", result.value).then(
+      (res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: err,
+            timer: 5000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          return;
+        }
+        if (res.data.Error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: res.data.Error,
+            timer: 5000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          return;
+        }
+        if (res.data.Status) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: res.data.Status,
+            timer: 5000,
+            timerProgressBar: true,
+            confirmButtonText: "Close",
+            confirmButtonColor: "#3085d6",
+          }).then(() => getUsers(setUsers));
+          return;
+        }
+      }
+    );
   });
 };

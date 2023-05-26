@@ -6,7 +6,7 @@ import { Header } from "../components/header";
 import { Table, THead, Th, Edit } from "../components/table";
 
 import { User } from "./oneUser";
-import { getUsers } from "./functions";
+import { addUser, getUsers } from "./functions";
 export const UserList = () => {
   const [users, setUsers] = useState([]);
 
@@ -17,7 +17,15 @@ export const UserList = () => {
   return (
     <>
       <Content>
-        <Header>User List</Header>
+        <Header>
+          <span>User List</span>
+          <button
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
+            onClick={() => addUser(setUsers)}
+          >
+            Add Employee +
+          </button>
+        </Header>
         <Table className="container">
           <THead>
             <Edit />
