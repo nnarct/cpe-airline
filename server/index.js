@@ -71,6 +71,7 @@ import { editPlane } from "./admin/edit/editPlane.js";
 
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
+import { selectFlight } from "./admin/restrict/flight/select.js";
 
 const app = express();
 app.use(express.json());
@@ -157,7 +158,7 @@ app.post("/getUserBooking", getUserBooking);
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);
-
+app.post("/selectFlight", selectFlight);
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
