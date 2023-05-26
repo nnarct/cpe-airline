@@ -36,7 +36,6 @@ export const SystemDashboard = () => {
     setContent(c);
   }, [c, navigate]);
   const [page, setPage] = useState("Dashboard"); // ["Dashboard", "My Profile" ]
-  useEffect(() => {}, [c]);
   return (
     <>
       <AdminNavbar info={info} setPage={setPage}/>
