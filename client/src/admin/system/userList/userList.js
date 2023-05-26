@@ -20,10 +20,10 @@ export const UserList = () => {
         <Header>
           <span>User List</span>
           <button
-            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
+            className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white hover:ring"
             onClick={() => addUser(setUsers)}
           >
-            Add Employee +
+            Add User +
           </button>
         </Header>
         <Table className="container">

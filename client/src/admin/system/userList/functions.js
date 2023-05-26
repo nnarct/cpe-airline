@@ -18,19 +18,19 @@ export const editUser = (user, setUsers) => {
     <form id="editUserForm">
       <div class="flex items-center justify-center">
         <label for="FirstName" class="w-24 block">FirstName</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="FirstName" value="${user.FirstName}">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="FirstName" value="${user.FirstName}">
       </div>
       <div class="flex items-center justify-center">
         <label for="LastName" class="w-24 block">LastName</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="LastName" value="${user.LastName}">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="LastName" value="${user.LastName}">
       </div>
       <div class="flex items-center justify-center">
         <label for="Email" class="w-24 block">Email</label>
-        <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Email" value="${user.Email}">
+        <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="Email" value="${user.Email}">
       </div>
       <div class="flex items-center justify-center">
         <label for="TelNo" class="w-24 block">TelNo</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="TelNo" value="${user.TelNo}">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="TelNo" value="${user.TelNo}">
       </div>
     </form>
     `,
@@ -174,23 +174,23 @@ export const addUser = (setUsers) => {
     <form>
       <div class="flex items-center justify-center">
         <label for="FirstName" class="w-24 block">FirstName</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="FirstName">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="FirstName" placeholder="First Name">
       </div>
       <div class="flex items-center justify-center">
         <label for="LastName" class="w-24 block">LastName</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="LastName">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="LastName" placeholder="Last Name">
       </div>
       <div class="flex items-center justify-center">
         <label for="Email" class="w-24 block">Email</label>
-        <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Email">
+        <input type="email" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="Email" placeholder="example@mail.com">
       </div>
       <div class="flex items-center justify-center">
         <label for="TelNo" class="w-24 block">TelNo</label>
-        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="TelNo">
+        <input type="text" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="TelNo" placeholder="0987776666">
       </div>
       <div class="flex items-center justify-center">
         <label for="Password" class="w-24 block">Password</label>
-        <input type="password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" id="Password">
+        <input type="password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="Password" placeholder="password">
       </div>
   </form>`,
     preConfirm: () => {
