@@ -23,7 +23,7 @@ export const Th = ({ children, className, width }) => {
       <th
         className={`px-1 py-2 border border-1 border-black whitespace-nowrap ${className} ${width}`}
       >
-        {children}
+        <span className="line-clamp-1">{children}</span>
       </th>
     </>
   );

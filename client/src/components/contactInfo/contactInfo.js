@@ -339,6 +339,7 @@ export const ContactInfo = () => {
       <Navbar />
 
       <PageWrapper>
+        <div></div>
         <ContactSection>
           <form action="" ref={info}>
             <InputFrom label="First Name">

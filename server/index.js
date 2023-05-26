@@ -4,7 +4,6 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import Amadeus from "amadeus";
 
 import { verifyUser, verifyUserRes } from "./users/verifyUser.js";
 import { register } from "./users/register.js";
@@ -32,7 +31,8 @@ import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
 
-import { insertAirport } from "./admin/insertAirport.js";
+import { insertAirport } from "./admin/insert/insertAirport.js";
+import { insertAirline } from "./admin/insert/insertAirline.js";
 
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
@@ -60,8 +60,8 @@ import {
 } from "./users/searchFlight/verifyowner.js";
 import { editPlane } from "./admin/edit/editPlane.js";
 
-
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
+import { deleteUser } from "./admin/delete/deleteUser.js";
 
 const app = express();
 app.use(express.json());
@@ -80,6 +80,10 @@ export const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
+});
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 // authentication
@@ -113,6 +117,7 @@ app.post("/system/editFlight", editFlight);
 app.post("/system/editPlane", editPlane);
 
 app.post("/system/insertAirport", insertAirport);
+app.post("/system/insertAirline", insertAirline);
 
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
@@ -120,6 +125,7 @@ app.post("/system/deleteEmployee", deleteEmployee);
 app.post("/system/deletePassenger", deletePassenger);
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deletePlane", deletePlane);
+app.post("/system/deleteUser", deleteUser);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);

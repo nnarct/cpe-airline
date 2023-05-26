@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { BsPersonCircle, BsPersonFillGear } from "react-icons/bs";
@@ -9,15 +10,37 @@ export const ForUser = () => {
   const [info, setInfo] = useState({ UserID: "", firstName: "", lastName: "" });
   useEffect(() => {
     Axios.get("http://localhost:3001/userName").then((res, err) => {
-      if (err) console.log(err); // You are not authenticated
+      if (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: err,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      } // You are not authenticated
       if (res.data.Status === "Success") {
         setInfo({
           UserID: res.data.Data[0],
           firstName: res.data.Data[1],
           lastName: res.data.Data[2],
         });
-      } else {
-        console.log(res);
+      } else if (res.data.Error === "User token is not ok") {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: res.data.Error,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      } else if (res.data.Error === "You are not authenticated User") {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: res.data.Error,
+          timer: 3000,
+          timerProgressBar: true,
+        });
       }
     });
   }, []);
@@ -51,7 +74,7 @@ export const ForUser = () => {
               {info.firstName} {info.lastName[0]}.
             </h2>
             <hr />
-            <Link to={`/myProfile/${info.UserID}`}>
+            <Link to={`/myProfile?id=${info.UserID}`}>
               <div className="w-full flex items-center px-4 hover:bg-primary/10 transition duration-200">
                 <span className="pr-3">
                   <BsPersonFillGear size={18} />

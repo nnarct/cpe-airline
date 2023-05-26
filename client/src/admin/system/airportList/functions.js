@@ -1,6 +1,12 @@
 import Swal from "sweetalert2";
 import Axios from "axios";
-export const editAirport = (airport) => {
+
+export  const getAirports = async (setAirports) => {
+  const res = await fetch("http://localhost:3001/system/airportList");
+  const data = await res.json();
+  setAirports(data.Data);
+};
+export const editAirport = (setAirports,airport) => {
   Swal.fire({
     title: "Edit Airport",
     html: `<div>You are editing airport ID
@@ -74,7 +80,7 @@ export const editAirport = (airport) => {
             timer: 3000,
             timerProgressBar: true,
             confirmButtonColor: "#2563eb",
-          });
+          }).then(() => getAirports(setAirports));
         else if (res.data.Error)
           Swal.fire({
             icon: "error",
@@ -95,7 +101,6 @@ export const deleteAirport = (airport) => {
       airport.Name
     }</span>
     <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-    showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Content } from "../components/content";
-import { Header } from "../components/header";
-import { AddFlight } from "../components/addFlight";
-import { Table, THead, Th, Edit } from "../components/table";
+import { Content } from "../../system/components/content";
+import { Header } from "../../system/components/header";
+import { AddFlight } from "../../system/components/addFlight";
+import { Table, THead, Th, Edit } from "../../system/components/table";
 import { getFlights, getPlanes } from "./functions";
 import { Flight } from "./oneFlight";
 export const FlightList = () => {
@@ -106,7 +106,7 @@ export const FlightList = () => {
                     className="w-full border text-base px-2 py-1 border-primary/50"
                     onChange={handleAirlineChange}
                   >
-                    <option value="ALL">All</option>
+                    <option key={"all"} value="ALL">All</option>
                     {airlines.map((airline) => {
                       return (
                         <option key={airline.AirlineID} value={airline.Name}>
@@ -123,7 +123,7 @@ export const FlightList = () => {
                     id="fromFilter"
                     onChange={handleFromChange}
                   >
-                    <option value="ALL">All</option>
+                    <option key={"all"} value="ALL">All</option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -140,7 +140,7 @@ export const FlightList = () => {
                     id="toFilter"
                     onChange={handleToChange}
                   >
-                    <option value="ALL">All</option>
+                    <option key={"all"} value="ALL">All</option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -177,10 +177,10 @@ export const FlightList = () => {
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
-            {loading &&
+          {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
-                  <tr key={tr} className="p-4 animate-pulse">
+                  <tr key={index} className="p-4 animate-pulse">
                     {[...Array(10)].map((td, i) => {
                       return (
                         <td key={i} className="p-2 border border-1 text-center">

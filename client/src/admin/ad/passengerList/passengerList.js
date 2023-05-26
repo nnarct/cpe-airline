@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Content } from "../components/content";
-import { Header } from "../components/header";
-import { Table, THead, Th, Edit } from "../components/table";
+import { Content } from "../../system/components/content";
+import { Header } from "../../system/components/header";
+import { Table, THead, Th, Edit } from "../../system/components/table";
 import { getPassengers, getPassengersGroupByBookingID } from "./functions";
 import { Passenger } from "./onePassenger";
 
