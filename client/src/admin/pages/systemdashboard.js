@@ -33,7 +33,7 @@ export const SystemDashboard = () => {
       }
     });
     setContent(c);
-  }, [c]);
+  }, [c, navigate]);
 
   useEffect(() => {}, [c]);
   return (

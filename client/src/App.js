@@ -7,8 +7,7 @@ import { Register } from "./components/auth/register";
 import { Login } from "./components/auth/login";
 import { UserProfile } from "./components/userSetting/myProfile/userProfile";
 import { LoginAdmin } from "./admin/auth/admin-login";
-import { DashboardRouter } from "./admin/pages/dashboardRounter";
-import { ManagerDashboard } from "./admin/pages/managerdashboard";
+import { DashboardRouter } from "./admin/pages/dashboardRouter";
 import { SystemDashboard } from "./admin/pages/systemdashboard";
 import { AdminDashboard } from "./admin/pages/admindasboard";
 import { ErrorPage } from "./admin/auth/error";
@@ -56,7 +55,6 @@ export const App = () => {
         )}
         <Route path="/homepage" element={<DashboardRouter />} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/manager" element={<ManagerDashboard />} />
         <Route path="/system" element={<SystemDashboard />} />
         <Route path="/admin/login" element={<LoginAdmin />} />
       </Routes>

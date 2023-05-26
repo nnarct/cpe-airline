@@ -15,7 +15,8 @@ export const LoginAdmin = () => {
   const handleSubmit = () => {
     Axios.post("http://localhost:3001/admin/login", values)
       .then((res) => {
-        if (res.data.Status === "Successfully login admin") {
+        if (res.data?.Status === "Successfully login admin") {
+          console.log(res.data);
           if (res.data.Position === "Admin") navigate("/admin");
           if (res.data.Position === "System") navigate("/system");
           else navigate("/error");
