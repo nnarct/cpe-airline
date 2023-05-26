@@ -2,14 +2,14 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import moment from "moment";
 
-export const getPassengers = async ({ setPassengers, adminCookie }) => {
+export const getPassengers = async ({ setLoading, setPassengers, adminCookie }) => {
   Axios.post("http://localhost:3001/selectPassenger", { adminCookie }).then(
     (res, err) => {
       if (err) Swal.fire("Error", err.message, "error");
       if (res.data.Status) setPassengers(res.data.Data);
       else Swal.fire("Error", res.data.Error, "error");
     }
-  );
+  ).then(() => setLoading(false));
 };
 export const editPassenger = (passenger) => {
   const fselected = passenger?.Gender === "female" ? "selected" : "";

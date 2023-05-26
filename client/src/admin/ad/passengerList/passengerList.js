@@ -9,11 +9,11 @@ import { Passenger } from "./onePassenger";
 
 export const PassengerList = () => {
   const [passengers, setPassengers] = useState([]);
-  
+  const [loading, setLoading] = useState(true);
   const [cookies] = useCookies(['admin']);
   const adminCookie = cookies.admin;
   useEffect(() => {
-    getPassengers({ setPassengers, adminCookie });
+    getPassengers({ setPassengers, setLoading, adminCookie });
   }, []);
 
   // Todo - delete passenger ** must effect seat
@@ -35,8 +35,22 @@ export const PassengerList = () => {
             <Th>SeatID</Th> */}
             <Th className="w-20">Delete</Th>
           </THead>
+          {loading &&
+              [...Array(9)].map((tr, index) => {
+                return (
+                  <tr key={index} className="p-4 animate-pulse">
+                    {[...Array(10)].map((td, i) => {
+                      return (
+                        <td key={i} className="p-2 border border-1 text-center">
+                          <div className="bg-slate-200 rounded-full m-px h-3" />
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
           <tbody>
-            {passengers?.map((passenger, i) => {
+            {!loading && passengers?.map((passenger, i) => {
               return (
                 <Passenger
                   passenger={passenger}
