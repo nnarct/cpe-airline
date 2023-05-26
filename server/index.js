@@ -15,6 +15,10 @@ import { registerAdmin } from "./admin/registerAdmin.js";
 import { loginAdmin } from "./admin/loginAdmin.js";
 import { logoutAdmin } from "./admin/logoutAdmin.js";
 
+// select of non-system admin
+import { selectPassenger } from "./admin/restrict/passenger/select.js";
+
+// list
 import { employeeList } from "./admin/employeeList.js";
 import { airlineList } from "./admin/airlineList.js";
 import { airportList } from "./admin/airportList.js";
@@ -26,20 +30,25 @@ import {
 import { userList } from "./admin/userList.js";
 import { planeList } from "./admin/planeList.js";
 
+// edit
 import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
 
+// insert
 import { insertAirport } from "./admin/insert/insertAirport.js";
 import { insertAirline } from "./admin/insert/insertAirline.js";
 
+//delete
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
 import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
 import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { deleteAirport } from "./admin/delete/deleteAirport.js";
 import { deletePlane } from "./admin/delete/deletePlane.js";
 
+
+// verify auth
 import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
 import { showProfile } from "./users/showProfile.js";
@@ -145,6 +154,9 @@ app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
 app.post("/getUserBooking", getUserBooking);
+
+// select for non-system admin
+app.post("/selectPassenger", selectPassenger);
 
 app.listen(3001, () => {
   console.log("running on port 3001");
