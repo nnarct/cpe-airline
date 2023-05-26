@@ -45,8 +45,6 @@ export const editUser = (user, setUsers) => {
       const LastName = document.getElementById("LastName").value;
       const Email = document.getElementById("Email").value;
       const TelNo = document.getElementById("TelNo").value;
-      // Todo - phone number validation
-      // Todo - email validation - must be unique from any others in database
       if (FirstName === "" || LastName === "" || Email === "" || TelNo === "")
         Swal.showValidationMessage(`Please enter all information.`);
       if (!/^[a-zA-Z\s]+$/.test(FirstName) || !/^[a-zA-Z\s]+$/.test(LastName))
