@@ -10,10 +10,12 @@ export const editAirport = (setAirports,airport) => {
   Swal.fire({
     title: "Edit Airport",
     html: `<div>You are editing airport ID
-              <span class="font-bold">${airport?.AirportID}</span>
-              <span class="text-blue-500 font-bold">${
-                airport?.IATA
+              <span class="font-bold">
+              ${airport?.AirportID
               }</span>
+              <span class="text-blue-500 font-bold">${
+                airport?.Name
+              } ${airport?.Name}</span>
             </div>
           <div class="flex items-center justify-center py-1">
             <label htmlFor="name" class="w-24 block">Name</label>
@@ -55,7 +57,12 @@ export const editAirport = (setAirports,airport) => {
         Swal.showValidationMessage(`Please enter airport state`);
       else if (!Province)
         Swal.showValidationMessage(`Please enter airport province`);
-      return { Name, IATA, State, Province };
+      return { 
+        id: airport?.AirportID,
+        Name: Name,
+        IATA: IATA,
+        State: State,
+        Province: Province,};
     },
   }).then((result) => {
     if (result.isConfirmed)

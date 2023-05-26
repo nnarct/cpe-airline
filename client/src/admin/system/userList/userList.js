@@ -38,7 +38,9 @@ export const UserList = () => {
           </THead>
           <tbody>
             {users?.map((user, i) => {
-              return <User key={user.UserID} user={user} setUsers={setUsers} />;
+              return (
+              <User key={user.UserID} user={user} setUsers={setUsers} />
+            );
             })}
           </tbody>
         </Table>

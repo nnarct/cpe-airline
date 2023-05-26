@@ -192,6 +192,12 @@ export const addUser = (setUsers) => {
         <input type="password" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" id="Password" placeholder="password">
       </div>
   </form>`,
+  showCancelButton: true,
+  confirmButtonText: "Add",
+  cancelButtonText: "Cancel",
+  focusCancel: true,
+  confirmButtonColor: "#2563eb",
+  reverseButtons: true,
     preConfirm: () => {
       const FirstName = document.getElementById("FirstName").value;
       const LastName = document.getElementById("LastName").value;
@@ -220,12 +226,6 @@ export const addUser = (setUsers) => {
         Swal.showValidationMessage(`Password must be at least 8 characters.`);
       return { FirstName, LastName, Email, TelNo, Password };
     },
-    showCancelButton: true,
-    confirmButtonText: "Add",
-    cancelButtonText: "Cancel",
-    focusCancel: true,
-    confirmButtonColor: "#2563eb",
-    reverseButtons: true,
   }).then((result) => {
     Axios.post("http://localhost:3001/register", result.value).then(
       (res, err) => {
@@ -260,10 +260,10 @@ export const addUser = (setUsers) => {
             timerProgressBar: true,
             confirmButtonText: "Close",
             confirmButtonColor: "#3085d6",
-          }).then(() => getUsers(setUsers));
+          });
+           getUsers(setUsers);
           return;
         }
-      }
-    );
+      });
   });
 };
