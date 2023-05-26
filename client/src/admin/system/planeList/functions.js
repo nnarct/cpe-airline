@@ -50,7 +50,6 @@ export const deletePlane = (plane, airlines) => {
     title: "Are you sure?",
     html: `You are deleting plane ${plane.PlaneID}, <span class="font-semibold text-red-500">${plane.PlaneModel}</span>
         <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-    showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
