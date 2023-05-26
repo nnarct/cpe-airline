@@ -4,7 +4,6 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import Amadeus from "amadeus";
 
 import { verifyUser, verifyUserRes } from "./users/verifyUser.js";
 import { register } from "./users/register.js";
@@ -81,6 +80,10 @@ export const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "cpeairline",
+});
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 // authentication
