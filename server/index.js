@@ -72,7 +72,9 @@ import {
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
 import { editPlane } from "./admin/edit/editPlane.js";
-
+import { genderCount } from "./admin/dashboard/genderCount.js"
+import { bookingCount } from "./admin/dashboard/bookCount.js"
+import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
@@ -171,6 +173,9 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.get("/system/genderCount", genderCount);
+app.get("/system/bookCount", bookingCount);
+app.get("/system/destinaton", getFlightCountsBySection)
 app.post("/getUserBooking", getUserBooking);
 
 // select for non-system admin
