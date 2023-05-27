@@ -43,8 +43,6 @@ export const Class = ({ values, setValues }) => {
             <ul className="w-11/12 my-2">
               <ClassList text="Economy" />
               <ClassList text="Premium Economy" />
-              <ClassList text="Business" />
-              <ClassList text="First Class" />
             </ul>
           </Card>
         ) : (
