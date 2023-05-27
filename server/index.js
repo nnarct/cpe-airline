@@ -79,6 +79,8 @@ import { deleteUser } from "./admin/delete/deleteUser.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
 import { addOnInfo } from "./users/searchFlight/addOns.js";
 import { adminInfo } from "./admin/adminInfo.js";
+import { editSystemProfile } from "./admin/edit/editSystemProfile.js";
+import { editAdminProfile } from "./admin/edit/editAdminProfile.js";
 
 const app = express();
 app.use(express.json());
@@ -117,6 +119,7 @@ app.get("/admin/logout", logoutAdmin);
 
 // system admin
 app.post("/admin/info", adminInfo);
+app.post("/system/editProfile", editAdminProfile);
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);
@@ -126,6 +129,7 @@ app.get("/system/passengerList", passengerList);
 app.get("/system/passengerListGroupByBookingID", passengerListGroupByBooking);
 app.get("/system/planeList", planeList);
 
+app.post("/system/editProfile", editSystemProfile);
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
 app.post("/system/editAirport", editAirport);
