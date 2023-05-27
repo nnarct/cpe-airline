@@ -39,6 +39,8 @@ import { editPassenger } from "./admin/edit/editPassenger.js";
 // insert
 import { insertAirport } from "./admin/insert/insertAirport.js";
 import { insertAirline } from "./admin/insert/insertAirline.js";
+import { insertPlane } from "./admin/insert/insertPlane.js";
+import { insertUser } from "./admin/insert/insertUser.js";
 
 //delete
 import { deleteAirline } from "./admin/delete/deleteAirline.js";
@@ -130,6 +132,8 @@ app.post("/system/editPlane", editPlane);
 
 app.post("/system/insertAirport", insertAirport);
 app.post("/system/insertAirline", insertAirline);
+app.post("/system/insertPlane", insertPlane);
+app.post("/system/insertUser", insertUser);
 
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);

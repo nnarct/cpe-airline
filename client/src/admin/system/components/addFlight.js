@@ -70,24 +70,12 @@ export const AddFlight = ({ airlines, airports, planes }) => {
           >
             {airlines?.map((airline, i) => {
               return (
-                <option key={`airline${i}`} value={airline.AirlineID}>
-                  {airline.AirlineID}-{airline.Name}
+                <option key={`airline${i}`} value={airline.AirlineID}> 
+                  {airline.AirlineID}-{airline.Name} == flight.AirlineID ? "selected" : ""       
                 </option>
               );
             })}
           </select>
-          {/* <label htmlFor="Airline" class="w-24 block">Airline</label>
-          <select id="Airline" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
-            ${a.AirlineID}. ${a.PlaneID}
-             }">
-        ${airlines?.map((a, i) => {
-          return `<option key=${i} value=${a.AirlineID} ${
-            a.AirlineID === planes.AirlineID ? "selected" : ""
-          }>
-              ${a.AirlineID}. ${a.PlaneID}
-            </option>`;
-        })}
-        </select> */}
         
           <label htmlFor="DepartureTime">Departure time</label>
           <input
@@ -104,13 +92,10 @@ export const AddFlight = ({ airlines, airports, planes }) => {
             type="datetime-local"
             min={new Date(values.DepartureTime).toISOString().slice(0, -8)}
           />
-          {/* <label htmlFor="PlaneID">Plane ID</label> */}
-          {/* <input type="text" className="mb-2 border rounded p-1" /> */}
+
             <label htmlFor="Plane" class="w-24 block">Plane</label>
             <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
              </select>
-
-  
 
           <label htmlFor="OriginAirport">Origin Airport</label>
           <select

@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import moment from "moment";
 import Axios from "axios";
+
 export const getFlights = async ({
   setFlights,
   setAirlines,
@@ -37,7 +38,6 @@ export const getPlanes = async ({ setPlanes }) => {
     console.log(err);
   }
 };
-
 
 export const editFlight = ({ flight, airlines, airports, planes }) => {
   const id = flight.FlightID;
@@ -117,10 +117,10 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
         </select>
     </form>`,
-        confirmButtonText: "Save",
-        showCancelButton: true,
-        focusCancel: true,
-        confirmButtonColor: "#3b82f6",
+    confirmButtonText: "Save",
+    showCancelButton: true,
+    focusCancel: true,
+    confirmButtonColor: "#3b82f6",
     didOpen: () => {
       const select1 = document.getElementById("Airline");
       const select2 = document.getElementById("Plane");
@@ -160,7 +160,9 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     preConfirm: () => {
       const flightNumber = document.getElementById("FlightNumber").value;
       const airline = document.getElementById("Airline").value;
-      const originAirport = document.getElementById("OriginAirportSelect").value;
+      const originAirport = document.getElementById(
+        "OriginAirportSelect"
+      ).value;
       const destinationAirport = document.getElementById(
         "DestinationAirportSelect"
       ).value;
@@ -207,43 +209,41 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         DepartureTime: `${depDate}T${depTime}`,
         ArrivalTime: `${arrDate}T${arrTime}`,
       };
-    }
-  }).then((result) => {
-    if(result.isConfirmed) {
-      Axios.post(
-        "http://localhost:3001/system/editFlight",
-        result.value
-      ).then((res,err) => {
-        if (err)
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err,
-          timer: 3000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-        else if (res.data.Status === "Edit flight successfully! :)")
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: res.data.Status,
-          timer: 3000,
-          timerProgressBar: true,
-          confirmButtonColor: "#2563eb",
-        });
-        else if (res.data.Error)
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: res.data.Error,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      })
-    }
     },
-  );
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Axios.post("http://localhost:3001/system/editFlight", result.value).then(
+        (res, err) => {
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err,
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+          else if (res.data.Status === "Edit flight successfully! :)")
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: res.data.Status,
+              timer: 3000,
+              timerProgressBar: true,
+              confirmButtonColor: "#2563eb",
+            });
+          else if (res.data.Error)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res.data.Error,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+        }
+      );
+    }
+  });
 };
 // Todo -delete flight
 export const deleteFlight = (id) => {

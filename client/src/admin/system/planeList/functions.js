@@ -10,7 +10,7 @@ export const getPlanes = async (setPlanes, setAirlines) => {
   }
 };
 // Todo - edit plane
-export const editPlane = (plane) => {
+export const editPlane = (setPlanes,plane,airlines,setAirlines) => {
   Swal.fire({
     title: "Edit Plane",
     html: `<div class="">You are editing Plane ID
@@ -19,24 +19,25 @@ export const editPlane = (plane) => {
             </div>
             <form>
               <div class="flex items-center justify-center">
-                <label htmlFor="PlaneID" class="w-24 block">PlaneID</label>
-                <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneID" value="
-                ${plane?.PlaneID}">
+                <label htmlFor="AirlineID" class="w-32 block">AirlineID</label>
+                <select  id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${plane.AirlineID}">
+                ${airlines?.map((a,i)=>{
+                  console.log("airline",a);
+                  return `<option key=${i} value=${a.AirlineID} ${
+                    a.AirlineID === plane.AirlineID ? "selected" : ""
+                  }>
+                    ${a.AirlineID}. ${a.Name}
+                  </option>`;
+                })}
+                </select>
               </div>
               <div class="flex items-center justify-center">
-                <label htmlFor="AirlineID" class="w-24 block">AirlineID</label>
-                <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="AirlineID" value="
-                ${plane?.AirlineID}">
+                <label htmlFor="PlaneModel" class="w-32 block">PlaneModel</label>
+                <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel" value="${plane?.PlaneModel}">
               </div>
               <div class="flex items-center justify-center">
-                <label htmlFor="PlaneModel" class="w-24 block">PlaneModel</label>
-                <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel" value="
-                ${plane?.PlaneModel}">
-              </div>
-              <div class="flex items-center justify-center">
-                <label htmlFor="SeatingPlan" class="w-24 block">SeatingPlan</label>
-                <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan" value="
-                ${plane?.SeatingPlan}">
+                <label htmlFor="SeatingPlan" class="w-32 block">SeatingPlan</label>
+                <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan" value="${plane?.SeatingPlan || ""}">
               </div>
               </div>
               </form>
@@ -47,27 +48,21 @@ export const editPlane = (plane) => {
     confirmButtonColor: "#3085d6",
 
     preConfirm: () => {
-      const planeID = document.getElementById("swal-input1").value;
+
       const airlineID = document.getElementById("swal-input2").value;
       const planeModel = document.getElementById("swal-input3").value;
       const seatingPlan = document.getElementById("swal-input4").value;
-      
-      if (!planeID) Swal.showValidationMessage("Please enter a planeID");
       if (!airlineID) Swal.showValidationMessage("Please enter a airlineID");
       if (!planeModel) Swal.showValidationMessage("Please enter a planeModel");
-      if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
-      return { PlaneID: planeID, AirlineID: airlineID, PlaneModel: planeModel, SeatingPlan: seatingPlan };
+
+      // else if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
+      return { AirlineID: airlineID, PlaneModel: planeModel, SeatingPlan: seatingPlan==='' ? null : seatingPlan , id: plane.PlaneID};
     },
   }).then((result) => { 
     if (result.isConfirmed)
-      Axios.post("http://localhost:3001/system/editPlane", {
-        id: plane.PlaneID,
-        // PlaneID: result.value.PlaneID.trim(),
-        AirlineID: result.value.AirlineID.trim(),
-        PlaneModel: result.value.PlaneModel.trim(),
-        SeatingPlan: result.value.SeatingPlan.trim(),
-      }).then((res, err) => {
-        if (err)
+      Axios.post("http://localhost:3001/system/editPlane",result.value
+      ).then((res, err) => {
+        if (err){
           Swal.fire({
             title: "Error!",
             text: err,
@@ -76,7 +71,9 @@ export const editPlane = (plane) => {
             timerProgressBar: true,
             showConfirmButton: false,
           });
-        if (res.data.Status)
+          return;
+        }
+        if (res.data.Status){
           Swal.fire({
             title: "Success!",
             text: res.data.Status,
@@ -86,7 +83,11 @@ export const editPlane = (plane) => {
             confirmButtonColor: "#3085d6",
             confirmButtonText: "OK",
             showConfirmButton: true,
+          }).then(()=>{
+            getPlanes(setPlanes,setAirlines);
           });
+        }
+          
         else if (res.data.Error)
           Swal.fire({
             title: "Error!",
@@ -96,8 +97,9 @@ export const editPlane = (plane) => {
             timerProgressBar: true,
             showConfirmButton: false,
           });
-      });
-  });
+        }
+      );
+    });
 };
 export const deletePlane = (plane, airlines) => {
   Swal.fire({
@@ -150,42 +152,42 @@ export const deletePlane = (plane, airlines) => {
   });
 };
 //Todo - add plane
-export const addPlane = (plane, airlines) => {
+export const addPlane = (airlines, setPlanes, setAirlines) => {
+  console.log(airlines);
   Swal.fire({
     title: "Add Plane",
-    html: `<div class="">You are adding Plane
-                </div>
+    html: `
                 <form>
-                <div class="flex items-center justify-center">
-                    <label htmlFor="PlaneID" class="w-28 block">PlaneID</label>
-                    <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneID">
-                  </div>
                   <div class="flex items-center justify-center">
                     <label htmlFor="AirlineID" class="w-28 block">AirlineID</label>
-                    <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="AirlineID">
-                  </div>
+                    <select  id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${airlines.AirlineID}">
+                  ${airlines?.map((a,i)=>{
+                  console.log("airline",a);
+                  return `<option key=${i} value=${a.AirlineID} ${
+                    a.AirlineID === airlines.AirlineID ? "selected" : ""
+                  }>
+                    ${a.AirlineID}. ${a.Name}</option>`;
+                  })}
+                </select>
+                </div>
                   <div class="flex items-center justify-center">
                     <label htmlFor="PlaneModel" class="w-28 block">PlaneModel</label>
-                    <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel">
-                  </div>
+                  <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel"></div>
                   <div class="flex items-center justify-center">
                     <label htmlFor="SeatingPlan" class="w-28 block">SeatingPlan</label>
-                    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan">
-                  </div>
+                    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan"></div>
                   </div>
               </form>
               `,
     preConfirm: () => {
-      const planeID = document.getElementById("swal-input1").value;
       const airlineID = document.getElementById("swal-input2").value;
       const planeModel = document.getElementById("swal-input3").value;
       const seatingPlan = document.getElementById("swal-input4").value;
 
-      if (!planeID) Swal.showValidationMessage("Please enter a planeID");
       if (!airlineID) Swal.showValidationMessage("Please enter a airlineID");
       if (!planeModel) Swal.showValidationMessage("Please enter a planeModel");
-      if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
-      return { airlineID, planeModel, seatingPlan };
+      // if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
+      return { AirlineID: airlineID, PlaneModel: planeModel, SeatingPlan: seatingPlan==='' ? null : seatingPlan};
     },
     confirmButtonText: "Save",
     showCancelButton: true,
@@ -193,10 +195,9 @@ export const addPlane = (plane, airlines) => {
     confirmButtonColor: "#3085d6",
   }).then((result) => {
     if (result.isConfirmed)
-      Axios.post("http://localhost:3001/system/addPlane", {
-        id: plane.PlaneID,
-      }).then((res, err) => {
-        if (err)
+      Axios.post("http://localhost:3001/system/insertPlane", result.value
+      ).then((res, err) => {
+        if (err){
           Swal.fire({
             title: "Error!",
             text: err,
@@ -205,7 +206,9 @@ export const addPlane = (plane, airlines) => {
             timerProgressBar: true,
             showConfirmButton: false,
           });
-        if (res.data.Status)
+          return;
+        }
+        if (res.data.Status){
           Swal.fire({
             title: "Success!",
             text: res.data.Status,
@@ -215,7 +218,10 @@ export const addPlane = (plane, airlines) => {
             confirmButtonColor: "#3085d6",
             confirmButtonText: "OK",
             showConfirmButton: true,
+          }).then(()=>{
+            getPlanes(setPlanes,setAirlines);
           });
+        }
         else if (res.data.Error)
           Swal.fire({
             title: "Error!",
