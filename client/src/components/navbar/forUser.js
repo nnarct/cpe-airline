@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { BsPersonCircle, BsPersonFillGear } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ForUser = () => {
   const [info, setInfo] = useState({ UserID: "", firstName: "", lastName: "" });
@@ -44,11 +44,11 @@ export const ForUser = () => {
       }
     });
   }, []);
-
+const navigate = useNavigate()
   const handleLogout = () => {
     Axios.get("http://localhost:3001/logout")
       .then((res) => {
-        window.location.reload(true);
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };

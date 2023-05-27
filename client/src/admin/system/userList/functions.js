@@ -227,43 +227,46 @@ export const addUser = (setUsers) => {
       return { FirstName, LastName, Email, TelNo, Password };
     },
   }).then((result) => {
-    Axios.post("http://localhost:3001/register", result.value).then(
-      (res, err) => {
-        if (err) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: err,
-            timer: 5000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-          return;
+    if (result.isConfirmed) {
+      Axios.post("http://localhost:3001/register", result.value).then(
+        (res, err) => {
+          if (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: err,
+              timer: 5000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            return;
+          }
+          if (res.data.Error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: res.data.Error,
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+              showCloseButton: true,
+            });
+            return;
+          }
+          if (res.data.Status) {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: res.data.Status,
+              timer: 5000,
+              timerProgressBar: true,
+              confirmButtonText: "Close",
+              confirmButtonColor: "#3085d6",
+            }).then(() => getUsers(setUsers));
+            return;
+          }
         }
-        if (res.data.Error) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: res.data.Error,
-            timer: 5000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-          return;
-        }
-        if (res.data.Status) {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: res.data.Status,
-            timer: 5000,
-            timerProgressBar: true,
-            confirmButtonText: "Close",
-            confirmButtonColor: "#3085d6",
-          });
-           getUsers(setUsers);
-          return;
-        }
-      });
+      );
+    }
   });
 };
