@@ -31,7 +31,7 @@ export const MyProfile = () => {
           </div>
         </Card>
         <Card>
-          <DataBlock title={"Email"}>{info?.Email}</DataBlock>
+          <DataBlock title={"Email"}>{info?.Email || "-"}</DataBlock>
         </Card>
         <Card>
           <DataBlock title={"Phone Number"}>{info?.TelNo || "-"}</DataBlock>
