@@ -22,7 +22,6 @@ export const editPlane = (setPlanes,plane,airlines,setAirlines) => {
                 <label htmlFor="AirlineID" class="w-32 block">AirlineID</label>
                 <select  id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${plane.AirlineID}">
                 ${airlines?.map((a,i)=>{
-                  console.log("airline",a);
                   return `<option key=${i} value=${a.AirlineID} ${
                     a.AirlineID === plane.AirlineID ? "selected" : ""
                   }>
