@@ -9,7 +9,6 @@ export const editUser = (req, res) => {
   const sql =
     "UPDATE user SET FirstName = ?, LastName = ?, Email = ?, TelNo = ? WHERE UserID =?";
   db.query(
-
     sql,
     [
       req.body.FirstName,
