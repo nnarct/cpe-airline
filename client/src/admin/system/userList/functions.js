@@ -227,7 +227,7 @@ export const addUser = (setUsers) => {
       return { FirstName, LastName, Email, TelNo, Password };
     },
   }).then((result) => {
-    Axios.post("http://localhost:3001/register", result.value).then(
+    Axios.post("http://localhost:3001/system/insertUser", result.value).then(
       (res, err) => {
         if (err) {
           Swal.fire({
