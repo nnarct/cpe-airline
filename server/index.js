@@ -74,6 +74,7 @@ import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
+import { addOnInfo } from "./users/searchFlight/addOns.js";
 
 const app = express();
 app.use(express.json());
@@ -152,6 +153,7 @@ app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
 app.post("/search/getFlight", getFlight);
 app.post("/contact/flightInfo", flightInfo);
+app.post("/contact/addonInfo", addOnInfo);
 app.post("/insertBooking", insertBooking);
 
 app.post("/getPayment", getPayment);
