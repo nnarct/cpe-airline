@@ -7,18 +7,26 @@ export const getFlights = async ({
   setAirlines,
   setAirports,
   setLoading,
-  adminCookie,
 }) => {
-  Axios.post("http://localhost:3001/selectFlight", { adminCookie }).then(
-    (res, err) => {
-      if (err) Swal.fire("Error", err.message, "error");
-      if (res.data.Status) {
-        setFlights(res.data.Data);
-        setAirlines(res.data.Airlines);
-        setAirports(res.data.Airports);
-      } else Swal.fire("Error", res.data.Error, "error");
-    }
-  ).then(() => setLoading(false));
+  try {
+    const res = await fetch("http://localhost:3001/system/flightList");
+    const data = await res.json();
+    if (data.Error)
+      Swal.fire({
+        icon: "error",
+        title: data.Error,
+        html: `<div class="text-red-900 bg-red-200 rounded py-1 px-4 mx-auto w-fit">${
+          data.SQL || ""
+        }</div>`,
+      });
+    setFlights(data.Data);
+    setAirlines(data.Airlines);
+    setAirports(data.Airports);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
+  }
 };
 
 export const getPlanes = async ({ setPlanes }) => {
