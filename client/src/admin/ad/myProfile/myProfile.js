@@ -4,7 +4,7 @@ import {
     DataBlock,
     MyProfileWrapper,
     NameIcon,
-  } from "./FunctionAdmin";
+  } from "./styles";
 
 export const MyProfile = () => {
     return (
