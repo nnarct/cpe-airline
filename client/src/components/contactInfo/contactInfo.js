@@ -458,13 +458,13 @@ export const ContactInfo = () => {
             </form>
           </ContactSection>
           <FlightInfo
-          pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
-          classType={data.c}
-        />
+            pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
+            classType={data.c}
+          />
         </div>
 
 
-        
+
 
         {/* Add on */}
         <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
