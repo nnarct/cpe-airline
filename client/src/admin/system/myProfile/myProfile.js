@@ -30,7 +30,7 @@ export const MyProfile = () => {
           </div>
         </Card>
         <Card>
-          <DataBlock title={"Email"}>{info?.Email}</DataBlock>
+          <DataBlock title={"Email"}>{info?.Email || "-"}</DataBlock>
         </Card>
         <Card>
           <DataBlock title={"Phone Number"}>{info?.TelNo || "-"}</DataBlock>
@@ -44,7 +44,7 @@ export const MyProfile = () => {
 
         <ButtonWrap>
           <button
-            onClick={() => editProfile(info, setInfo)}
+            onClick={() => editProfile(info, setInfo, cookie)}
             className="m-2 bg-blue-500 text-white font-bold py-2 px-6 rounded hover:ring focus:bg-blue-600"
           >
             Edit
