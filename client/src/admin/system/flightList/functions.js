@@ -62,7 +62,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="Airline" class="w-24 block">Airline</label>
-        <select id="Airline" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
+        <select id="AirlineSelect" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
           flight?.AirlineID
         }">
         ${airlines?.map((a, i) => {
@@ -114,7 +114,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       </div>
       <div class="flex items-center justify-center">
         <label htmlFor="Plane" class="w-24 block">Plane</label>
-        <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
+        <select id="PlaneSelect" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
         </select>
     </form>`,
     confirmButtonText: "Save",
@@ -122,8 +122,8 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     focusCancel: true,
     confirmButtonColor: "#3b82f6",
     didOpen: () => {
-      const select1 = document.getElementById("Airline");
-      const select2 = document.getElementById("Plane");
+      const select1 = document.getElementById("AirlineSelect");
+      const select2 = document.getElementById("PlaneSelect");
 
       for (const plane of planes) {
         select2.innerHTML += `<option value=${plane.PlaneID} ${
@@ -159,7 +159,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     },
     preConfirm: () => {
       const flightNumber = document.getElementById("FlightNumber").value;
-      const airline = document.getElementById("Airline").value;
+      const airline = document.getElementById("AirlineSelect").value;
       const originAirport = document.getElementById(
         "OriginAirportSelect"
       ).value;
@@ -190,7 +190,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       else if (!arrTime)
         Swal.showValidationMessage("Please select arrival time");
       else if (originAirport === destinationAirport) {
-        console.log(originAirport, destinationAirport);
         Swal.showValidationMessage(
           "Origin and destination airports cannot be the same. Please select again."
         );

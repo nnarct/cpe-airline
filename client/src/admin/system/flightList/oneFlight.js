@@ -2,7 +2,7 @@ import moment from "moment";
 import { editFlight, deleteFlight } from "./functions";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
-export const Flight = ({ flight , airlines, airports, planes,  }) => {
+export const Flight = ({ flight , airlines, airports, planes }) => {
   return (
     <>
       <tr>
