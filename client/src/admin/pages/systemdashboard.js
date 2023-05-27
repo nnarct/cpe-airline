@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // components
 import { AdminNavbar } from "../components/navbar";
+import { MyProfile } from "../system/myProfile";
 import { Sidebar } from "../system/sidebar/sidebar";
 import { EmployeeList } from "../system/employeeList/employeeList";
 import { AirlineList } from "../system/airlineList/airlineList";
@@ -33,25 +34,28 @@ export const SystemDashboard = () => {
       }
     });
     setContent(c);
-  }, [c]);
-
-  useEffect(() => {}, [c]);
+  }, [c, navigate]);
+  const [page, setPage] = useState("Dashboard"); // ["Dashboard", "My Profile" ]
   return (
     <>
-      <AdminNavbar info={info} />
-      <div className="min-h-calc flex">
-        <Sidebar current={content} setContent={setContent} />
-        <div className="w-full bg-slate-100">
-          {content === "Dashboard" && <Dashboard />}
-          {content === "EmployeeList" && <EmployeeList />}
-          {content === "AirlineList" && <AirlineList />}
-          {content === "AirportList" && <AirportList />}
-          {content === "FlightList" && <FlightList />}
-          {content === "UserList" && <UserList />}
-          {content === "PassengerList" && <PassengerList />}
-          {content === "PlaneList" && <PlaneList />}
+      <AdminNavbar info={info} setPage={setPage}/>
+      {page === "My Profile" ? (
+        <MyProfile />
+      ) : (
+        <div className="min-h-calc flex">
+          <Sidebar current={content} setContent={setContent} />
+          <div className="w-full bg-slate-100">
+            {content === "Dashboard" && <Dashboard />}
+            {content === "EmployeeList" && <EmployeeList />}
+            {content === "AirlineList" && <AirlineList />}
+            {content === "AirportList" && <AirportList />}
+            {content === "FlightList" && <FlightList />}
+            {content === "UserList" && <UserList />}
+            {content === "PassengerList" && <PassengerList />}
+            {content === "PlaneList" && <PlaneList />}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
