@@ -78,6 +78,7 @@ import { deleteUser } from "./admin/delete/deleteUser.js";
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
 import { addOnInfo } from "./users/searchFlight/addOns.js";
+import { adminInfo } from "./admin/adminInfo.js";
 
 const app = express();
 app.use(express.json());
@@ -115,6 +116,7 @@ app.post("/admin/login", loginAdmin);
 app.get("/admin/logout", logoutAdmin);
 
 // system admin
+app.post("/admin/info", adminInfo);
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);
