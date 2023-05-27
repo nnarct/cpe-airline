@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // components
 import { AdminNavbar } from "../components/navbar";
-import { MyProfile } from "../system/myProfile";
+import { MyProfile } from "../system/myProfile/myProfile";
 import { Sidebar } from "../system/sidebar/sidebar";
 import { EmployeeList } from "../system/employeeList/employeeList";
 import { AirlineList } from "../system/airlineList/airlineList";

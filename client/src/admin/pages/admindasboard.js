@@ -8,7 +8,7 @@ import { AirportList } from "../system/airportList/airportList";
 import { FlightList } from "../ad/flightList/flightList";
 import { PlaneList } from "../system/planeList/planeList";
 import { PassengerList } from "../ad/passengerList/passengerList";
-import { MyProfile } from "../ad/myProfile";
+import { MyProfile } from "../ad/myProfile/myProfile";
 export const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
