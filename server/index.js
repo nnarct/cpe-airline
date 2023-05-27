@@ -121,7 +121,7 @@ app.get("/admin/logout", logoutAdmin);
 
 // system admin
 app.post("/admin/info", adminInfo);
-app.post("/system/editProfile", editAdminProfile);
+app.post("/admin/editProfile", editAdminProfile);
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);

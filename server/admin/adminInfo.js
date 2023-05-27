@@ -7,17 +7,17 @@ export const adminInfo = (req, res) => {
     if (err) return res.json({ Error: "Error while getting airlines..." });
     else if (result.length > 0) {
       airlines = result;
+      if (req.body.cookieID) {
+        jwt.verify(req.body.cookieID, "admin-secret-key", (err, decoded) => {
+          if (err) return res.json({ Error: "Admin token is not ok" });
+          delete decoded.info.Password;
+          return res.json({
+            Status: "Success",
+            Info: decoded.info,
+            Airlines: airlines,
+          });
+        });
+      } else return res.json({ Error: "You are not authenticated admin" });
     } else return res.json({ Error: "No airlines found..." });
   });
-  if (req.body.cookieID) {
-    jwt.verify(req.body.cookieID, "admin-secret-key", (err, decoded) => {
-      if (err) return res.json({ Error: "Admin token is not ok" });
-      delete decoded.info.Password;
-      return res.json({
-        Status: "Success",
-        Info: decoded.info,
-        Airlines: airlines,
-      });
-    });
-  } else return res.json({ Error: "You are not authenticated admin" });
 };

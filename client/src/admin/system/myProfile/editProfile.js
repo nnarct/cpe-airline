@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { getInfo } from "./getInfo";
-// import { useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 // const cookies = useCookies();
 // const cookie = cookies[0].admin;
 // const [info, setInfo] = useState({});
