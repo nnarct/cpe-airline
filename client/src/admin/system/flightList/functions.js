@@ -159,7 +159,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
     },
     preConfirm: () => {
       const flightNumber = document.getElementById("FlightNumber").value;
-      const airline = document.getElementById("Airline").value;
+      const airline = document.getElementById("AirlineSelect").value;
       const originAirport = document.getElementById(
         "OriginAirportSelect"
       ).value;
@@ -190,7 +190,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       else if (!arrTime)
         Swal.showValidationMessage("Please select arrival time");
       else if (originAirport === destinationAirport) {
-        console.log(originAirport, destinationAirport);
         Swal.showValidationMessage(
           "Origin and destination airports cannot be the same. Please select again."
         );
