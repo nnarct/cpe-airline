@@ -13,9 +13,8 @@ export const MyProfile = () => {
   const cookies = useCookies();
   const cookie = cookies[0].admin;
   const [info, setInfo] = useState({});
-  const [airlines, setAirlines] = useState([{}]);
   useEffect(() => {
-    getInfo(cookie, setInfo, setAirlines);
+    getInfo(cookie, setInfo);
   }, [cookie]);
   return (
     <>
@@ -45,7 +44,7 @@ export const MyProfile = () => {
 
         <ButtonWrap>
           <button
-            onClick={() => editProfile(info, setInfo, airlines, setAirlines)}
+            onClick={() => editProfile(info, setInfo)}
             className="m-2 bg-blue-500 text-white font-bold py-2 px-6 rounded hover:ring focus:bg-blue-600"
           >
             Edit

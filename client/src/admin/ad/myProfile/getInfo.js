@@ -1,6 +1,6 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
-export const getInfo = (cookieID, setInfo) => {
+export const getInfo = (cookieID, setInfo, setAirlines) => {
   Axios.post("http://localhost:3001/admin/info", { cookieID }).then(
     (res, err) => {
       if (err) {
@@ -14,6 +14,7 @@ export const getInfo = (cookieID, setInfo) => {
       }
       if (res.data.Status === "Success") {
         setInfo(res.data.Info);
+        setAirlines(res.data.Airlines);
         return;
       }
       Swal.fire({
