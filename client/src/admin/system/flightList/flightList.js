@@ -5,6 +5,7 @@ import { AddFlight } from "../components/addFlight";
 import { Table, THead, Th, Edit } from "../components/table";
 import { getFlights, getPlanes } from "./functions";
 import { Flight } from "./oneFlight";
+import { paginateData, RenderPaginationLinks } from "./pagination";
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
   const [airlines, setAirlines] = useState([]);
@@ -16,12 +17,18 @@ export const FlightList = () => {
   const handleClick = () => {
     addFlight.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataSubset, setDataSubset] = useState([]);
 
   useEffect(() => {
     getFlights({ setFlights, setAirlines, setAirports, setLoading });
     getPlanes({ setPlanes });
-  }, []);
 
+    const subset = paginateData(flights, currentPage);
+    setDataSubset(subset);
+  }, [flights, currentPage]);
+
+  
   // Todo - delete flight
   // Todo - Pagination
 
@@ -57,14 +64,16 @@ export const FlightList = () => {
       : setSelectedDate({ status: false, date: "" });
   };
 
-  const filteredFlights = flights?.filter((flight) => {
+  const filteredFlights = dataSubset?.filter((flight) => {
     if (selectedAirline.status && flight.airline !== selectedAirline.airline)
       return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    return !(selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date);
+    return !(
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    );
   });
 
   return (
@@ -79,6 +88,7 @@ export const FlightList = () => {
             Add Flight +
           </button>
         </Header>
+        <RenderPaginationLinks {...{flights, currentPage, setCurrentPage}}/>
         <Header>
           <table className="text-base font-normal">
             <thead className="">
@@ -206,7 +216,7 @@ export const FlightList = () => {
           </tbody>
         </Table>
         <div ref={addFlight} />
-        <AddFlight airlines={airlines} airports={airports} planes={planes}/>
+        <AddFlight airlines={airlines} airports={airports} planes={planes} />
       </Content>
     </>
   );
