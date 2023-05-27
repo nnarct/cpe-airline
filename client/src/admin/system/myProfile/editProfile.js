@@ -64,7 +64,6 @@ export const editProfile = (info, setInfo, cookie) => {
       };
     },
   }).then((result) => {
-    console.log(result.value);
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/editProfile", result.value).then(
         (res, err) => {
