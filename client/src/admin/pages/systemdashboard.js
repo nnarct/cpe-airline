@@ -12,7 +12,7 @@ import { AirportList } from "../system/airportList/airportList";
 import { FlightList } from "../system/flightList/flightList";
 import { UserList } from "../system/userList/userList";
 import { PassengerList } from "../system/passengerList/passengerList";
-import { Dashboard } from "../system/dashboard";
+import { Dashboard } from "../system/dashboard/dashboard";
 import { PlaneList } from "../system/planeList/planeList";
 
 export const SystemDashboard = () => {
