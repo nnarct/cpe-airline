@@ -59,8 +59,10 @@ import {
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
 import { editPlane } from "./admin/edit/editPlane.js";
-
-
+import { genderCount } from "./admin/dashboard/genderCount.js"
+import { bookingCount } from "./admin/dashboard/bookCount.js"
+import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
+// import { getFlightCountsBySection2 } from "./admin/dashboard/Destination2.js"
 
 const app = express();
 app.use(express.json());
@@ -137,6 +139,10 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.get("/system/genderCount", genderCount);
+app.get("/system/bookCount", bookingCount);
+app.get("/system/destinaton", getFlightCountsBySection)
+// app.get("/system/destinaton2", getFlightCountsBySection2)
 
 app.listen(3001, () => {
   console.log("running on port 3001");
