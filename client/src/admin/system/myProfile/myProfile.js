@@ -36,7 +36,7 @@ export const MyProfile = () => {
           <DataBlock title={"Phone Number"}>{info?.TelNo || "-"}</DataBlock>
         </Card>
         <Card>
-          <DataBlock title={"UserName"}>{info?.username}</DataBlock>
+          <DataBlock title={"username"}>{info?.username}</DataBlock>
         </Card>
         <Card>
           <DataBlock title={"Password"}>******</DataBlock>
