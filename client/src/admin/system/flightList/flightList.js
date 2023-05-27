@@ -58,7 +58,7 @@ export const FlightList = () => {
       : setSelectedDate({ status: false, date: "" });
   };
 
-  const filteredFlights = flights.filter((flight) => {
+  const filteredFlights = flights?.filter((flight) => {
     if (selectedAirline.status && flight.airline !== selectedAirline.airline)
       return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
@@ -107,7 +107,7 @@ export const FlightList = () => {
                     onChange={handleAirlineChange}
                   >
                     <option value="ALL">All</option>
-                    {airlines.map((airline) => {
+                    {airlines?.map((airline) => {
                       return (
                         <option key={airline.AirlineID} value={airline.Name}>
                           {airline.Name}
@@ -124,7 +124,7 @@ export const FlightList = () => {
                     onChange={handleFromChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
@@ -141,7 +141,7 @@ export const FlightList = () => {
                     onChange={handleToChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
@@ -193,7 +193,7 @@ export const FlightList = () => {
               })}
             {!loading &&
               filteredFlights &&
-              filteredFlights.map((flight, i) => {
+              filteredFlights?.map((flight, i) => {
                 return (
                   <Flight
                     key={flight.FlightID || i}
@@ -207,7 +207,7 @@ export const FlightList = () => {
           </tbody>
         </Table>
         <div ref={addFlight} />
-        <AddFlight airlines={airlines} airports={airports} />
+        <AddFlight airlines={airlines} airports={airports} planes={planes}/>
       </Content>
     </>
   );

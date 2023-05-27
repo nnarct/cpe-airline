@@ -61,22 +61,26 @@ export const AddFlight = ({ airlines, airports, planes }) => {
               setValues({ ...values, FlightNumber: e.target.value })
             }
           />
-          
+
           <label htmlFor="airlineID">Airline</label>
           <select
             name="airlineID"
             id="AirlineID"
             className="mb-2 border rounded p-1"
+            defaultValue={1}
+            onChange={(e) =>
+              setValues({ ...values, AirlineID: e.target.value })
+            }
           >
             {airlines?.map((airline, i) => {
               return (
-                <option key={`airline${i}`} value={airline.AirlineID}> 
-                  {airline.AirlineID}-{airline.Name} == flight.AirlineID ? "selected" : ""       
+                <option key={`airline${i}`} value={airline.AirlineID}>
+                  {airline.AirlineID}-{airline.Name}
                 </option>
               );
             })}
           </select>
-        
+
           <label htmlFor="DepartureTime">Departure time</label>
           <input
             className="mb-2 border rounded p-1"
@@ -93,9 +97,23 @@ export const AddFlight = ({ airlines, airports, planes }) => {
             min={new Date(values.DepartureTime).toISOString().slice(0, -8)}
           />
 
-            <label htmlFor="Plane" class="w-24 block">Plane</label>
-            <select id="Plane" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
-             </select>
+          <label htmlFor="Plane" class="w-24 block">
+            Plane
+          </label>
+          <select
+            id="Plane"
+            class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2"
+          >
+            {planes?.map((p, i) => {
+              if (Number(p.AirlineID) === Number(values.AirlineID))
+                return (
+                  <option key={p.PlaneID} value={p.PlaneID}>
+                    {p.PlaneModel} {p.airline}
+                  </option>
+                );
+              return null;
+            })}
+          </select>
 
           <label htmlFor="OriginAirport">Origin Airport</label>
           <select
@@ -143,7 +161,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
               );
             })}
           </select>
-          
+
           <button
             className="bg-blue-500 text-white rounded py-1 px-3 hover:opacity-40  active:opacity-80"
             type="submit"
