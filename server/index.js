@@ -46,6 +46,7 @@ import { deleteEmployee } from "./admin/delete/deleteEmployee.js";
 import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { deleteAirport } from "./admin/delete/deleteAirport.js";
 import { deletePlane } from "./admin/delete/deletePlane.js";
+import { deleteFlight } from "./admin/delete/deleteFlight.js";
 
 
 // verify auth
@@ -71,6 +72,7 @@ import { editPlane } from "./admin/edit/editPlane.js";
 
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
+//import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
 
 const app = express();
@@ -136,6 +138,7 @@ app.post("/system/deletePassenger", deletePassenger);
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deletePlane", deletePlane);
 app.post("/system/deleteUser", deleteUser);
+app.post("/system/deleteFlight", deleteFlight);
 
 app.get("/userName", verifyUserName, getUserName);
 app.get("/airportList", airportListUser);

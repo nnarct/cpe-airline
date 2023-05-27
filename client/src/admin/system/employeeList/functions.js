@@ -53,8 +53,8 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
                 <input id="Position" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="Position" value="${
                   employee?.Position
                 }">
-              </div>
-              <div class="flex items-center justify-center">
+              </div> 
+              <div id="airlineInput" class="flex items-center justify-center">
               <label htmlFor="AirlineID" class="w-24 block">Airline ID</label>
               <select id="AirlineID" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-4" value="${
                 employee?.AirlineID
@@ -68,20 +68,22 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
               })}
               </select>
               </div>
-              </form>`,
-    confirmButtonText: "Save",
-    cancelButtonText: "Cancel",
-    confirmButtonColor: "#3b82f6",
-    showCancelButton: true,
-    focusCancel: true,
+            </form>`,
+    didOpen: () => {
+      const position = document.getElementById("Position");
+      const airlineInput = document.getElementById("airlineInput");
+      airlineInput.classList.add("hidden");
+      if (position.value === "Admin") airlineInput.classList.remove("hidden");
+      else airlineInput.classList.add("hidden");
+    },
     preConfirm: () => {
       const firstName = document.getElementById("FirstName").value;
       const lastName = document.getElementById("LastName").value;
       const email = document.getElementById("Email").value;
       let TelNo = document.getElementById("TelNo").value;
       const position = document.getElementById("Position").value;
-      const airlineID = document.getElementById("AirlineID").value;
-
+      const airlineID = 
+        position === "Admin" ? document.getElementById("AirlineID").value : null;     
       if (!firstName) Swal.showValidationMessage("Please enter FirstName");
       else if (!lastName) Swal.showValidationMessage("Please enter LastName");
       else if (!email) Swal.showValidationMessage("Please enter Email");
@@ -95,8 +97,8 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
         if (TelNo && !/^\d{10}$/.test(TelNo))
           return Swal.showValidationMessage("Phone number is invalid");
       }
-
-      return {
+      const val = {
+      // return {
         id: employee?.EmployeeID,
         FirstName: firstName,
         LastName: lastName,
@@ -105,7 +107,13 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
         Position: position,
         AirlineID: airlineID,
       };
+      return val;
     },
+    confirmButtonText: "Save",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#3b82f6",
+    showCancelButton: true,
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed) {
       Axios.post(

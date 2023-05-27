@@ -248,5 +248,54 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
 // Todo -delete flight
 export const deleteFlight = (id) => {
   // todo - popup to make sure u wanna deelte the flight
-  //if cnfirm - send request to daabase to delete to flight where flight id =id
+  // if confirm - send request to daabase to delete to flight where flight id =id
+  Swal.fire({
+    icon: "warning",
+    title: "Are you sure?",
+    html: `You are deleting Airport ${id.FlightID}, <span class="font-semibold text-red-500">${
+      id.FlightNumber
+    }</span>
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+    focusCancel: true,
+  }).then((result) => {
+    if (result.isConfirmed)
+      Axios.post("http://localhost:3001/system/deleteFlight", {
+        id: id.FlightNumber,
+      }).then((res, err) => {
+        if (err)
+          Swal.fire({
+            title: "Error!",
+            text: err,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        if (res.data.Status)
+          Swal.fire({
+            title: "Success!",
+            text: res.data.Status,
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK",
+            showConfirmButton: true,
+          });
+        else if (res.data.Error)
+          Swal.fire({
+            title: "Error!",
+            text: res.data.Error,
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+      });
+  });
 };
+
