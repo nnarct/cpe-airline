@@ -245,13 +245,13 @@ export const Dashboard = () => {
           <div>
             <h1 className="font-bold text-xl ml-10 mt-10">Destination</h1>
             <div className="ml-20">
-              <FlightCountsChart Width={380} height={200}></FlightCountsChart>
+              <FlightCountsChart Width={380} height={200} />
             </div>
           </div>
           <div>
             <h1 className="font-bold text-xl mt-10 ml-28">Gender</h1>
             <div className="w-100 h-100 ml-36">
-              <Doughnut data={data} options={options}></Doughnut>
+              <Doughnut data={data} options={options} />
             </div>
           </div>
         </div>
