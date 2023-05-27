@@ -18,36 +18,32 @@ import { Payment } from "./components/contactInfo/payment/payment";
 import { Invoice } from "./components/contactInfo/payment/invoice";
 export const App = () => {
   Axios.defaults.withCredentials = true;
-  const [auth, setAuth] = useState("");
+  const [auth, setAuth] = useState(null);
   useEffect(() => {
-    
     Axios.get("http://localhost:3001").then((res, err) => {
       if (err) setAuth(false); // You are not authenticated
-      if (res.data.Status === "Success") {
-        setAuth(true);
-      } else {
-        setAuth(false);
-      }
+      if (res.data.Status === "Success") setAuth(true);
+      else setAuth(false);
     });
-    console.log(auth)
-  },[auth]);
+  }, [auth]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/error" element={<ErrorPage />} />
-        <Route path="/login" element={<Login setAuth={setAuth}/>} />
+        <Route path="/login" element={<Login setAuth={setAuth} />} />
         <Route path="/register" element={<Register auth={auth} />} />
         <Route path="/search" element={<SearchResultPage />} />
-        {auth ? (
+        {auth === true && (
           <>
             <Route path="/contact" element={<ContactInfo />} />
             <Route path="/myProfile" element={<UserProfile />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/invoice" element={<Invoice />} />
           </>
-        ) : (
+        )}
+        {auth === false && (
           <>
             <Route path="/contact" element={<Error />} />
             <Route path="/myProfile" element={<Error />} />
