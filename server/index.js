@@ -83,6 +83,8 @@ import { addOnInfo } from "./users/searchFlight/addOns.js";
 import { adminInfo } from "./admin/adminInfo.js";
 import { editSystemProfile } from "./admin/edit/editSystemProfile.js";
 import { editAdminProfile } from "./admin/edit/editAdminProfile.js";
+import { flightCount } from "./admin/dashboard/flightCount.js";
+import { userCount } from "./admin/dashboard/userCount.js";
 
 const app = express();
 app.use(express.json());
@@ -173,10 +175,15 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getUserBooking", getUserBooking);
+
+
+// Dashboard
 app.get("/system/genderCount", genderCount);
 app.get("/system/bookCount", bookingCount);
-app.get("/system/destinaton", getFlightCountsBySection)
-app.post("/getUserBooking", getUserBooking);
+app.get("/system/destination", getFlightCountsBySection)
+app.get("/system/flightCount", flightCount);
+app.get("/system/userCount", userCount);
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);
