@@ -23,7 +23,7 @@ export const Navbar = () => {
               <Menu to="/">
                 <img src={logo} className="h-8" alt={"CPE Flying"} />
               </Menu>
-              <Menu>Menu 1</Menu>
+              <Menu to={"/homepage"}>Admin Homepage</Menu>
               <Menu>Menu 2</Menu>
               <Menu>Menu 3</Menu>
             </ul>

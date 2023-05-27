@@ -1,13 +1,21 @@
 import Swal from "sweetalert2";
 import Axios from "axios";
-export const editAirport = (airport) => {
+
+export  const getAirports = async (setAirports) => {
+  const res = await fetch("http://localhost:3001/system/airportList");
+  const data = await res.json();
+  setAirports(data.Data);
+};
+export const editAirport = (setAirports,airport) => {
   Swal.fire({
     title: "Edit Airport",
     html: `<div>You are editing airport ID
-              <span class="font-bold">${airport?.AirportID}</span>
-              <span class="text-blue-500 font-bold">${
-                airport?.IATA
+              <span class="font-bold">
+              ${airport?.AirportID
               }</span>
+              <span class="text-blue-500 font-bold">${
+                airport?.Name
+              } ${airport?.Name}</span>
             </div>
           <div class="flex items-center justify-center py-1">
             <label htmlFor="name" class="w-24 block">Name</label>
@@ -37,8 +45,7 @@ export const editAirport = (airport) => {
     confirmButtonText: "Save",
     confirmButtonColor: "#2563eb",
     cancelButtonText: "Cancel",
-    focusConfirm: false,
-    reverseButtons: true,
+    focusCancel: true,
     preConfirm: () => {
       const Name = document.getElementById("swal-input1").value;
       const IATA = document.getElementById("swal-input2").value;
@@ -50,7 +57,12 @@ export const editAirport = (airport) => {
         Swal.showValidationMessage(`Please enter airport state`);
       else if (!Province)
         Swal.showValidationMessage(`Please enter airport province`);
-      return { Name, IATA, State, Province };
+      return { 
+        id: airport?.AirportID,
+        Name: Name,
+        IATA: IATA,
+        State: State,
+        Province: Province,};
     },
   }).then((result) => {
     if (result.isConfirmed)
@@ -75,7 +87,7 @@ export const editAirport = (airport) => {
             timer: 3000,
             timerProgressBar: true,
             confirmButtonColor: "#2563eb",
-          });
+          }).then(() => getAirports(setAirports));
         else if (res.data.Error)
           Swal.fire({
             icon: "error",
@@ -95,12 +107,12 @@ export const deleteAirport = (airport) => {
     html: `You are deleting Airport ${airport.AirportID}, <span class="font-semibold text-red-500">${
       airport.Name
     }</span>
-    <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
-    showValidationMessage: "no",
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deleteAirport", {

@@ -1,14 +1,15 @@
 import { TbPlaneInflight } from "react-icons/tb";
 import ThaiSmile from "./../../../assets/airlinesLogo/thaiSmile.png";
+import moment from "moment";
+import { airlineLogo } from "../../searchResult/function";
 export const Item = ({
-  Airline,
+  AirlineName,
   BookingID,
   FlightID,
-  Date,
   DepartureTime,
-  OriginAirportID,
+  OriginAirport,
   ArrivalTime,
-  DestinationAirportID,
+  DestinationAirport,
 }) => {
   return (
     <>
@@ -16,9 +17,13 @@ export const Item = ({
         <div className="w-full py-4 container flex justify-between">
           <div className="w-64 pr-2">
             <div className="h-14 flex items-center space-x-2">
-              <img className="h-14 object-fit" src={ThaiSmile} alt="" />
+              <img
+                className="w-16 object-fit"
+                src={airlineLogo(AirlineName)}
+                alt=""
+              />
               <h1 className="text-3xl text-gray-900 font-bold tracking-tight">
-                {Airline}
+                {AirlineName}
               </h1>
             </div>
 
@@ -29,7 +34,9 @@ export const Item = ({
               </ul>
               <ul>
                 <li>Date</li>
-                <span className="font-bold text-xl">{Date}</span>
+                <span className="font-bold text-xl">
+                  {moment(DepartureTime).format("DD MMM YY")}
+                </span>
               </ul>
             </div>
           </div>
@@ -37,8 +44,10 @@ export const Item = ({
             <div className="flex justify-between items-center">
               <div>
                 <li>From</li>
-                <li className="font-bold text-4xl">{DepartureTime}</li>
-                <li className="font-bold text-2xl">{OriginAirportID}</li>
+                <li className="font-bold text-4xl">
+                  {moment(DepartureTime).format("HH:mm")}
+                </li>
+                <li className="font-bold text-2xl">{OriginAirport}</li>
               </div>
               <div className="p-2 bg-primary rounded-full">
                 <TbPlaneInflight size="2.5em" color="white" />
@@ -46,9 +55,11 @@ export const Item = ({
 
               <div>
                 <li>To</li>
-                <li className="font-bold text-4xl">{ArrivalTime}</li>
+                <li className="font-bold text-4xl">
+                  {moment(ArrivalTime).format("HH:mm")}
+                </li>
                 <li className="font-bold text-2xl text-right">
-                  {DestinationAirportID}
+                  {DestinationAirport}
                 </li>
               </div>
             </div>

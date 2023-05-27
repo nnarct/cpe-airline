@@ -4,17 +4,13 @@ import { Content } from "../components/content";
 import { Header } from "../components/header";
 import { Table, THead, Th, Edit } from "../components/table";
 import { Airport } from "./oneAirport";
-
+import { getAirports } from "./functions";
 export const AirportList = () => {
   const [airports, setAirports] = useState([]);
   const [addAirport, setAddAirport] = useState(false);
-  const getAirports = async () => {
-    const res = await fetch("http://localhost:3001/system/airportList");
-    const data = await res.json();
-    setAirports(data.Data);
-  };
+
   useEffect(() => {
-    getAirports();
+    getAirports(setAirports);
   }, []);
 
 
@@ -42,12 +38,11 @@ export const AirportList = () => {
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
-            {airports &&
-              airports.map((airport, i) => {
-                return (
-                  <Airport airport={airport} key={i} />
-                );
-              })}
+            {airports?.map((airport, i) => {
+              return (
+                <Airport airport={airport} key={i} setAirports={setAirports}/>
+              );
+            })}
           </tbody>
         </Table>
       </Content>

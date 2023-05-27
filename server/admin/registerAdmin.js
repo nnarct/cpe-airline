@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 export const registerAdmin = (req, res) => {
   const sqlCheck = `SELECT * FROM employee WHERE username = ?`;
   const sql =
-    "INSERT INTO employee (FirstName, LastName, username, Email, TelNo, Password, Position) VALUES (?)";
+    "INSERT INTO employee (FirstName, LastName, username, Email, TelNo, Password, Position, AirlineID) VALUES (?)";
   db.query(sqlCheck, [req.body.username], (err, response) => {
     if (err)
       return res.json({ Error: "Error while checking username in db..." });
@@ -20,12 +20,15 @@ export const registerAdmin = (req, res) => {
         req.body.TelNo,
         hash,
         req.body.position,
+        req.body.airlineID,
       ];
       db.query(sql, [values], (err, result) => {
-        if (err)
+        if (err) {
+          console.log(err);
           return res.json({ Error: "Inserting data error in server..." });
+        }
         return res.json({ Status: "Create new admin successfully! :)" });
       });
     });
   });
-}
+};

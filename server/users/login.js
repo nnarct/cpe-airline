@@ -21,7 +21,7 @@ export const login = (req, res) => {
               { UserID, FirstName, LastName },
               "user-secret-key",
               {
-                expiresIn: "1d",
+                expiresIn: "30d",
               }
             );
             res.cookie("userToken", token);

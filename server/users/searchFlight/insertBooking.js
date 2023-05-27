@@ -42,11 +42,12 @@ export const insertBooking = (req, res) => {
     "INSERT INTO `booking` (`UserID`, `ContactFirstname`, `ContactLastname`, `ContactPhone`, `ContactEmail`, `FlightID`,`InvoiceID`) VALUES (?,?,?,?,?,?,?)";
 
   const sqlPassenger =
-    "INSERT INTO `passenger` (`FirstName`, `LastName`, `DOB`, `Gender` ,`Nationality`, `BookingID`) VALUES (?,?,?,?,?,?)";
+    "INSERT INTO `passenger` (`FirstName`, `LastName`, `DOB`, `Gender` ,`Nationality`, `BookingID`, `AddOnsID`) VALUES (?,?,?,?,?,?,?)";
 
   db.query(sqlInvoice, invoiceValue, (err, result) => {
-    if (err) res.json({ Error: "Error while creating invoice in server" });
-    else {
+    if (err)
+      res.json({ Error: "Error while creating invoice in server" });
+     else {
       const invoiceID = result.insertId;
       db.query(
         sqlDepBooking,
@@ -76,6 +77,7 @@ export const insertBooking = (req, res) => {
                   p.gender,
                   p.nationality,
                   Number(bookingID),
+                  p.addondep,
                 ],
                 (err, result) => {
                   if (err)
@@ -118,6 +120,7 @@ export const insertBooking = (req, res) => {
                     p.gender,
                     p.nationality,
                     Number(bookingID),
+                    p.addonret,
                   ],
                   (err, result) => {
                     if (err)
@@ -128,12 +131,12 @@ export const insertBooking = (req, res) => {
                   }
                 );
               });
-              return res.json({ Status: "Success" , ID: invoiceID});
+              return res.json({ Status: "Success", ID: invoiceID });
             }
           }
         );
       } else {
-        return res.json({ Status: "Success" , ID: invoiceID});
+        return res.json({ Status: "Success", ID: invoiceID });
       }
     }
   });

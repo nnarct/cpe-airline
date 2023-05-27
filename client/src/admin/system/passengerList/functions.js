@@ -13,7 +13,6 @@ export const getPassengersGroupByBookingID = async ({ setPassengers }) => {
   );
   const data = await res.json();
   setPassengers(data.Data);
-  console.log(data.Data);
 };
 export const editPassenger = (passenger) => {
   const fselected = passenger?.Gender === "female" ? "selected" : "";
@@ -30,25 +29,25 @@ export const editPassenger = (passenger) => {
               } ${passenger?.LastName}</span>
             </div>
             <form>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center ">
                 <label htmlFor="FirstName" class="w-24 block">FirstName</label>
                 <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="FirstName" value="${
                   passenger?.FirstName
                 }">
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center py-2.5">
                 <label htmlFor="LastName" class="w-24 block">LastName</label>
-                <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="LastName" value="${
+                <input id="swal-input2" class="w-full md:w-4/5 px-2 py-2.5 active:ring rounded border" placeholder="LastName" value="${
                   passenger?.LastName
                 }">
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center py-2.5">
                 <label htmlFor="DOB" class="w-24 block">DOB</label>
                 <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(
       new Date()
     ).format("YYYY-MM-DD")}>
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center py-2.5">
                 <label htmlFor="gender" class="w-24 block">Gender</label>
                 <select id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" value="${
                   passenger?.Gender
@@ -57,7 +56,7 @@ export const editPassenger = (passenger) => {
                   <option value="female" ${fselected}>female</option>
                 </select>
               </div>
-              <div class="flex items-center justify-center">
+              <div class="flex items-center justify-center py-2.5">
                 <label htmlFor="nationality" class="w-24 block">Nationality</label>
                 <input id="swal-input5" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="nationality" value="${
                   passenger?.Nationality
@@ -134,13 +133,14 @@ export const deletePassenger = (passenger) => {
   Swal.fire({
     icon: "warning",
     title: "Are you sure?",
-    html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${passenger.Name}</span>
-      <div class="py-1 bg-red-100 text-red-700 w-full rounded">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    html: `You are deleting passenger ${passenger.PassengerID}, <span class="font-semibold text-red-500">${passenger.FirstName}</span>
+      <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
     showValidationMessage: "no",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
     cancelButtonText: "Cancel",
+    focusCancel: true,
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deletePassenger", {
@@ -178,3 +178,4 @@ export const deletePassenger = (passenger) => {
       });
   });
 };
+

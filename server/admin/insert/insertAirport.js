@@ -1,4 +1,4 @@
-import { db } from "../index.js";
+import { db } from "../../index.js";
 export const insertAirport = (req,res) => {
   const sqlCheck = `SELECT * FROM airport WHERE IATA = ?`;
   const sql = "INSERT INTO airport (Name, IATA, State, Province) VALUES (?)";
