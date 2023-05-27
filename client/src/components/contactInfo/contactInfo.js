@@ -326,141 +326,145 @@ export const ContactInfo = () => {
       <Navbar />
 
       <PageWrapper>
-        <ContactSection>
-          <form action="" ref={info}>
-            <InputFrom label="First Name">
-              <input
-                name="cfirstname"
-                type="text"
-                className={inp}
-                defaultValue={contact.firstname}
-                onChange={(e) =>
-                  setContact({ ...contact, firstname: e.target.value })
-                }
-              />
-            </InputFrom>
-            <InputFrom label="Last Name">
-              <input
-                name="clastname"
-                type="text"
-                className={inp}
-                defaultValue={contact.lastname}
-                onChange={(e) =>
-                  setContact({ ...contact, lastname: e.target.value })
-                }
-              />
-            </InputFrom>
-            <InputFrom label="Phone">
-              <input
-                name="cphone"
-                type="text"
-                className={inp}
-                defaultValue={contact.phone}
-                onChange={(e) =>
-                  setContact({ ...contact, phone: e.target.value })
-                }
-              />
-            </InputFrom>
-            <InputFrom label="Email">
-              <input
-                name="cemail"
-                type="text"
-                className={inp}
-                defaultValue={contact.email}
-                onChange={(e) =>
-                  setContact({ ...contact, email: e.target.value })
-                }
-              />
-            </InputFrom>
-            {pass?.map((t, i) => {
-              return (
-                <PassengerInfo type={t} no={i + 1} key={i}>
-                  <InputFrom label="First Name">
-                    <input
-                      name={`fname${i + 1}`}
-                      type="text"
-                      className={inp}
-                      defaultValue={value[i]?.firstname}
-                    />
-                  </InputFrom>
-                  <InputFrom label="Last Name">
-                    <input
-                      name={`lname${i + 1}`}
-                      type="text"
-                      className={inp}
-                      defaultValue={value[i]?.lastname}
-                    />
-                  </InputFrom>
-                  <InputFrom label="Nationality">
-                    <input
-                      name={`nationality${i + 1}`}
-                      type="text"
-                      className={inp}
-                      defaultValue={value[i]?.nationality}
-                    />
-                  </InputFrom>
-                  <InputFrom label="Date of birth">
-                    <Datepicker
-                      asSingle={true}
-                      useRange={false}
-                      minDate={new Date("1900-01-02")}
-                      maxDate={new Date()}
-                      value={
-                        value[i]
-                          ? {
+        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+          <ContactSection>
+            <form action="" ref={info}>
+              <InputFrom label="First Name">
+                <input
+                  name="cfirstname"
+                  type="text"
+                  className={inp}
+                  defaultValue={contact.firstname}
+                  onChange={(e) =>
+                    setContact({ ...contact, firstname: e.target.value })
+                  }
+                />
+              </InputFrom>
+              <InputFrom label="Last Name">
+                <input
+                  name="clastname"
+                  type="text"
+                  className={inp}
+                  defaultValue={contact.lastname}
+                  onChange={(e) =>
+                    setContact({ ...contact, lastname: e.target.value })
+                  }
+                />
+              </InputFrom>
+              <InputFrom label="Phone">
+                <input
+                  name="cphone"
+                  type="text"
+                  className={inp}
+                  defaultValue={contact.phone}
+                  onChange={(e) =>
+                    setContact({ ...contact, phone: e.target.value })
+                  }
+                />
+              </InputFrom>
+              <InputFrom label="Email">
+                <input
+                  name="cemail"
+                  type="text"
+                  className={inp}
+                  defaultValue={contact.email}
+                  onChange={(e) =>
+                    setContact({ ...contact, email: e.target.value })
+                  }
+                />
+              </InputFrom>
+              {pass?.map((t, i) => {
+                return (
+                  <PassengerInfo type={t} no={i + 1} key={i}>
+                    <InputFrom label="First Name">
+                      <input
+                        name={`fname${i + 1}`}
+                        type="text"
+                        className={inp}
+                        defaultValue={value[i]?.firstname}
+                      />
+                    </InputFrom>
+                    <InputFrom label="Last Name">
+                      <input
+                        name={`lname${i + 1}`}
+                        type="text"
+                        className={inp}
+                        defaultValue={value[i]?.lastname}
+                      />
+                    </InputFrom>
+                    <InputFrom label="Nationality">
+                      <input
+                        name={`nationality${i + 1}`}
+                        type="text"
+                        className={inp}
+                        defaultValue={value[i]?.nationality}
+                      />
+                    </InputFrom>
+                    <InputFrom label="Date of birth">
+                      <Datepicker
+                        asSingle={true}
+                        useRange={false}
+                        minDate={new Date("1900-01-02")}
+                        maxDate={new Date()}
+                        value={
+                          value[i]
+                            ? {
                               startDate: value[i].dob.startDate,
                               endDate: value[i].dob.endDate,
                             }
-                          : null
-                      }
-                      placeholder="DD-MM-YYYY"
-                      displayFormat={"DD-MM-YYYY"}
-                      inputClassName={inp}
-                      onChange={(e) => handleValueChange(i + 1, e)}
-                    />
-                    <label
-                      id={`gender${i + 1}`}
-                      className="px-3 whitespace-nowrap text-primary"
-                    >
-                      Gender
-                    </label>
-                    <span className="flex space-x-2 pr-3">
-                      <input
-                        type="radio"
-                        htmlFor="gender"
-                        name={`gender${i + 1}`}
-                        onClick={() => handleGender(i + 1, "female")}
+                            : null
+                        }
+                        placeholder="DD-MM-YYYY"
+                        displayFormat={"DD-MM-YYYY"}
+                        inputClassName={inp}
+                        onChange={(e) => handleValueChange(i + 1, e)}
                       />
-                      <span>female</span>
-                    </span>
-                    <span className="flex space-x-2 pr-3">
-                      <input
-                        type="radio"
-                        htmlFor="gender"
-                        name={`gender${i + 1}`}
-                        onClick={() => handleGender(i + 1, "male")}
-                        className="p-1"
-                      />
-                      <span>male</span>
-                    </span>
-                  </InputFrom>
-                </PassengerInfo>
-              );
-            })}
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white px-4 py-1 mt-3 float-right w-fit rounded hover:ring "
-            >
-              Submit
-            </button>
-          </form>
-        </ContactSection>
-
-        <FlightInfo
+                      <label
+                        id={`gender${i + 1}`}
+                        className="px-3 whitespace-nowrap text-primary"
+                      >
+                        Gender
+                      </label>
+                      <span className="flex space-x-2 pr-3">
+                        <input
+                          type="radio"
+                          htmlFor="gender"
+                          name={`gender${i + 1}`}
+                          onClick={() => handleGender(i + 1, "female")}
+                        />
+                        <span>female</span>
+                      </span>
+                      <span className="flex space-x-2 pr-3">
+                        <input
+                          type="radio"
+                          htmlFor="gender"
+                          name={`gender${i + 1}`}
+                          onClick={() => handleGender(i + 1, "male")}
+                          className="p-1"
+                        />
+                        <span>male</span>
+                      </span>
+                    </InputFrom>
+                  </PassengerInfo>
+                );
+              })}
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="bg-blue-500 text-white px-4 py-1 mt-3 float-right w-fit rounded hover:ring "
+              >
+                Submit
+              </button>
+            </form>
+          </ContactSection>
+          <FlightInfo
           pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
           classType={data.c}
         />
+        </div>
+
+
+        
 
         {/* Add on */}
         <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
