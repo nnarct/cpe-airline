@@ -16,9 +16,9 @@ export const Register = ({ auth }) => {
 
   const verifyValues = () => {
     let errText = "";
-    if (!/^[A-Z]{1,40}$/i(values.FirstName))
+    if (!/^[A-Z]{1,40}$/i.test(values.FirstName))
       errText += "\u2022Please check your first name.\n";
-    if (!/^[A-Z]{1,40}$/i(values.LastName))
+    if (!/^[A-Z]{1,40}$/i.test(values.LastName))
       errText += "\u2022Please check your last name.\n";
     if (values.Email === null || values.Email === "")
       errText += "\u2022 Please enter your Email.\n";
@@ -26,7 +26,7 @@ export const Register = ({ auth }) => {
       errText += "\u2022 Phone number must start with 0.\n";
     else if (values.TelNo.length !== 10)
       errText += "\u2022 Phone number must be just 10 numbers.\n";
-    else if (!/^\(?(\d{10})$/(values.TelNo))
+    else if (!/^\(?(\d{10})$/.test(values.TelNo))
       errText += "\u2022 Wrong phone number format.";
     if (values.Password.length < 8)
       errText += "\u2022 Password must be at least 8 characters.\n";
