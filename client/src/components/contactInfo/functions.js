@@ -2,27 +2,27 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 
 export const validate = (contact) => {
-  if (contact.firstname === undefined || contact.firstname === "") {
+  if (contact.FirstName === undefined || contact.LastName === "") {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
-      text: "Please enter your contact firstname",
+      text: "Please enter contact first name",
       confirmButtonColor: "#3085d6",
       timer: 4000,
       timerProgressBar: true,
     });
     return 0;
-  } else if (contact.firstname > 40) {
+  } else if (contact.FirstName > 40) {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
-      text: "Please fill contact firstname less than 40",
+      text: "First name must be less than 40 characters",
       confirmButtonColor: "#3085d6",
       timer: 4000,
       timerProgressBar: true,
     });
     return 0;
-  } else if (/\d/.test(contact.firstname)) {
+  } else if (/\d/.test(contact.FirstName)) {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
@@ -34,21 +34,21 @@ export const validate = (contact) => {
     return 0;
   }
 
-  if (contact.lastname === undefined || contact.lastname === "") {
+  if (contact.LastName === undefined || contact.LastName === "") {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
-      text: "Please enter your contact lastname",
+      text: "Please enter contact last name",
       confirmButtonColor: "#3085d6",
       timer: 4000,
       timerProgressBar: true,
     });
     return 0;
-  } else if (contact.lastname > 40) {
+  } else if (contact.LastName > 40) {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
-      text: "Please fill contact lastname less than 40",
+      text: "Last name must be less than 40 characters",
       confirmButtonColor: "#3085d6",
       timer: 4000,
       timerProgressBar: true,
@@ -90,7 +90,7 @@ export const validate = (contact) => {
     Swal.fire({
       icon: "error",
       title: "Sorry...",
-      text: "Please fill email less than 40",
+      text: "Email must be less than 40 characters.",
       confirmButtonColor: "#3085d6",
       timer: 4000,
       timerProgressBar: true,
