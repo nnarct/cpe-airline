@@ -113,11 +113,12 @@ export const SaveTrip = () => {
   );
 };
 
-export const BaseLuggage = ({ children }) => {
+export const BaseLuggage = ({ base }) => {
   return (
     <>
       <div className="bg-green-300 border border-green-900 p-2 w-full rounded text-green-900 mt-1 mb-2">
-        Base Baggage {children} kg.
+        <p>You have {base?.CarryOn || "0"} kg. for Carry On Bag.</p>
+        <p>You have {base?.CheckedIn || "0"} kg. for Checked-In Bag.</p>
       </div>
     </>
   );
