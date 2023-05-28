@@ -24,7 +24,9 @@ export const MyFlight = () => {
     return new Date(b.DepartureTime) < new Date();
   });
 
-  const filteredCanceledFlights = Bookings.filter((b) => {});
+  const filteredCanceledFlights = Bookings.filter((b) => {
+    return 1;
+  });
 
   return (
     <>
