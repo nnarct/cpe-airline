@@ -1,20 +1,29 @@
-export const Seat = ({ seatNumber, seatStatus }) => {
-    return seatStatus === 1 ? (
-        <div className="m-2">
-
-            <input disabled type="radio" id={seatNumber} name="SeatSelect" className="hidden peer" />
-            <label htmlFor={seatNumber} className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-gray-200 border-2 border-gray-200 rounded-lg ">
-                {seatNumber}
-            </label>
+export const Seat = ({ seat }) => {
+  if (seat.isBooked)
+    return (
+      <>
+        <div
+          className={`col-span-2 flex items-center justify-center font-bold text-xl w-full text-gray-500 border-2 border-gray-600 py-4 bg-gray-300 rounded-lg ${
+            seat.SeatCode.includes("C") ? "mr-2" : ""
+          }`}
+        >
+          {seat.SeatCode}
         </div>
-
-    ) : (
-        <div className="m-2">
-            <input  type="radio" id={seatNumber} name="SeatSelect" className="hidden peer" />
-            <label htmlFor={seatNumber} className="inline-flex items-center justify-between w-full p-5 text-black bg-orange-300 border-2 border-orange-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                <p>{seatNumber}</p>
-            </label>
-        </div>
+        {seat.SeatCode.includes("C") && <div className="w-12" />}
+      </>
     );
-
+  return (
+    <>
+      <div
+        className={`col-span-2 shadow flex items-center justify-center w-full cursor-pointer font-bold text-xl border-2 py-4 border-gray-600 rounded-lg ${
+          seat.Class === "Economy"
+            ? "bg-blue-300 border-blue-100 hover:border-blue-400"
+            : "bg-green-300 border-green-100 hover:border-green-400"
+        }  `}
+      >
+        {seat.SeatCode}
+      </div>
+      {seat.SeatCode.includes("C") && <div className="w-12" />}
+    </>
+  );
 };
