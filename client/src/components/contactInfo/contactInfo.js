@@ -343,7 +343,7 @@ export const ContactInfo = () => {
         </ExtWrap>
 
         {/* seat */}
-        <Seatselect />
+        <Seatselect params={params}/>
         <button
           type="submit"
           onClick={handleSubmit}
