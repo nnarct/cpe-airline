@@ -47,7 +47,7 @@ export const insertBooking = (req, res) => {
   db.query(sqlInvoice, invoiceValue, (err, result) => {
     if (err)
       res.json({ Error: "Error while creating invoice in server" });
-     else {
+    else {
       const invoiceID = result.insertId;
       db.query(
         sqlDepBooking,
