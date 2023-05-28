@@ -19,10 +19,10 @@ export const MyProfile = () => {
   }, [cookie]);
   return (
     <>
-      <div className="my-3 flex justify-center text-4xl font-semibold">
-        Admin
-      </div>
       <MyProfileWrapper>
+        <div className="my-3 flex justify-center text-4xl font-semibold">
+          Admin
+        </div>
         <Card className="flex items-center">
           <NameIcon>{info.FirstName ? info.FirstName[0] : ""}</NameIcon>
           <div>
