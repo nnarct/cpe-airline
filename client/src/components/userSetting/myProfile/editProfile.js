@@ -117,7 +117,7 @@ export const EditProfile = () => {
                 }}
                 className="text-gray-500 rounded mx-3 font-semibold active:bg-gray-100 border border-gray-400 py-2 px-6 hover:ring ring-gray-300/60 bg-white"
               >
-                Cancle
+                Cancel
               </button>
               <button
                 onClick={(e) => {

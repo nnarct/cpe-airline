@@ -21,11 +21,8 @@ export const FlightInfo = ({ pass, classType }) => {
       (res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Success") {
-          if (data.isReturn === "0") setDep(res.data.DepFlight);
-          else {
-            setDep(res.data.DepFlight);
-            setRet(res.data.RetFlight);
-          }
+          setDep(res.data.DepFlight);
+          if (data.isReturn !== "0") setRet(res.data.RetFlight);
         } else console.log(res.data.Error);
       }
     );

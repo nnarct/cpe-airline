@@ -2,7 +2,7 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { Star } from "../../components/star";
-export const AddFlight = ({ airlines, airports }) => {
+export const AddFlight = ({ airlines, airports, planes }) => {
   const [values, setValues] = useState({
     FlightNumber: "",
     AirlineID: "",
@@ -13,8 +13,88 @@ export const AddFlight = ({ airlines, airports }) => {
     DestinationAirportID: "",
   });
   const handleSubmit = (e) => {
-    Axios.post("http://localhost:3001/system/insertFlight", values)
-      .then((res) => {
+    if (values.FlightNumber === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please input flight number again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.AirlineID === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select airline again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.DepartureTime === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select departure time again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.ArrivalTime === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select arrival time again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.PlaneID === 0 || values.PlaneID === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select plane again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.DestinationAirportID === 0 || values.DestinationAirportID === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select destiantion airport again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.OriginAirportID === 0 || values.OriginAirportID === '') {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Please select origin airport again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    Axios.post("http://localhost:3001/system/insertFlight", values).then(
+      (res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err,
+            timer: 5000,
+            timerProgressBar: true,
+          });
+          return;
+        }
         if (res.data.Status === "Create new flight successfully! :)")
           Swal.fire({
             icon: "success",
@@ -32,10 +112,8 @@ export const AddFlight = ({ airlines, airports }) => {
             timer: 5000,
             timerProgressBar: true,
           });
-      })
-      .then((err) => {
-        if (err) console.log(err);
-      });
+      }
+    );
   };
   return (
     <>
@@ -61,11 +139,16 @@ export const AddFlight = ({ airlines, airports }) => {
               setValues({ ...values, FlightNumber: e.target.value })
             }
           />
+
           <label htmlFor="airlineID">Airline</label>
           <select
             name="airlineID"
             id="AirlineID"
             className="mb-2 border rounded p-1"
+            defaultValue={1}
+            onChange={(e) =>
+              setValues({ ...values, AirlineID: e.target.value })
+            }
           >
             {airlines?.map((airline, i) => {
               return (
@@ -75,6 +158,7 @@ export const AddFlight = ({ airlines, airports }) => {
               );
             })}
           </select>
+
           <label htmlFor="DepartureTime">Departure time</label>
           <input
             className="mb-2 border rounded p-1"
@@ -89,50 +173,73 @@ export const AddFlight = ({ airlines, airports }) => {
             className="mb-2 border rounded p-1"
             type="datetime-local"
             min={new Date(values.DepartureTime).toISOString().slice(0, -8)}
+            onChange={(e) =>
+              setValues({ ...values, ArrivalTime: e.target.value })
+            }
           />
-          <label htmlFor="PlaneID">Plane ID</label>
-          <input type="text" className="mb-2 border rounded p-1" />
+
+          <label htmlFor="Plane" className="w-24 block">
+            Plane
+          </label>
+          <select
+            id="Plane"
+            className="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2"
+            defaultValue={0}
+            onChange={(e,) =>
+              setValues({
+                ...values,
+                PlaneID: e.target.value,
+              })
+            }
+          >
+            {planes?.map((p, i) => {
+              if (Number(p.AirlineID) === Number(values.AirlineID))
+                return (
+                  <option key={p.PlaneID} value={p.PlaneID}>
+                    {p.PlaneModel} {p.airline}
+                  </option>
+                );
+              return null;
+            })}
+          </select>
+
           <label htmlFor="OriginAirport">Origin Airport</label>
           <select
             name="OriginAirport"
             id="OriginAirport"
             className="mb-2 border rounded p-1"
+            defaultValue={0}
+            onChange={(e) =>
+              setValues({
+                ...values,
+                OriginAirportID: e.target.value,
+              })
+            }
           >
             {airports?.map((airport, i) => {
               return (
-                <option
-                  key={`origin${i}`}
-                  value={airport.AirportID}
-                  onClick={() =>
-                    setValues({
-                      ...values,
-                      OriginAirportID: airport.AirportID,
-                    })
-                  }
-                >
+                <option key={`origin${i}`} value={airport.AirportID}>
                   {i + 1}. {airport.Name} ({airport.IATA})
                 </option>
               );
             })}
           </select>
-          <label htmlFor="OriginAirport">Destination Airport</label>
+          <label htmlFor="DestinationAirport">Destination Airport</label>
           <select
             name="DestinationAirport"
             id="DestinationAirport"
             className="mb-2 border rounded p-1"
+            defaultValue={0}
+            onChange={(e) =>
+              setValues({
+                ...values,
+                DestinationAirportID: e.target.value,
+              })
+            }
           >
             {airports?.map((airport, i) => {
               return (
-                <option
-                  key={`destination${i}`}
-                  value={airport.AirportID}
-                  onClick={() =>
-                    setValues({
-                      ...values,
-                      DestinationAirportID: airport.AirportID,
-                    })
-                  }
-                >
+                <option key={`destination${i}`} value={airport.AirportID}>
                   {i + 1}. {airport.Name} ({airport.IATA})
                 </option>
               );

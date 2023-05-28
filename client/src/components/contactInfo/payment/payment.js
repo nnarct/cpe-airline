@@ -153,8 +153,24 @@ export const Payment = () => {
   const [exp, setExp] = useState({ month: "06", year: "23" });
   const [payments, setPayments] = useState([]);
   useEffect(() => {
+    if(sessionStorage.passenger == null || sessionStorage.contact === null || sessionStorage.contact === undefined)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Session expired, please try again.",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#3B82F6",
+      }).then(() => navigate("/"));
     Axios.post("http://localhost:3001/getPayment").then((res, err) => {
-      if (err) console.log(err);
+      if (err) {
+        Swal.fire({
+          icon: "error",
+          title: "API Error",
+          text: "Error while getting payment method.",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#3B82F6",
+        }).then(() => navigate("/"));
+      }
       else setPayments(res.data.Payments);
     });
   }, []);
@@ -182,12 +198,36 @@ export const Payment = () => {
         booking.returnFlightID = params.get("returnFlightID");
 
       if (type.Name === "PromptPay") {
+        if(form["PromtpayNumber"].value.length !== 10 && form["PromtpayNumber"].value.length !== 13){
+          Swal.fire({
+            icon: "error",
+            title: "Oops! Sorry",
+            text: "PromtPay number must be 10 0r 13 digits",
+          });
+          return;
+        }
+        if(contact.FirstName + " " + contact.LastName === '' || form["PromtpayNumber"].value === ''){
+          Swal.fire({
+            icon: "error",
+            title: "Oops! Sorry",
+            text: "Please fill all the fields",
+          });
+          return;
+        }
         booking.payment = {
           PaymentID: type.PaymentID,
           BillTo: contact.firstname + " " + contact.lastname,
           PromtpayNumber: form["PromtpayNumber"].value,
         };
       } else {
+        if(form["cardHolder"].value === '' || form["cardNumber"].value === '' || form["cvv"].value === '' || exp.month === '' || exp.year === ''){
+          Swal.fire({
+            icon: "error",
+            title: "Oops! Sorry",
+            text: "Please fill all the fields",
+          });
+          return;
+        }
         booking.payment = {
           PaymentID: type.PaymentID,
           BillTo: form["cardHolder"].value,
@@ -205,7 +245,6 @@ export const Payment = () => {
               title: "Oops! Sorry",
               text: "Something went wrong, please contact admin..",
             });
-            console.log(res.data.Error);
             return;
           }
           if (res.data.Status) {
@@ -243,8 +282,10 @@ export const Payment = () => {
 
   return (
     <>
+    
       <Navbar />
       <PageWrapper>
+        
         <form
           ref={paymentForm}
           className="mx-auto bg-white w-120 flex flex-col p-3 md:p-6 rounded-xl shadow"

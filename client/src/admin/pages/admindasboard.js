@@ -3,12 +3,12 @@ import { AdminNavbar } from "../components/navbar";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Sidebar } from "../ad/sidebar/sidebar";
-import { Dashboard } from "../system/dashboard";
+import { Dashboard } from "../system/dashboard/dashboard";
 import { AirportList } from "../system/airportList/airportList";
 import { FlightList } from "../ad/flightList/flightList";
 import { PlaneList } from "../system/planeList/planeList";
 import { PassengerList } from "../ad/passengerList/passengerList";
-import { MyProfile } from "../ad/myProfile";
+import { MyProfile } from "../ad/myProfile/myProfile";
 export const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();

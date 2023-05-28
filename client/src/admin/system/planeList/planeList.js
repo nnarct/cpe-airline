@@ -17,7 +17,7 @@ export const PlaneList = () => {
           <span>Plane List</span>
           <button
             className="text-base shadow focus:ring-2 rounded px-2 bg-blue-600 text-white  hover:ring"
-            onClick={() => addPlane(airlines)}
+            onClick={() => addPlane(airlines, setPlanes, setAirlines)}
           >
             Add Plane +
           </button>
@@ -33,7 +33,7 @@ export const PlaneList = () => {
           </THead>
           <tbody>
             {planes && planes?.map((plane, i) => {
-              return <Plane plane={plane}key={i} />;
+              return <Plane plane={plane} key={i} setPlanes={setPlanes} airlines={airlines} setAirlines={setAirlines}/>;
             })}
           </tbody>
         </Table>

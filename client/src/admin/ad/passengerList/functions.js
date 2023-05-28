@@ -2,17 +2,14 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import moment from "moment";
 
-export const getPassengers = async ({ setPassengers }) => {
-  const res = await fetch("http://localhost:3001/system/passengerList");
-  const data = await res.json();
-  setPassengers(data.Data);
-};
-export const getPassengersGroupByBookingID = async ({ setPassengers }) => {
-  const res = await fetch(
-    "http://localhost:3001/system/passengerListGroupByBookingID"
-  );
-  const data = await res.json();
-  setPassengers(data.Data);
+export const getPassengers = async ({ setLoading, setPassengers, adminCookie }) => {
+  Axios.post("http://localhost:3001/selectPassenger", { adminCookie }).then(
+    (res, err) => {
+      if (err) Swal.fire("Error", err.message, "error");
+      if (res.data.Status) setPassengers(res.data.Data);
+      else Swal.fire("Error", res.data.Error, "error");
+    }
+  ).then(() => setLoading(false));
 };
 export const editPassenger = (passenger) => {
   const fselected = passenger?.Gender === "female" ? "selected" : "";
@@ -37,19 +34,19 @@ export const editPassenger = (passenger) => {
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="LastName" class="w-24 block">LastName</label>
-                <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="LastName" value="${
+                <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="LastName" value="${
                   passenger?.LastName
                 }">
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="DOB" class="w-24 block">DOB</label>
-                <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="DOB" value="${d}" max=${moment(
+                <input type="date" id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="DOB" value="${d}" max=${moment(
       new Date()
     ).format("YYYY-MM-DD")}>
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="gender" class="w-24 block">Gender</label>
-                <select id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" value="${
+                <select id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" value="${
                   passenger?.Gender
                 }">
                   <option value="male" ${mselected}>male</option>
@@ -58,7 +55,7 @@ export const editPassenger = (passenger) => {
               </div>
               <div class="flex items-center justify-center">
                 <label htmlFor="nationality" class="w-24 block">Nationality</label>
-                <input id="swal-input5" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="nationality" value="${
+                <input id="swal-input5" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="nationality" value="${
                   passenger?.Nationality
                 }">
               </div>

@@ -5,6 +5,7 @@ import { AddFlight } from "../components/addFlight";
 import { Table, THead, Th, Edit } from "../components/table";
 import { getFlights, getPlanes } from "./functions";
 import { Flight } from "./oneFlight";
+import { paginateData, RenderPaginationLinks } from "./pagination";
 export const FlightList = () => {
   const [flights, setFlights] = useState([]);
   const [airlines, setAirlines] = useState([]);
@@ -16,12 +17,18 @@ export const FlightList = () => {
   const handleClick = () => {
     addFlight.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataSubset, setDataSubset] = useState([]);
 
   useEffect(() => {
     getFlights({ setFlights, setAirlines, setAirports, setLoading });
     getPlanes({ setPlanes });
-  }, []);
 
+    const subset = paginateData(flights, currentPage);
+    setDataSubset(subset);
+  }, [flights, currentPage]);
+
+  
   // Todo - delete flight
   // Todo - Pagination
 
@@ -52,20 +59,21 @@ export const FlightList = () => {
   };
 
   const handleDateChange = (event) => {
-    console.log(event.target.value);
     event.target.value !== "ALL"
       ? setSelectedDate({ status: true, date: event.target.value })
       : setSelectedDate({ status: false, date: "" });
   };
 
-  const filteredFlights = flights.filter((flight) => {
+  const filteredFlights = dataSubset?.filter((flight) => {
     if (selectedAirline.status && flight.airline !== selectedAirline.airline)
       return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    return !(selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date);
+    return !(
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    );
   });
 
   return (
@@ -80,6 +88,7 @@ export const FlightList = () => {
             Add Flight +
           </button>
         </Header>
+        <RenderPaginationLinks {...{flights, currentPage, setCurrentPage}}/>
         <Header>
           <table className="text-base font-normal">
             <thead className="">
@@ -107,7 +116,7 @@ export const FlightList = () => {
                     onChange={handleAirlineChange}
                   >
                     <option value="ALL">All</option>
-                    {airlines.map((airline) => {
+                    {airlines?.map((airline) => {
                       return (
                         <option key={airline.AirlineID} value={airline.Name}>
                           {airline.Name}
@@ -124,7 +133,7 @@ export const FlightList = () => {
                     onChange={handleFromChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
@@ -141,7 +150,7 @@ export const FlightList = () => {
                     onChange={handleToChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
@@ -180,7 +189,7 @@ export const FlightList = () => {
             {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
-                  <tr key={tr} className="p-4 animate-pulse">
+                  <tr key={index} className="p-4 animate-pulse">
                     {[...Array(10)].map((td, i) => {
                       return (
                         <td key={i} className="p-2 border border-1 text-center">
@@ -193,10 +202,10 @@ export const FlightList = () => {
               })}
             {!loading &&
               filteredFlights &&
-              filteredFlights.map((flight, i) => {
+              filteredFlights?.map((flight, i) => {
                 return (
                   <Flight
-                    key={flight.FlightID || i}
+                    key={flight?.FlightID}
                     flight={flight}
                     airlines={airlines}
                     airports={airports}
@@ -207,7 +216,7 @@ export const FlightList = () => {
           </tbody>
         </Table>
         <div ref={addFlight} />
-        <AddFlight airlines={airlines} airports={airports} />
+        <AddFlight airlines={airlines} airports={airports} planes={planes} />
       </Content>
     </>
   );

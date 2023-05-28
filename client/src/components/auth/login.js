@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Star } from "../../admin/components/star";
-export const Login = () => {
+export const Login = ({ setAuth }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const redirect = params.get("redirect");
@@ -18,6 +18,7 @@ export const Login = () => {
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
       if (res.data.Status === "Success") {
+        setAuth(true);
         if (redirect === "/search") navigate(-1);
         navigate("/");
       }
@@ -42,6 +43,7 @@ export const Login = () => {
       Axios.post("http://localhost:3001/login", values).then((res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Successfully login") {
+          setAuth(true);
           if (redirect === "/search") navigate(-1);
           navigate("/");
           return;

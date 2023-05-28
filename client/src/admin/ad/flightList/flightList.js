@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import { Content } from "../../system/components/content";
 import { Header } from "../../system/components/header";
 import { AddFlight } from "../../system/components/addFlight";
@@ -11,33 +12,30 @@ export const FlightList = () => {
   const [airports, setAirports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [planes, setPlanes] = useState([]);
-
+  const [cookies] = useCookies(["admin"]);
+  const adminCookie = cookies.admin;
   const addFlight = useRef(null);
   const handleClick = () => {
     addFlight.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    getFlights({ setFlights, setAirlines, setAirports, setLoading });
+    getFlights({
+      setFlights,
+      setAirlines,
+      setAirports,
+      setLoading,
+      adminCookie,
+    });
     getPlanes({ setPlanes });
-  }, []);
+  }, [adminCookie]);
 
   // Todo - delete flight
   // Todo - Pagination
 
-  const [selectedAirline, setSelectedAirline] = useState({
-    status: false,
-    airline: "",
-  });
   const [selectedFrom, setSelectedFrom] = useState({ status: false, from: "" });
   const [selectedTo, setSelectedTo] = useState({ status: false, to: "" });
   const [selectedDate, setSelectedDate] = useState({ status: false, date: "" });
-
-  const handleAirlineChange = (event) => {
-    if (event.target.value !== "ALL")
-      setSelectedAirline({ status: true, airline: event.target.value });
-    else setSelectedAirline({ status: false, airline: "" });
-  };
 
   const handleFromChange = (event) => {
     if (event.target.value !== "ALL")
@@ -52,20 +50,19 @@ export const FlightList = () => {
   };
 
   const handleDateChange = (event) => {
-    console.log(event.target.value);
-    event.target.value !== "ALL"
-      ? setSelectedDate({ status: true, date: event.target.value })
-      : setSelectedDate({ status: false, date: "" });
+    if (event.target.value === "ALL")
+      setSelectedDate({ status: false, date: "" });
+    else setSelectedDate({ status: true, date: event.target.value });
   };
 
   const filteredFlights = flights.filter((flight) => {
-    if (selectedAirline.status && flight.airline !== selectedAirline.airline)
-      return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    return !(selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date);
+    return !(
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    );
   });
 
   return (
@@ -85,9 +82,6 @@ export const FlightList = () => {
             <thead className="">
               <tr className="rounded-t-xl">
                 <th className="font-semibold text-gray-600 text-sm text-left pl-2">
-                  Airline :
-                </th>
-                <th className="font-semibold text-gray-600 text-sm text-left pl-2">
                   From :
                 </th>
                 <th className="font-semibold text-gray-600 text-sm text-left pl-2">
@@ -102,28 +96,13 @@ export const FlightList = () => {
               <tr>
                 <td className="pr-3">
                   <select
-                    id="airlineFilter"
-                    className="w-full border text-base px-2 py-1 border-primary/50"
-                    onChange={handleAirlineChange}
-                  >
-                    <option key={"all"} value="ALL">All</option>
-                    {airlines.map((airline) => {
-                      return (
-                        <option key={airline.AirlineID} value={airline.Name}>
-                          {airline.Name}
-                        </option>
-                      );
-                    })}
-                    {/* Add more airline options as needed */}
-                  </select>
-                </td>
-                <td className="pr-3">
-                  <select
                     className="w-full border text-base px-2 py-1 border-primary/50"
                     id="fromFilter"
                     onChange={handleFromChange}
                   >
-                    <option key={"all"} value="ALL">All</option>
+                    <option key={"all"} value="ALL">
+                      All
+                    </option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -140,7 +119,9 @@ export const FlightList = () => {
                     id="toFilter"
                     onChange={handleToChange}
                   >
-                    <option key={"all"} value="ALL">All</option>
+                    <option key={"all"} value="ALL">
+                      All
+                    </option>
                     {airports.map((airport) => {
                       return (
                         <option key={airport.AirportID} value={airport.IATA}>
@@ -177,7 +158,7 @@ export const FlightList = () => {
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
-          {loading &&
+            {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
                   <tr key={index} className="p-4 animate-pulse">
