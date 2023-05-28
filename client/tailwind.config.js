@@ -43,6 +43,9 @@ module.exports = {
         primary: "#0D3E5E",
         lightblue: "#E9EDEF",
       },
+      gridTemplateColumns: {
+        '13' : 'repeat(13, minmax(0, 1fr))',
+      },
       screens: {
         xs: "475px",
         // => @media (min-width: 475px) { ... }
