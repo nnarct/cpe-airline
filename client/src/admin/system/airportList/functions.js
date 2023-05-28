@@ -1,12 +1,17 @@
-import Swal from "sweetalert2";
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 export  const getAirports = async (setAirports) => {
   const res = await fetch("http://localhost:3001/system/airportList");
   const data = await res.json();
   setAirports(data.Data);
 };
-export const editAirport = (setAirports,airport) => {
+
+export const editAirport = (setAirports, airport) => {
+  const sselected = airport?.section === "South" ? "selected" : "";
+  const cselected = airport?.section === "Central" ? "selected" : "";
+  const nselected = airport?.section === "North" ? "selected" : "";
+  const neselected = airport?.section === "Northeast" ? "selected" : "";
   Swal.fire({
     title: "Edit Airport",
     html: `<div>You are editing airport ID
@@ -40,29 +45,46 @@ export const editAirport = (setAirports,airport) => {
             <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Province" value="${
               airport?.Province
             }">
-          </div>`,
+            </div>
+          <div class="flex items-center justify-center py-1">
+              <label htmlFor="section" class="w-24 block">section</label>
+              <select id="swal-input5" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" value="${
+                airport?.section
+              }">
+                <option value="South" ${sselected}>South</option>
+                <option value="Central" ${cselected}>Central</option>
+                <option value="North" ${nselected}>North</option>
+                <option value="Northeast" ${neselected}>Northeast</option>
+              </select>
+            </div>`,
     showCancelButton: true,
     confirmButtonText: "Save",
     confirmButtonColor: "#2563eb",
     cancelButtonText: "Cancel",
     focusCancel: true,
+
     preConfirm: () => {
       const Name = document.getElementById("swal-input1").value;
       const IATA = document.getElementById("swal-input2").value;
       const State = document.getElementById("swal-input3").value;
       const Province = document.getElementById("swal-input4").value;
+      const section = document.getElementById("swal-input5").value;
       if (!Name) Swal.showValidationMessage(`Please enter airport name`);
       else if (!IATA) Swal.showValidationMessage(`Please enter airport IATA`);
       else if (!State)
         Swal.showValidationMessage(`Please enter airport state`);
       else if (!Province)
         Swal.showValidationMessage(`Please enter airport province`);
+      else if (!section)
+        Swal.showValidationMessage(`Please enter airport section`);  
       return { 
         id: airport?.AirportID,
         Name: Name,
         IATA: IATA,
         State: State,
-        Province: Province,};
+        Province: Province,
+        Section: section,
+      };
     },
   }).then((result) => {
     if (result.isConfirmed)
