@@ -25,7 +25,7 @@ export const SeatSelect = ({
       returnFlightID: params.get("returnFlightID"),
       class: params.get("class"),
     }).then((res, err) => {
-      if (err) console.log(err);
+      if (err) console.log(err); // Todo - handle error
       if (res.data.Status === "Success") {
         setAvailableDepartureSeat(res.data.availableDepartureSeat);
         setBookedDepartureSeat(res.data.bookedDepartureSeat);
@@ -33,7 +33,8 @@ export const SeatSelect = ({
           setAvailableReturnSeat(res.data.availableReturnSeat);
           setBookedReturnSeat(res.data.bookedReturnSeat);
         }
-      }
+        return;
+      } else console.log(res.data.Error);
     });
   }, []);
 
@@ -76,7 +77,6 @@ export const SeatSelect = ({
   const [id, setId] = useState(0);
   const [select, setSelect] = useState(0);
   const getCode = (seatId, arr) => {
-    console.log(arr);
     return arr.find((seat) => seat.SeatID === seatId)?.SeatCode;
   };
   return (
@@ -116,6 +116,7 @@ export const SeatSelect = ({
             {depSeats.map((seat, index) => {
               return (
                 <div
+                  key={seat.SeatID}
                   onClick={() => setId(index)}
                   className={`flex m-1 cursor-pointer hover:ring border rounded ${
                     id === index
@@ -170,7 +171,7 @@ export const SeatSelect = ({
                     return (
                       <Seat
                         id={id}
-                        key={seatIndex}
+                        key={seat.SeatID}
                         seat={seat}
                         seatID={depSeats}
                         setSeatID={setDepSeats}
@@ -189,7 +190,7 @@ export const SeatSelect = ({
                     return (
                       <Seat
                         id={id}
-                        key={seatIndex}
+                        key={seat.SeatID}
                         seat={seat}
                         seatID={retSeats}
                         setSeatID={setRetSeats}
