@@ -48,7 +48,7 @@ export const ContactInfo = () => {
     c: params.get("class"),
   };
   const flightData = {
-    isReturn: params.get("isReturn"),
+    isReturn: Number(params.get("isReturn")),
     departureFlightID: params.get("departureFlightID"),
     returnFlightID: params.get("returnFlightID"),
   };
@@ -77,7 +77,8 @@ export const ContactInfo = () => {
   const [base, setBase] = useState([]);
   const [dep, setDep] = useState({});
   const [ret, setRet] = useState({});
-  const [seatID, setSeatID] = useState(pass.map((p) => null));
+  const [depSeats, setDepSeats] = useState(pass.map((p) => null));
+  const [retSeats, setRetSeats] = useState(pass.map((p) => null));
   useEffect(() => {
     if (maxPassenger(pass) === 0) navigate("/");
     setContact({ ...contact, protection: true });
@@ -114,23 +115,26 @@ export const ContactInfo = () => {
       const dob = value.find((v) => v.id === i);
       const addDep = addondep[i - 1];
       const addRet = addonret[i - 1];
-      const seat = seatID[i - 1];
+      const depSeat = depSeats[i - 1];
+      const retSeat = retSeats[i - 1];
       if (validatePassenger(fname, lname, dob, nationality, gender) === 0)
         return;
       values.push({
         id: i,
-        firstname: fname,
-        lastname: lname,
+        FirstName: fname,
+        LastName: lname,
         dob: JSON.stringify(dob.dob),
         nationality: nationality,
         gender: gender,
         addondep: addDep,
         addonret: addRet,
-        seatID: seat,
+        DepSeatID: depSeat,
+        RetSeatID: retSeat,
       });
     }
-    setSession(contact, values);
-    navigate("/payment" + location.search);
+    console.log("values", values);
+    // setSession(contact, values);
+    // navigate("/payment" + location.search);
   };
 
   return (
@@ -145,9 +149,9 @@ export const ContactInfo = () => {
                   name="cfirstname"
                   type="text"
                   className={inp}
-                  defaultValue={contact.firstname}
+                  defaultValue={contact.FirstName}
                   onChange={(e) =>
-                    setContact({ ...contact, firstname: e.target.value })
+                    setContact({ ...contact, FirstName: e.target.value })
                   }
                 />
               </InputFrom>
@@ -158,7 +162,7 @@ export const ContactInfo = () => {
                   className={inp}
                   defaultValue={contact.lastname}
                   onChange={(e) =>
-                    setContact({ ...contact, lastname: e.target.value })
+                    setContact({ ...contact, LastName: e.target.value })
                   }
                 />
               </InputFrom>
@@ -192,7 +196,7 @@ export const ContactInfo = () => {
                         name={`fname${i + 1}`}
                         type="text"
                         className={inp}
-                        defaultValue={value[i]?.firstname}
+                        defaultValue={value[i]?.FirstName}
                       />
                     </InputFrom>
                     <InputFrom label="Last Name">
@@ -200,7 +204,7 @@ export const ContactInfo = () => {
                         name={`lname${i + 1}`}
                         type="text"
                         className={inp}
-                        defaultValue={value[i]?.lastname}
+                        defaultValue={value[i]?.LastName}
                       />
                     </InputFrom>
                     <InputFrom label="Nationality">
@@ -346,7 +350,7 @@ export const ContactInfo = () => {
         </ExtWrap>
 
         {/* seat */}
-        <SeatSelect params={params}/>
+        <SeatSelect params={params} depSeats={depSeats} setDepSeats={setDepSeats} retSeats={retSeats} setRetSeats={setRetSeats}/>
         <button
           type="submit"
           onClick={handleSubmit}
