@@ -79,7 +79,7 @@ import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
-import { addOnInfo } from "./users/searchFlight/addOns.js";
+import { addOnInfo, getBase } from "./users/searchFlight/addOns.js";
 import { adminInfo } from "./admin/adminInfo.js";
 import { editSystemProfile } from "./admin/edit/editSystemProfile.js";
 import { editAdminProfile } from "./admin/edit/editAdminProfile.js";
@@ -165,11 +165,12 @@ app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
 
-app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
+// app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
 app.post("/search/getFlight", getFlight);
 app.post("/contact/flightInfo", flightInfo);
 app.post("/contact/addonInfo", addOnInfo);
+app.post("/contact/getBase", getBase);
 app.post("/insertBooking", insertBooking);
 
 app.post("/getPayment", getPayment);
