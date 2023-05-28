@@ -254,10 +254,13 @@ export const initSession = (setContact, setValue) => {
 export const getFlightInfo = (flightData, setDep, setRet) => {
   Axios.post("http://localhost:3001/contact/flightInfo", flightData).then(
     (res, err) => {
-      if (err) console.log(err);
+      if (err) console.log(err); // Todo - handle error
       if (res.data.Status === "Success") {
         setDep(res.data.DepFlight);
-        if (res.data.isReturn !== "0") setRet(res.data.RetFlight);
+        if (flightData.isReturn) {
+          setRet(res.data.RetFlight);
+        }
+        return;
       } else console.log(res.data.Error);
     }
   );
@@ -266,7 +269,7 @@ export const getFlightInfo = (flightData, setDep, setRet) => {
 export const getAddOnInfo = (flightData, setAddon) => {
   Axios.post("http://localhost:3001/contact/addonInfo", flightData).then(
     (res, err) => {
-      if (err) console.log(err);
+      if (err) console.log(err); // Todo - handle error
       if (res.data.Status === "Success") {
         setAddon({ dep: res.data.DepAddOns, ret: res.data.RetAddOns });
       } else console.log(res.data.Error);
@@ -281,7 +284,7 @@ export const getBagBase = (params, setBase) => {
     returnFlightID: params.get("returnFlightID"),
     class: params.get("class"),
   }).then((res, err) => {
-    if (err) console.log(err);
+    if (err) console.log(err); // Todo - handle error
     if (res.data.Status === "Success") {
       setBase(res.data.Base);
     } else console.log(res.data.Error);
@@ -303,4 +306,3 @@ export const handleGender = (index, element, genders, setGenders) => {
   });
   setGenders(newArray);
 };
-
