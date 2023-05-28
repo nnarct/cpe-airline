@@ -143,7 +143,7 @@ export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
             className="cursor-pointer w-full flex justify-between"
           >
             <span className="cursor-pointer flex items-center">
-              No checked baggage
+              No checked-in baggage.
             </span>
           </label>
         </div>
