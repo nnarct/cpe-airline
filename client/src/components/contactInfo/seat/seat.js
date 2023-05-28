@@ -7,7 +7,7 @@ export const checkUniqueData = (dep, ret) => {
 };
 export const Seat = ({ id, seat, seatID, setSeatID, dif }) => {
   const handleSeat = (index, element) => {
-    if(seatID.includes(element)) return; // seat is already selected
+    if (seatID.includes(element)) return; // seat is already selected
     const newArray = seatID.map((seat, i) => {
       if (i === index) return element;
       return seat;
@@ -40,12 +40,17 @@ export const Seat = ({ id, seat, seatID, setSeatID, dif }) => {
   return (
     <>
       <div
-        className={`col-span-2 shadow flex items-center justify-center w-full cursor-pointer font-bold text-xl border-2 py-4 rounded-lg  ${seatID.includes(seat.SeatID) ? "bg-red-400" : 
-        (  seat.Class === "Economy"
-          ? "bg-blue-300 border-blue-100 hover:border-blue-400"
-          : "bg-green-300 border-green-100 hover:border-green-400")
+        className={`col-span-2 shadow flex items-center justify-center w-full cursor-pointer font-bold text-xl border-2 py-4 rounded-lg  ${
+          seatID.includes(seat.SeatID)
+            ? "bg-red-400"
+            : seat.Class === "Economy"
+            ? "bg-blue-300 border-blue-100 hover:border-blue-400"
+            : "bg-green-300 border-green-100 hover:border-green-400"
         } `}
-        onClick={() => handleSeat(id, seat.SeatID)}
+        onClick={() => {
+          if (seatID.includes(seat.SeatID)) handleSeat(id, null);
+          else handleSeat(id, seat.SeatID);
+        }}
       >
         {seat.SeatCode}
       </div>
