@@ -7,24 +7,24 @@ export const addOnInfo = (req, res) => {
   let retA = [];
   db.query(sql, [req.body.departureFlightID], (err, result) => {
     if (err)
-      res.json({ Error: "Error while getting departure flight add-ons." });
+      return res.json({ Error: "Error while getting departure flight add-ons." });
     else if (result.length === 0)
       return res.json({ Error: "No departure flight add-ons found." });
     else {
       depA = result;
-      if (req.body.isReturn === "1") {
+      if (req.body.isReturn === 1 || req.body.isReturn === "1") {
         db.query(sql, [req.body.returnFlightID], (err, result) => {
           if (err)
-            res.json({ Error: "Error while getting return flight add-ons." });
+            return res.json({ Error: "Error while getting return flight add-ons." });
           else if (result.length === 0)
             return res.json({ Error: "No return flight add-ons found." });
           else {
             retA = result;
-            res.send({ Status: "Success", DepAddOns: depA, RetAddOns: retA });
+            return res.json({ Status: "Success", DepAddOns: depA, RetAddOns: retA });
           }
         });
       } else {
-        res.send({ Status: "Success", DepAddOns: depA, RetAddOns: [] });
+        return res.json({ Status: "Success", DepAddOns: depA, RetAddOns: [] });
       }
     }
   });
@@ -39,17 +39,17 @@ export const getBase = (req, res) => {
       return res.json({ Error: "No base luggage found." });
     else {
       const depBase = result[0];
-      if (req.body.isReturn === "1") {
+      if (req.body.isReturn === 1 || req.body.isReturn === "1") {
         db.query(
           sql,
           [req.body.returnFlightID, req.body.class],
           (err, result) => {
-            if (err) res.json({ Error: "Error while getting base luggage." });
+            if (err) return res.json({ Error: "Error while getting base luggage." });
             else if (result.length === 0)
               return res.json({ Error: "No base luggage found." });
             else {
               const retBase = result[0];
-              res.json({
+              return res.json({
                 Status: "Success",
                 Base: { DepBase: depBase, RetBase: retBase },
               });
@@ -57,7 +57,7 @@ export const getBase = (req, res) => {
           }
         );
       } else
-        res.json({
+        return res.json({
           Status: "Success",
           Base: { DepBase: depBase, RetBase: null },
         });
