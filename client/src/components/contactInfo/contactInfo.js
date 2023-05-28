@@ -159,7 +159,7 @@ export const ContactInfo = () => {
                   name="clastname"
                   type="text"
                   className={inp}
-                  defaultValue={contact.lastname}
+                  defaultValue={contact.LastName}
                   onChange={(e) =>
                     setContact({ ...contact, LastName: e.target.value })
                   }
