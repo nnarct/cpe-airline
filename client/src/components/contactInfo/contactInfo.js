@@ -1,4 +1,3 @@
-
 import moment from "moment";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useRef, useState } from "react";
@@ -282,29 +281,32 @@ export const ContactInfo = () => {
         <ExtWrap>
           <div className="border-b border-primary/20 mb-1 pb-1 flex ">
             <h1 className="text-2xl font-bold text-primary ">Baggage</h1>
-            <div
-              className={`cursor-pointer text-xs ml-4 w-36 text-center justify-center text-gray-600 flex items-center hover:bg-slate-100 cursor-pointer flex flex-col py-1 ${
-                baggageDate === 1 && "bg-slate-100"
-              }`}
-              onClick={() => setBaggageDate(1)}
-            >
-              <span>{moment(dep.DepartureTime).format("DD MMM YYYY")}</span>
-              <span className="flex items-center">
-                {dep.OriIATA} <BsArrowRightShort /> {dep.DesIATA}
-              </span>
-            </div>
+
             {flightData.isReturn ? (
-              <div
-                className={`cursor-pointer border-l w-36 text-xs text-center text-gray-600 flex justify-center items-center hover:bg-slate-100 cursor-pointer flex flex-col py-1 ${
-                  baggageDate === 2 && "bg-slate-100"
-                }`}
-                onClick={() => setBaggageDate(2)}
-              >
-                <span>{moment(ret.DepartureTime).format("DD MMM YYYY")}</span>
-                <span className="flex items-center">
-                  {ret.OriIATA} <BsArrowRightShort /> {ret.DesIATA}
-                </span>
-              </div>
+              <>
+                <div
+                  className={`cursor-pointer text-xs ml-4 w-36 text-center justify-center text-gray-600 flex items-center hover:bg-slate-100 cursor-pointer flex flex-col py-1 ${
+                    baggageDate === 1 && "bg-slate-100"
+                  }`}
+                  onClick={() => setBaggageDate(1)}
+                >
+                  <span>{moment(dep.DepartureTime).format("DD MMM YYYY")}</span>
+                  <span className="flex items-center">
+                    {dep.OriIATA} <BsArrowRightShort /> {dep.DesIATA}
+                  </span>
+                </div>
+                <div
+                  className={`cursor-pointer border-l w-36 text-xs text-center text-gray-600 flex justify-center items-center hover:bg-slate-100 cursor-pointer flex flex-col py-1 ${
+                    baggageDate === 2 && "bg-slate-100"
+                  }`}
+                  onClick={() => setBaggageDate(2)}
+                >
+                  <span>{moment(ret.DepartureTime).format("DD MMM YYYY")}</span>
+                  <span className="flex items-center">
+                    {ret.OriIATA} <BsArrowRightShort /> {ret.DesIATA}
+                  </span>
+                </div>
+              </>
             ) : null}
           </div>
           <div className={baggageDate === 1 ? "block" : "hidden"}>
@@ -350,7 +352,16 @@ export const ContactInfo = () => {
         </ExtWrap>
 
         {/* seat */}
-        <SeatSelect params={params} depSeats={depSeats} setDepSeats={setDepSeats} retSeats={retSeats} setRetSeats={setRetSeats}/>
+        <SeatSelect
+          params={params}
+          depSeats={depSeats}
+          setDepSeats={setDepSeats}
+          retSeats={retSeats}
+          setRetSeats={setRetSeats}
+          flightData={flightData}
+          ret={ret}
+          dep={dep}
+        />
         <button
           type="submit"
           onClick={handleSubmit}
