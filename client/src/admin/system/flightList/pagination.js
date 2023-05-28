@@ -5,8 +5,9 @@ export const paginateData = (data, currentPage) => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   return data.slice(startIndex, endIndex);
 };
-export const RenderPaginationLinks = ({flights, currentPage, setCurrentPage}) => {
-  const totalPages = Math.ceil(flights?.length / ITEMS_PER_PAGE);
+export const RenderPaginationLinks = ({filteredFlights, currentPage, setCurrentPage}) => {
+  console.log(filteredFlights);
+  const totalPages = Math.ceil(filteredFlights?.length / ITEMS_PER_PAGE);
   const pageNumbers = [];
 
   // Add "<<" button
