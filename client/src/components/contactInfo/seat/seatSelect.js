@@ -4,7 +4,7 @@ import { Seat } from "./seat";
 import { useEffect, useState } from "react";
 
 
-export const Seatselect = ({ params }) => {
+export const SeatSelect = ({ params }) => {
   const [availableDepartureSeat, setAvailableDepartureSeat] = useState([]);
   const [availableReturnSeat, setAvailableReturnSeat] = useState([]);
   const [bookedDepartureSeat, setBookedDepartureSeat] = useState([]);

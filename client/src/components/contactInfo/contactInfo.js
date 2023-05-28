@@ -1,13 +1,12 @@
-import Axios from "axios";
+
 import moment from "moment";
-import Swal from "sweetalert2";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
 import { Navbar } from "../navbar";
 import { FlightInfo } from "./flightInfo";
-import { Seatselect } from "./seatselect";
+import { SeatSelect } from "./seat/seatSelect";
 import {
   InputFrom,
   inp,
@@ -67,6 +66,7 @@ export const ContactInfo = () => {
         gender: "",
         dob: { startDate: null, endDate: null },
         addOnsID: null,
+        seatID: null,
       };
     })
   );
@@ -77,6 +77,7 @@ export const ContactInfo = () => {
   const [base, setBase] = useState([]);
   const [dep, setDep] = useState({});
   const [ret, setRet] = useState({});
+  const [seatID, setSeatID] = useState(pass.map((p) => null));
   useEffect(() => {
     if (maxPassenger(pass) === 0) navigate("/");
     setContact({ ...contact, protection: true });
@@ -113,6 +114,7 @@ export const ContactInfo = () => {
       const dob = value.find((v) => v.id === i);
       const addDep = addondep[i - 1];
       const addRet = addonret[i - 1];
+      const seat = seatID[i - 1];
       if (validatePassenger(fname, lname, dob, nationality, gender) === 0)
         return;
       values.push({
@@ -124,6 +126,7 @@ export const ContactInfo = () => {
         gender: gender,
         addondep: addDep,
         addonret: addRet,
+        seatID: seat,
       });
     }
     setSession(contact, values);
@@ -343,7 +346,7 @@ export const ContactInfo = () => {
         </ExtWrap>
 
         {/* seat */}
-        <Seatselect params={params}/>
+        <SeatSelect params={params}/>
         <button
           type="submit"
           onClick={handleSubmit}
