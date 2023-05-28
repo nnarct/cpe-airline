@@ -124,7 +124,7 @@ export const BaseLuggage = ({ base }) => {
   );
 };
 
-export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
+export const LuggagesDep = ({ luggages, id, fn }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
@@ -181,7 +181,7 @@ export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
     </>
   );
 };
-export const LuggagesRet = ({ luggages, id, fn, addonret }) => {
+export const LuggagesRet = ({ luggages, id, fn }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
