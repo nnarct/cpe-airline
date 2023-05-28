@@ -116,7 +116,7 @@ export const SeatSelect = ({
             {depSeats.map((seat, index) => {
               return (
                 <div
-                  key={seat.SeatID}
+                  key={seat?.SeatID}
                   onClick={() => setId(index)}
                   className={`flex m-1 cursor-pointer hover:ring border rounded ${
                     id === index
@@ -171,7 +171,7 @@ export const SeatSelect = ({
                     return (
                       <Seat
                         id={id}
-                        key={seat.SeatID}
+                        key={seat?.SeatID}
                         seat={seat}
                         seatID={depSeats}
                         setSeatID={setDepSeats}
@@ -190,7 +190,7 @@ export const SeatSelect = ({
                     return (
                       <Seat
                         id={id}
-                        key={seat.SeatID}
+                        key={seat?.SeatID}
                         seat={seat}
                         seatID={retSeats}
                         setSeatID={setRetSeats}
