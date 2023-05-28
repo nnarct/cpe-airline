@@ -200,7 +200,7 @@ export const LuggagesRet = ({ luggages, id, fn, addonret }) => {
             className="cursor-pointer w-full flex justify-between"
           >
             <span className="cursor-pointer flex items-center">
-              No checked baggage
+              No checked-in baggage.
             </span>
           </label>
         </div>
