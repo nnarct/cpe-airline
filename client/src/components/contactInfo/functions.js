@@ -258,7 +258,6 @@ export const getFlightInfo = (flightData, setDep, setRet) => {
       if (res.data.Status === "Success") {
         setDep(res.data.DepFlight);
         if (res.data.isReturn !== "0") setRet(res.data.RetFlight);
-        console.log(res.data);
       } else console.log(res.data.Error);
     }
   );
@@ -304,3 +303,4 @@ export const handleGender = (index, element, genders, setGenders) => {
   });
   setGenders(newArray);
 };
+
