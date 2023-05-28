@@ -1,7 +1,7 @@
 import { db } from "../../index.js";
 export const insertAirport = (req,res) => {
   const sqlCheck = `SELECT * FROM airport WHERE IATA = ?`;
-  const sql = "INSERT INTO airport (Name, IATA, State, Province) VALUES (?)";
+  const sql = "INSERT INTO airport (Name, IATA, State, Province, section) VALUES (?)";
   db.query(sqlCheck, [req.body.IATA], (err, response) => {
     if (err)
       return res.json({ Error: "Error while checking IATA in db..." });
@@ -12,6 +12,7 @@ export const insertAirport = (req,res) => {
       req.body.IATA,
       req.body.State,
       req.body.Province,
+      req.body.section,
     ];
     db.query(sql, [values], (err, result) => {
       if (err)

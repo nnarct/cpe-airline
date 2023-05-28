@@ -34,13 +34,18 @@ export const AirportList = () => {
             <Th>Name</Th>
             <Th className="w-22">IATA</Th>
             <Th>State</Th>
-            <Th className="w-48">Province</Th>
+            <Th className="w-42">Province</Th>
+            <Th className="w-22">section</Th>
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
             {airports?.map((airport, i) => {
               return (
-                <Airport airport={airport} key={i} setAirports={setAirports}/>
+                <Airport 
+                setAirports={setAirports}
+                airport={airport} 
+                key={i}
+                />
               );
             })}
           </tbody>
