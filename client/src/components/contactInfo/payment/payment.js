@@ -206,7 +206,7 @@ export const Payment = () => {
           });
           return;
         }
-        if(contact.firstname + " " + contact.lastname === '' || form["PromtpayNumber"].value === ''){
+        if(contact.FirstName + " " + contact.LastName === '' || form["PromtpayNumber"].value === ''){
           Swal.fire({
             icon: "error",
             title: "Oops! Sorry",
