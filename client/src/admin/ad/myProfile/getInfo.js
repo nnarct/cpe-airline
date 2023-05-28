@@ -4,6 +4,7 @@ export const getInfo = (cookieID, setInfo, setAirlines) => {
   Axios.post("http://localhost:3001/admin/info", { cookieID }).then(
     (res, err) => {
       if (err) {
+        console.log(err)
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -12,14 +13,14 @@ export const getInfo = (cookieID, setInfo, setAirlines) => {
         });
         return;
       }
-      if (res.data.Status === "Success") {
+      if (res.data.Status === "Get admin info successfully! :)") {
         setInfo(res.data.Info);
         setAirlines(res.data.Airlines);
         return;
       }
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Sorry",
         text: res.data.Error,
         confirmButtonColor: "#3085d6",
       });
