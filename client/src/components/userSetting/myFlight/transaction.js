@@ -77,14 +77,13 @@ export const Transaction = ({ flights, s }) => {
   };
 
   const editBooking = (e) => {
-    e.preventDefault();
     Swal.fire({
       title: "Edit Booking",
       html: `
       <div>You are editing booking
       <span class="font-bold">
       ${flightInfo?.BookingID}
-      }</span>
+      </span>
     </div>
   <div class="flex items-center justify-center py-1">
     <label htmlFor="fname" class="w-24 block">First Name</label>
@@ -122,7 +121,6 @@ export const Transaction = ({ flights, s }) => {
     });
   };
   const editPassenger = (e) => {
-    e.preventDefault();
     Swal.fire({
       title: "Edit passenger",
       html: `
@@ -278,12 +276,12 @@ export const Transaction = ({ flights, s }) => {
         {contactInfo?.map((info, i) => {
           return (
             <div key={i} className="pt-2 pb-2 px-8 mt-3 text-xl mb-4">
-              <div className="font-bold text-3xl border-t text-primary mt-4">
+              <div className="font-bold text-3xl border-t text-primary mt-4 flex items-center justify-between">
                 <h1> Passenger {i + 1}</h1>
                 {s === 1 && flightInfo?.Protection === 1 && (
                   <button
-                    className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
-                    onClick={editPassenger(i.PassengerID)}
+                    className="text-base px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
+                    onClick={editPassenger(info.PassengerID)}
                   >
                     Edit
                   </button>

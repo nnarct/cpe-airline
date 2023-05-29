@@ -106,6 +106,8 @@ import { getBookingInfo } from "./users/myFlight/getBookingInfo.js";
 import { routeList } from "./admin/flightRoute.js";
 import { getPrice } from "./users/createBooking/getPrice.js";
 import { bookByday } from "./admin/dashboard/bookByday.js";
+import { cancelBooking } from "./users/myFlight/cancelBooking.js";
+import { editBooking } from "./users/myFlight/editBooking.js";
 
 const app = express();
 app.use(express.json());
@@ -221,6 +223,13 @@ app.get("/system/destination", getFlightCountsBySection);
 app.get("/system/flightCount", flightCount);
 app.get("/system/userCount", userCount);
 app.get("/system/bookByday", bookByday);
+
+
+app.post("/cancelBooking", cancelBooking);
+app.post("/editBooking", editBooking);
+app.post("/editPassenger", editPassenger);
+
+
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);
