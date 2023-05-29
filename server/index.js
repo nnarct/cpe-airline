@@ -102,6 +102,7 @@ import { flightCount } from "./admin/dashboard/flightCount.js";
 import { userCount } from "./admin/dashboard/userCount.js";
 import { genderCount } from "./admin/dashboard/genderCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
+import { getBookingInfo } from "./users/myFlight/getBookingInfo.js";
 import { routeList } from "./admin/flightRoute.js";
 import { getPrice } from "./users/createBooking/getPrice.js";
 import { bookByday } from "./admin/dashboard/bookByday.js";
@@ -189,6 +190,8 @@ app.get("/airportList", airportListUser);
 app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
+app.post("/getUserBooking", getUserBooking);
+app.post('/getBookingInfo',getBookingInfo);
 
 // app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);

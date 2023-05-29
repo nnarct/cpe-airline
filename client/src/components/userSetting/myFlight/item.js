@@ -4,11 +4,13 @@ import { airlineLogo } from "../../searchResult/function";
 export const Item = ({
   AirlineName,
   BookingID,
+  FlightNumber,
   FlightID,
   DepartureTime,
   OriginAirport,
   ArrivalTime,
   DestinationAirport,
+  
 }) => {
   return (
     <>
@@ -29,7 +31,7 @@ export const Item = ({
             <div className="py-4 mx-auto container flex justify-between">
               <ul>
                 <li>Flight</li>
-                <span className="font-bold text-xl">{FlightID}</span>
+                <span className="font-bold text-xl">{FlightNumber}</span>
               </ul>
               <ul>
                 <li>Date</li>
