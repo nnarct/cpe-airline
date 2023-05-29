@@ -96,6 +96,7 @@ import { flightCount } from "./admin/dashboard/flightCount.js";
 import { userCount } from "./admin/dashboard/userCount.js";
 import { genderCount } from "./admin/dashboard/genderCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
+import { getBookingInfo } from "./users/myFlight/getBookingInfo.js";
 
 const app = express();
 app.use(express.json());
@@ -175,6 +176,8 @@ app.get("/airportList", airportListUser);
 app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
+app.post("/getUserBooking", getUserBooking);
+app.post('/getBookingInfo',getBookingInfo);
 
 // app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
@@ -187,7 +190,6 @@ app.post("/insertBooking", insertBooking);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
-app.post("/getUserBooking", getUserBooking);
 app.post("/getAvailableSeat", getAvailableSeat);
 
 
