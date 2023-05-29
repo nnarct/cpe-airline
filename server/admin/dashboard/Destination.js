@@ -37,10 +37,20 @@ export const getFlightCountsBySection = (req, res) => {
       });
       flightCountsBySection[section] = counts;
     });
-
+db.query(airline,(err,airlineName) => {
+  if (err) {
+    console.log(err);
+    return res.json({ Error: "Select airline list error in server..." });
+  }
+  if (airlineName.length > 0) {
     return res.json({
-      Status: "Successfully retrieved flight counts by section",
+      Status: "Successfully select airline name",
       FlightCountsBySection: flightCountsBySection,
+      Airlinename: airlineName,
     });
+  } else {
+    return res.json({ Error: "Airline name not found" });
+  }
+})
   });
 };
