@@ -2,6 +2,35 @@ import Axios from "axios";
 import { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement,
+  CategoryScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+
+  RadialLinearScale,
+} from 'chart.js';
+import { PolarArea } from 'react-chartjs-2';
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  LinearScale,
+  BarElement,
+  Title,
+  CategoryScale,
+  PointElement,
+  LineElement,
+  RadialLinearScale,
+); 
+
 
 // export const getCountFromBackend = async (setCountf, setCountm) => {
 //   try {
@@ -184,7 +213,7 @@ export class GenderCountsChart extends Component {
       const airlineNames = Object.values(genderCountsByAirline).map(
         (airline) => airline.AirlineName
       );
-      console.log("Gender : ", genderCountsByAirline);
+
       this.setState({ genderCountsByAirline, airlineNames });
     } catch (error) {
       console.error("Error:", error.response.data.Error);
@@ -231,6 +260,7 @@ export class GenderCountsChart extends Component {
 
     const chartOptions = {
       responsive: true,
+      maintainAspectRatio: false,
       indexAxis: "x", // Set to 'y' for horizontal bar chart
       plugins: {
         legend: {
@@ -239,13 +269,14 @@ export class GenderCountsChart extends Component {
       },
     };
 
-    return <Bar data={chartData} options={chartOptions} />;
+    return <Bar className="w-full h-full" data={chartData} options={chartOptions} />;
   }
 
   render() {
     return <div>{this.renderChart()}</div>;
   }
 }
+
 
 export class FlightCountsChart extends Component {
   state = {
@@ -260,7 +291,6 @@ export class FlightCountsChart extends Component {
       );
       const flightCountsBySection = response.data.FlightCountsBySection;
       const AirlineName = response.data.Airlinename;
-      console.log("Flight : ", flightCountsBySection);
       this.setState({ flightCountsBySection, AirlineName });
     } catch (error) {
       console.error("Error:", error.response.data.Error);
@@ -319,7 +349,7 @@ export class FlightCountsChart extends Component {
 export class BookSecCountsChart extends Component {
   state = {
     bookCountsByAirport: {},
-    AirlineName: {},
+    AirlineName: {}
   };
 
   async componentDidMount() {
@@ -328,16 +358,17 @@ export class BookSecCountsChart extends Component {
         "http://localhost:3001/system/bookBySec"
       );
       const bookCountsByAirport = response.data.BookCountsBySection;
-      const AirlineName = response.data.Airlinename;
+      const AirlineName = response.data.Airlinename
       // console.log('Book :',bookCountsByAirport)
-      this.setState({ bookCountsByAirport, AirlineName });
+      this.setState({ bookCountsByAirport,AirlineName })
+
     } catch (error) {
       console.error("Error:", error.response.data.Error);
     }
   }
 
   renderChart() {
-    const { bookCountsByAirport, AirlineName } = this.state;
+    const { bookCountsByAirport,AirlineName } = this.state;
 
     if (!Object.keys(bookCountsByAirport).length) {
       return null;
@@ -348,13 +379,10 @@ export class BookSecCountsChart extends Component {
     const bookingCounts = airportData.map((data) => data.BookingCount);
     // console.log(airlineNames)
     const getRandomColor = () => {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
+  const randomChannel = () => Math.floor(Math.random() * 256);
+  const color = `rgba(${randomChannel()}, ${randomChannel()}, ${randomChannel()}, 0.5)`;
+  return color;
+};
 
     const barColors = bookingCounts.map(() => getRandomColor());
 
@@ -379,7 +407,7 @@ export class BookSecCountsChart extends Component {
       },
     };
 
-    return <Bar data={chartData} options={chartOptions} />;
+    return <PolarArea data={chartData} options={chartOptions} />;
   }
 
   render() {
@@ -448,6 +476,118 @@ export class AddonsCountChart extends Component {
     };
 
     return <Doughnut data={chartData} options={chartOptions} />;
+  }
+
+  render() {
+    return <div>{this.renderChart()}</div>;
+  }
+}
+
+export class BookByday extends Component {
+  state = {
+    bookByday: {},
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await Axios.get(
+        "http://localhost:3001/system/bookByday"
+      );
+      const bookByday = response.data.BookByday;
+      // console.log("Daycount :", bookingsCountByAirline);
+      this.setState({bookByday });
+    } catch (error) {
+      console.error("Error:", error.response.data.Error);
+    }
+  }
+
+  renderChart() {
+    const { bookByday } = this.state;
+
+    if (
+      !bookByday ||
+      Object.keys(bookByday).length === 0
+    ) {
+      return null;
+    }
+
+    const airlineIDs = Object.keys(bookByday);
+    const airlineNames = airlineIDs.map(
+      (id) => bookByday[id].Name
+    );
+    const mondayCounts = airlineIDs.map(
+      (id) => bookByday[id].MondayCount
+    );
+    const tuesdayCounts = airlineIDs.map(
+      (id) => bookByday[id].TuesdayCount
+    );
+    const wednesdayCounts = airlineIDs.map(
+      (id) => bookByday[id].WednesdayCount
+    );
+    const thursdayCounts = airlineIDs.map(
+      (id) => bookByday[id].ThursdayCount
+    );
+    const fridayCounts = airlineIDs.map(
+      (id) => bookByday[id].FridayCount
+    );
+    const saturdayCounts = airlineIDs.map(
+      (id) => bookByday[id].SaturdayCount
+    );
+    const sundayCounts = airlineIDs.map(
+      (id) => bookByday[id].SundayCount
+    );
+
+    const chartData = {
+      labels: airlineNames,
+      datasets: [
+        {
+          label: "Monday",
+          data: mondayCounts,
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+        {
+          label: "Tuesday",
+          data: tuesdayCounts,
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+        },
+        {
+          label: "Wednesday",
+          data: wednesdayCounts,
+          backgroundColor: "rgba(255, 206, 86, 0.5)",
+        },
+        {
+          label: "Thursday",
+          data: thursdayCounts,
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
+        },
+        {
+          label: "Friday",
+          data: fridayCounts,
+          backgroundColor: "rgba(153, 102, 255, 0.5)",
+        },
+        {
+          label: "Saturday",
+          data: saturdayCounts,
+          backgroundColor: "rgba(255, 159, 64, 0.5)",
+        },
+        {
+          label: "Sunday",
+          data: sundayCounts,
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+        },
+      ],
+    };
+
+    const chartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    };
+
+    return <Bar data={chartData} options={chartOptions} />;
   }
 
   render() {

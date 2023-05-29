@@ -104,6 +104,7 @@ import { genderCount } from "./admin/dashboard/genderCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
 import { routeList } from "./admin/flightRoute.js";
 import { getPrice } from "./users/createBooking/getPrice.js";
+import { bookByday } from "./admin/dashboard/bookByday.js";
 
 const app = express();
 app.use(express.json());
@@ -216,6 +217,7 @@ app.get("/system/bookEachday", getBookingsCountByAirline);
 app.get("/system/destination", getFlightCountsBySection);
 app.get("/system/flightCount", flightCount);
 app.get("/system/userCount", userCount);
+app.get("/system/bookByday", bookByday);
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);
