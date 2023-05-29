@@ -12,6 +12,7 @@ import { BsTelephoneForward } from "react-icons/bs";
 import { MdOutlineAttachEmail } from "react-icons/md";
 import { BsCalendar3 } from "react-icons/bs";
 import LogoFly from "../../../assets/logo/logo-primary.png";
+import { airlineLogo } from "../../searchResult/function";
 
 export const Invoice = () => {
   const location = useLocation();
@@ -102,20 +103,20 @@ export const Invoice = () => {
                 key={invoice.InvoiceID}
               >
                 <div className="rounded-l-xl p-4  w-120 h-120 bg-gradient-to-br from-cyan-200  to-blue-200">
-                  <div className="m-2 text-2xl fond-bold ">
-                    <div className="text-xl fond-bold pb-2 mb-2 border-b">
+                  <div className="m-2 text-2xl border-primary/60 ">
+                    <div className="text-xl border-primary/60 pb-2 mb-2 border-b">
                       <p className="text-2xl font-bold">
                         <span>{invoice.BillTo}</span>
                       </p>
                     </div>
-                    <div className="text-xl pb-2 mb-2 border-b fond-bold">
+                    <div className="text-xl pb-2 mb-2 border-b border-primary/60">
                       <div className="flex items-center space-x-2">
                         <GiReceiveMoney />
                         <span>Total: </span>
                       </div>
                       <p className="text-2xl font-bold">{invoice.Total} ฿</p>
                     </div>
-                    <div className="text-xl fond-bold pb-2 mb-2 border-b">
+                    <div className="text-xl border-primary/60 pb-2 mb-2 border-b">
                       <div className="flex items-center space-x-2">
                         <MdFlight /> <span>Flight Number: </span>
                       </div>
@@ -123,7 +124,7 @@ export const Invoice = () => {
                         {invoice.FlightNumber}
                       </p>
                     </div>
-                    <div className="text-xl pb-2 mb-2 border-b fond-bold">
+                    <div className="text-xl pb-2 mb-2 border-b border-primary/60">
                       <div className="flex items-center space-x-2">
                         <SlWallet />
                         <span>Payment Method: </span>
@@ -132,40 +133,57 @@ export const Invoice = () => {
                         {invoice["payment method"]}
                       </p>
                     </div>
-                    <div className="text-xl pb-2 mb-2 border-b fond-bold">
+                    <div className="text-xl pb-2 mb-2 border-b border-primary/60">
                       <div className="flex items-center space-x-2">
                         <BsTelephoneForward />
                         <span>Tel: </span>
                       </div>
                       <p className="text-2xl font-bold">{invoice.tel}</p>
                     </div>
-                    <div className="text-xl pb-2 mb-2 border-b fond-bold">
+                    <div className="text-xl pb-2 mb-2 border-b border-primary/60">
                       <div className="flex items-center space-x-2">
                         <MdOutlineAttachEmail />
                         <span>Email: </span>
                       </div>
                       <p className="text-2xl font-bold">{invoice.email}</p>
                     </div>
-                    <div className="text-xl pb-2 mb-2 border-b fond-bold">
+                    <div className="text-xl pb-2 mb-2 border-b border-primary/60">
                       <div className="flex items-center space-x-2">
                         <BsCalendar3 />
                         <span>Date: </span>
                       </div>
-                      <p className="text-2xl font-bold">
-                        {moment(invoice.Date).format("DD MMM YYYY HH:MM")}
+                      <p className="">
+                        <span className="text-2xl font-bold">
+                          {moment(invoice.Date).format("DD MMM YYYY")}
+                        </span>
+                        <span className="text-base pl-3">
+                          {moment(invoice.Date).format("HH:mm:ss")}
+                        </span>
                       </p>
                     </div>
                   </div>
                 </div>
                 <div className="rounded-r-xl text-primary bg-gradient-to-tr from-sky-400 to-purple-100 w-full">
                   <div className="content">
-                    <div className="m-6 header flex flex-col items-end">
-                      <img alt="" src={LogoFly} className="h-[50px]" />
-                      <div className="text-2xl font-bold">
-                        <h4>InvoiceID 42</h4>
+                    <div className="m-6 header flex items-center justify-between">
+                      <h1 className="text-5xl uppercase font-bold">
+                        Invoice {invoice.InvoiceID}
+                      </h1>
+                      <div className="font-bold">
+                        <img alt="" src={LogoFly} className="h-10" />
+
+                        <h4 className="text-right">
+                          BookingID {invoice.BookingID}
+                        </h4>
                       </div>
                     </div>
-                    <div className="m-8 text-4xl font-bold">
+                    <div className="m-8 text-4xl font-bold flex items-center space-x-2">
+                      <img
+                        alt=""
+                        src={airlineLogo(invoice.Airline)}
+                        className="h-20"
+                      />
+
                       <h3>{invoice.Airline}</h3>
                     </div>
                     <div className="m-8 flex text-2xl font-semibold justify-between">
@@ -185,7 +203,12 @@ export const Invoice = () => {
                           <tr className="py-4 text-xl font-semibold border-t border-primary">
                             <td className="p-3">{invoice.Class}</td>
                             <td className="p-3">1</td>
-                            <td className="p-3">{invoice.Total}</td>
+                            <td className="p-3">
+                              {invoice.Total.toFixed(2).replace(
+                                /\B(?=(\d{3})+(?!\d))/g,
+                                ","
+                              )}
+                            </td>
                           </tr>
                         </tbody>
                         <tfoot>
@@ -198,7 +221,11 @@ export const Invoice = () => {
                             <td></td>
                             <td className="p-3">
                               <p className="whitespace-nowrap text-3xl text-right font-bold pt-8">
-                                {invoice.Total} ฿
+                                {invoice.Total.toFixed(2).replace(
+                                  /\B(?=(\d{3})+(?!\d))/g,
+                                  ","
+                                )}{" "}
+                                ฿
                               </p>
                             </td>
                           </tr>
