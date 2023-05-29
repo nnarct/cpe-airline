@@ -82,7 +82,7 @@ export const ContactInfo = () => {
   const [total, setTotal] = useState(0);
   useEffect(() => {
     if (maxPassenger(pass) === 0) navigate("/");
-    setContact({ ...contact, protection: true });
+    setContact({ ...contact, Protection: true, Class: data.c });
     initSession(setContact, setValue);
     getFlightInfo(flightData, setDep, setRet);
     getAddOnInfo(flightData, setAddon);
@@ -103,11 +103,13 @@ export const ContactInfo = () => {
     });
     setAddonret(newArray);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate(contact) === 0) return;
     const form = info.current;
-    setContact({ ...contact, Total: total, Class: data.c });
+    contact.Total = total;
+    contact.Class = data.c;
     let values = [];
     for (let i = 1; i <= pass.length; i++) {
       const fname = form[`fname${i}`].value;
@@ -134,8 +136,8 @@ export const ContactInfo = () => {
         RetSeatID: retSeat,
       });
     }
-    // console.log("values", values);
-    // console.log("contact", contact);
+    console.log("values", values);
+    console.log("contact", contact);
     setSession(contact, values);
     navigate("/payment" + location.search);
   };
@@ -362,7 +364,7 @@ export const ContactInfo = () => {
               classType={data.c}
             />
             <Price
-              protection={contact.protection}
+              protection={contact.Protection}
               addondep={addondep}
               addonret={addonret}
               setTotal={setTotal}
