@@ -26,7 +26,7 @@ export const AirportList = () => {
             Add Airport +
           </button>
         </Header>
-        {addAirport && <AddAirport />}
+        {addAirport && <AddAirport setAirports={setAirports} />}
         <Table>
           <THead>
             <Edit />
