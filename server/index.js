@@ -96,6 +96,7 @@ import { flightCount } from "./admin/dashboard/flightCount.js";
 import { userCount } from "./admin/dashboard/userCount.js";
 import { genderCount } from "./admin/dashboard/genderCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
+import { routeList } from "./admin/flightRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -143,6 +144,7 @@ app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
 app.get("/system/passengerListGroupByBookingID", passengerListGroupByBooking);
 app.get("/system/planeList", planeList);
+app.get("/system/routeList", routeList);
 
 app.post("/system/editProfile", editSystemProfile);
 app.post("/system/editEmployee", editEmployee);
