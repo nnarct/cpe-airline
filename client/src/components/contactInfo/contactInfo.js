@@ -79,6 +79,7 @@ export const ContactInfo = () => {
   const [ret, setRet] = useState({});
   const [depSeats, setDepSeats] = useState(pass.map((p) => null));
   const [retSeats, setRetSeats] = useState(pass.map((p) => null));
+  const [total, setTotal] = useState(0);
   useEffect(() => {
     if (maxPassenger(pass) === 0) navigate("/");
     setContact({ ...contact, protection: true });
@@ -106,6 +107,7 @@ export const ContactInfo = () => {
     e.preventDefault();
     if (validate(contact) === 0) return;
     const form = info.current;
+    setContact({ ...contact, total: total });
     let values = [];
     for (let i = 1; i <= pass.length; i++) {
       const fname = form[`fname${i}`].value;
@@ -113,8 +115,8 @@ export const ContactInfo = () => {
       const nationality = form[`nationality${i}`].value;
       const gender = genders[i - 1];
       const dob = value.find((v) => v.id === i);
-      const addDep = addondep[i - 1];
-      const addRet = addonret[i - 1];
+      const addDep = addondep[i - 1]?.AddOnsID;
+      const addRet = addonret[i - 1]?.AddOnsID;
       const depSeat = depSeats[i - 1];
       const retSeat = retSeats[i - 1];
       if (validatePassenger(fname, lname, dob, nationality, gender) === 0)
@@ -132,9 +134,10 @@ export const ContactInfo = () => {
         RetSeatID: retSeat,
       });
     }
-    console.log("values", values);
-    // setSession(contact, values);
-    // navigate("/payment" + location.search);
+    // console.log("values", values);
+    // console.log("contact", contact);
+    setSession(contact, values);
+    navigate("/payment" + location.search);
   };
 
   return (
@@ -278,7 +281,6 @@ export const ContactInfo = () => {
             <ExtWrap>
               <div className="border-b border-primary/20 mb-1 pb-1 flex ">
                 <h1 className="text-2xl font-bold text-primary ">Baggage</h1>
-
                 {flightData.isReturn ? (
                   <>
                     <div
@@ -359,7 +361,12 @@ export const ContactInfo = () => {
               }
               classType={data.c}
             />
-            <Price />
+            <Price
+              protection={contact.protection}
+              addondep={addondep}
+              addonret={addonret}
+              setTotal={setTotal}
+            />
           </div>
         </div>
         {/* seat */}
@@ -373,7 +380,6 @@ export const ContactInfo = () => {
           ret={ret}
           dep={dep}
         />
-
         <button
           type="submit"
           onClick={handleSubmit}
