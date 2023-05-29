@@ -14,7 +14,6 @@ export const Plane = ({ plane, airlines, setPlanes, setAirlines }) => {
                 plane?.PlaneID,
                 plane?.AirlineID,
                 plane?.PlaneModel,
-                plane?.SeatingPlane,
             ].map((item, i) => {
                 return (
                     <td key={i} className="border px-3 py-2 text-center">

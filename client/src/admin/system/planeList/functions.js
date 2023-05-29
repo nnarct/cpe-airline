@@ -34,10 +34,6 @@ export const editPlane = (setPlanes,plane,airlines,setAirlines) => {
                 <label htmlFor="PlaneModel" class="w-32 block">PlaneModel</label>
                 <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel" value="${plane?.PlaneModel}">
               </div>
-              <div class="flex items-center justify-center">
-                <label htmlFor="SeatingPlan" class="w-32 block">SeatingPlan</label>
-                <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan" value="${plane?.SeatingPlan || ""}">
-              </div>
               </div>
               </form>
           `,
@@ -50,12 +46,11 @@ export const editPlane = (setPlanes,plane,airlines,setAirlines) => {
 
       const airlineID = document.getElementById("swal-input2").value;
       const planeModel = document.getElementById("swal-input3").value;
-      const seatingPlan = document.getElementById("swal-input4").value;
       if (!airlineID) Swal.showValidationMessage("Please enter a airlineID");
       if (!planeModel) Swal.showValidationMessage("Please enter a planeModel");
 
       // else if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
-      return { AirlineID: airlineID, PlaneModel: planeModel, SeatingPlan: seatingPlan==='' ? null : seatingPlan , id: plane.PlaneID};
+      return { AirlineID: airlineID, PlaneModel: planeModel, id: plane.PlaneID};
     },
   }).then((result) => { 
     if (result.isConfirmed)
