@@ -148,10 +148,10 @@ export const Payment = () => {
   const location = useLocation();
   const paymentForm = useRef(null);
   const params = new URLSearchParams(location.search);
-  const price = 1000;
   const [type, setType] = useState({ Name: "Visa", PaymentID: 1 });
   const [exp, setExp] = useState({ month: "06", year: "23" });
   const [payments, setPayments] = useState([]);
+  const [Total, setTotal] = useState(0)
   useEffect(() => {
     if(sessionStorage.passenger == null || sessionStorage.contact === null || sessionStorage.contact === undefined)
       Swal.fire({
@@ -173,6 +173,7 @@ export const Payment = () => {
       }
       else setPayments(res.data.Payments);
     });
+    setTotal(JSON.parse(sessionStorage.contact).Total);
   }, []);
 
   const handleSubmit = (e) => {
@@ -191,7 +192,7 @@ export const Payment = () => {
         contact: contact,
         passenger: passenger,
         isReturn: params.get("isReturn"),
-        Total: price,
+        Total: contact.Total,
         departureFlightID: params.get("departureFlightID"),
       };
       if (params.get("returnFlightID") !== null)
@@ -216,7 +217,7 @@ export const Payment = () => {
         }
         booking.payment = {
           PaymentID: type.PaymentID,
-          BillTo: contact.firstname + " " + contact.lastname,
+          BillTo: contact.FirstName + " " + contact.LastName,
           PromtpayNumber: form["PromtpayNumber"].value,
         };
       } else {
@@ -240,6 +241,7 @@ export const Payment = () => {
         (res, err) => {
           if (err) console.log(err);
           if (res.data.Error) {
+            console.log(res.data);
             Swal.fire({
               icon: "error",
               title: "Oops! Sorry",
@@ -322,7 +324,7 @@ export const Payment = () => {
           )}
           <div className="text-right border-t py-3 mt-4">
             <span className="font-bold text-xl">Total</span>
-            <span className="font-bold text-3xl px-5">{price}</span>
+            <span className="font-bold text-3xl px-5">{Total}</span>
             <span>฿ </span>
           </div>
           <button
