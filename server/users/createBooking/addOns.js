@@ -31,7 +31,6 @@ export const addOnInfo = (req, res) => {
 };
 
 export const getBase = (req, res) => {
-  console.log(req.body);
   const sql =
     "SELECT s.BasePurseWeight as CarryOn , s.BaseLuggageWeight as CheckedIn FROM `seat` s INNER JOIN class c ON c.ClassID = s.ClassID INNER JOIN plane p ON c.PlaneID = p.PlaneID INNER JOIN Airline a on p.AirlineID = a.AirlineID INNER JOIN flight f on f.AirlineID = a.AirlineID WHERE f.FlightID = ? AND c.Name = ? LIMIT 1;";
   db.query(sql, [req.body.departureFlightID, req.body.class], (err, result) => {
