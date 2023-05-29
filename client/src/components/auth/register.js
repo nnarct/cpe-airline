@@ -3,8 +3,6 @@ import Swal from "sweetalert2";
 import Logo from "../../assets/logo/logo.png";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { isPhoneNumber } from "./../../feature/verification/phone";
-import { isName } from "./../../feature/verification/name";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 export const Register = ({ auth }) => {
   const navigate = useNavigate();
@@ -18,9 +16,9 @@ export const Register = ({ auth }) => {
 
   const verifyValues = () => {
     let errText = "";
-    if (!isName(values.FirstName))
+    if (!/^[A-Z]{1,40}$/i.test(values.FirstName))
       errText += "\u2022Please check your first name.\n";
-    if (!isName(values.LastName))
+    if (!/^[A-Z]{1,40}$/i.test(values.LastName))
       errText += "\u2022Please check your last name.\n";
     if (values.Email === null || values.Email === "")
       errText += "\u2022 Please enter your Email.\n";
@@ -28,7 +26,7 @@ export const Register = ({ auth }) => {
       errText += "\u2022 Phone number must start with 0.\n";
     else if (values.TelNo.length !== 10)
       errText += "\u2022 Phone number must be just 10 numbers.\n";
-    else if (!isPhoneNumber(values.TelNo))
+    else if (!/^\(?(\d{10})$/.test(values.TelNo))
       errText += "\u2022 Wrong phone number format.";
     if (values.Password.length < 8)
       errText += "\u2022 Password must be at least 8 characters.\n";

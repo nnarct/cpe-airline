@@ -31,6 +31,9 @@ export const Sidebar = ({ setContent, current }) => {
           <Menu current={current} content="PlaneList">
             Plane List
           </Menu>
+          <Menu current={current} content="FlightRoute">
+            Route
+          </Menu>
         </ul>
       </div>
     </>

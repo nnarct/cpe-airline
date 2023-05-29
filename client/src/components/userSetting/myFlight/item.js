@@ -1,6 +1,5 @@
+import moment from "moment/moment";
 import { TbPlaneInflight } from "react-icons/tb";
-import ThaiSmile from "./../../../assets/airlinesLogo/thaiSmile.png";
-import moment from "moment";
 import { airlineLogo } from "../../searchResult/function";
 export const Item = ({
   AirlineName,

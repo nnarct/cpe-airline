@@ -13,7 +13,7 @@ export const Flight = () => {
   const navigate = useNavigate();
   const [isReturn, setIsReturn] = useState(1);
   const [values, setValues] = useState({
-    from: 1,
+    from: 6,
     to: 3,
     date: {
       startDate: null,

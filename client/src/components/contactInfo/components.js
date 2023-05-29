@@ -9,8 +9,8 @@ export const dob =
 export const ExtWrap = ({ children }) => {
   return (
     <>
-      <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
-        <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
+      <div className="w-full max-w-1000 pt-3">
+        <div className="bg-white border border-primary/40 rounded-md py-3 px-5">
           {children}
         </div>
       </div>
@@ -54,8 +54,8 @@ export const InputFrom = ({ label, children }) => {
 export const ContactSection = ({ children }) => {
   return (
     <>
-      <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
-        <h1 className="text-2xl  bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
+      <div className="bg-white border border-primary/40 rounded-md py-3 px-5">
+        <h1 className="text-2xl bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
           Contact Info
         </h1>
         {children}
@@ -113,17 +113,18 @@ export const SaveTrip = () => {
   );
 };
 
-export const BaseLuggage = ({ children }) => {
+export const BaseLuggage = ({ base }) => {
   return (
     <>
       <div className="bg-green-300 border border-green-900 p-2 w-full rounded text-green-900 mt-1 mb-2">
-        Base Baggage {children} kg.
+        <p>You have {base?.CarryOn || "0"} kg. for Carry On Bag.</p>
+        <p>You have {base?.CheckedIn || "0"} kg. for Checked-In Bag.</p>
       </div>
     </>
   );
 };
 
-export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
+export const LuggagesDep = ({ luggages, id, fn }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
@@ -142,7 +143,7 @@ export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
             className="cursor-pointer w-full flex justify-between"
           >
             <span className="cursor-pointer flex items-center">
-              No checked baggage
+              No checked-in baggage.
             </span>
           </label>
         </div>
@@ -159,7 +160,7 @@ export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
                 value={luggage.AddOnsID}
                 className="w-3 mr-2 "
                 onChange={() => {
-                  fn(id, luggage.AddOnsID);
+                  fn(id, luggage);
                 }}
               />
               <label
@@ -180,7 +181,7 @@ export const LuggagesDep = ({ luggages, id, fn, addondep }) => {
     </>
   );
 };
-export const LuggagesRet = ({ luggages, id, fn, addonret }) => {
+export const LuggagesRet = ({ luggages, id, fn }) => {
   return (
     <>
       <div className="flex flex-col space-y-2">
@@ -199,7 +200,7 @@ export const LuggagesRet = ({ luggages, id, fn, addonret }) => {
             className="cursor-pointer w-full flex justify-between"
           >
             <span className="cursor-pointer flex items-center">
-              No checked baggage
+              No checked-in baggage.
             </span>
           </label>
         </div>
@@ -216,7 +217,7 @@ export const LuggagesRet = ({ luggages, id, fn, addonret }) => {
                 value={luggage.AddOnsID}
                 className="w-3 mr-2 "
                 onChange={() => {
-                  fn(id, luggage.AddOnsID);
+                  fn(id, luggage);
                 }}
               />
               <label

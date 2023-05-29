@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { db } from "../../index.js";
 export const insertBooking = (req, res) => {
+  console.log(req.body);
   const payment = req.body.payment;
   const contact = req.body.contact;
   const passenger = req.body.passenger;
@@ -20,19 +21,19 @@ export const insertBooking = (req, res) => {
   const sqlInvoice =
     payment.PaymentID === 2
       ? "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `PromptpayNumber`) VALUES (?,?,?,?)"
-      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`) VALUES (?,?,?,?,?,?)";
+      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`, `Class`) VALUES (?,?,?,?,?,?)";
   const invoiceValue =
     payment.PaymentID === 2
       ? [
           payment.PaymentID,
           payment.BillTo,
-          req.body.Total,
+          contact.Total,
           payment.PromtpayNumber,
         ]
       : [
           payment.PaymentID,
           payment.BillTo,
-          req.body.Total,
+          contact.Total,
           payment.CardNumber,
           payment.CVV,
           payment.ExpDate,
@@ -42,27 +43,28 @@ export const insertBooking = (req, res) => {
     "INSERT INTO `booking` (`UserID`, `ContactFirstname`, `ContactLastname`, `ContactPhone`, `ContactEmail`, `FlightID`,`InvoiceID`) VALUES (?,?,?,?,?,?,?)";
 
   const sqlPassenger =
-    "INSERT INTO `passenger` (`FirstName`, `LastName`, `DOB`, `Gender` ,`Nationality`, `BookingID`, `AddOnsID`) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO `passenger` (`FirstName`, `LastName`, `DOB`, `Gender` ,`Nationality`, `BookingID`, `AddOnsID`, `SeatID`) VALUES (?,?,?,?,?,?,?,?)";
 
   db.query(sqlInvoice, invoiceValue, (err, result) => {
     if (err)
-      res.json({ Error: "Error while creating invoice in server" });
-     else {
+      return res.json({ Error: "Error while creating invoice in server" });
+    else {
       const invoiceID = result.insertId;
       db.query(
         sqlDepBooking,
         [
           UserID,
-          contact.firstname,
-          contact.lastname,
+          contact.FirstName,
+          contact.LastName,
           contact.phone,
           contact.email,
           departureFlightID,
           Number(invoiceID),
+          contact.Class
         ],
         (err, result) => {
           if (err)
-            res.json({
+            return res.json({
               Error: "Error while creating departure booking in server",
             });
           else {
@@ -71,17 +73,18 @@ export const insertBooking = (req, res) => {
               db.query(
                 sqlPassenger,
                 [
-                  p.firstname,
-                  p.lastname,
+                  p.FirstName,
+                  p.LastName,
                   JSON.parse(p.dob).startDate + " 00:00:00",
                   p.gender,
                   p.nationality,
                   Number(bookingID),
                   p.addondep,
+                  p.DepSeatID,
                 ],
                 (err, result) => {
                   if (err)
-                    res.json({
+                    return res.json({
                       Error:
                         "Error while creating departure passenger in server",
                     });
@@ -96,8 +99,8 @@ export const insertBooking = (req, res) => {
           sqlDepBooking,
           [
             UserID,
-            contact.firstname,
-            contact.lastname,
+            contact.FirstName,
+            contact.LastName,
             contact.phone,
             contact.email,
             returnFlightID,
@@ -105,7 +108,7 @@ export const insertBooking = (req, res) => {
           ],
           (err, result) => {
             if (err)
-              res.json({
+              return res.json({
                 Error: "Error while creating return flight booking in server",
               });
             else {
@@ -114,17 +117,18 @@ export const insertBooking = (req, res) => {
                 db.query(
                   sqlPassenger,
                   [
-                    p.firstname,
-                    p.lastname,
+                    p.FirstName,
+                    p.LastName,
                     JSON.parse(p.dob).startDate + " 00:00:00",
                     p.gender,
                     p.nationality,
                     Number(bookingID),
                     p.addonret,
+                    p.RetSeatID
                   ],
                   (err, result) => {
                     if (err)
-                      res.json({
+                      return res.json({
                         Error:
                           "Error while creating return passenger in server",
                       });

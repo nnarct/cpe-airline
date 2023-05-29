@@ -35,6 +35,9 @@ import { editEmployee } from "./admin/edit/editEmployee.js";
 import { editAirline } from "./admin/edit/editAirline.js";
 import { editUser } from "./admin/edit/editUser.js";
 import { editPassenger } from "./admin/edit/editPassenger.js";
+import { editAirport } from "./admin/edit/editAirport.js";
+import { editFlight } from "./admin/edit/editFlight.js";
+import { editPlane } from "./admin/edit/editPlane.js";
 
 // insert
 import { insertAirport } from "./admin/insert/insertAirport.js";
@@ -50,27 +53,27 @@ import { deletePassenger } from "./admin/delete/deletePassenger.js";
 import { deleteAirport } from "./admin/delete/deleteAirport.js";
 import { deletePlane } from "./admin/delete/deletePlane.js";
 import { deleteFlight } from "./admin/delete/deleteFlight.js";
-
+import { deleteUser } from "./admin/delete/deleteUser.js";
 
 // verify auth
 import { verifyUserName, getUserName } from "./users/getUserName.js";
 import { airportListUser } from "./users/airportList.js";
+
+// user my profile
 import { showProfile } from "./users/showProfile.js";
 import { editProfile } from "./users/editProfile.js";
 import { changePassword } from "./users/changePassword.js";
-import { AmadeusSearchFlights } from "./users/amadeus.js";
+import { getUserBooking } from "./users/myFlight/getUserBooking.js";
+
+// search flight
 import { searchFlights } from "./users/searchFlight/searchFlight.js";
-import { getFlight } from "./users/searchFlight/getFlight.js";
-import { flightInfo } from "./users/searchFlight/flightInfo.js";
-import { insertBooking } from "./users/searchFlight/insertBooking.js";
-import { getPayment } from "./users/searchFlight/getPayment.js";
-import { getInvoice } from "./users/searchFlight/getInvoice.js";
-import { editAirport } from "./admin/edit/editAirport.js";
-import { editFlight } from "./admin/edit/editFlight.js";
+
+// create booking
 import {
   verifyOwner,
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
+<<<<<<< HEAD
 import { editPlane } from "./admin/edit/editPlane.js";
 import { genderCount } from "./admin/dashboard/genderCount.js"
 import { bookingCount } from "./admin/dashboard/bookCount.js"
@@ -81,12 +84,33 @@ import { getAddonsCountByAirport} from "./admin/dashboard/airportbyAdds.js"
 import { getBookingsCountByAirline} from "./admin/dashboard/bookEachday.js"
 import { getUserBooking } from "./users/myFlight/getUserBooking.js";
 import { deleteUser } from "./admin/delete/deleteUser.js";
+=======
+import { getFlight } from "./users/createBooking/getFlight.js";
+import { flightInfo } from "./users/createBooking/flightInfo.js";
+import { insertBooking } from "./users/createBooking/insertBooking.js";
+import { getPayment } from "./users/createBooking/getPayment.js";
+import { getInvoice } from "./users/createBooking/getInvoice.js";
+import { addOnInfo, getBase } from "./users/createBooking/addOns.js";
+import { getAvailableSeat } from "./users/createBooking/getAvailableSeat.js";
+
+>>>>>>> main
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
-import { addOnInfo } from "./users/searchFlight/addOns.js";
+
+
+// admin my profile
 import { adminInfo } from "./admin/adminInfo.js";
 import { editSystemProfile } from "./admin/edit/editSystemProfile.js";
 import { editAdminProfile } from "./admin/edit/editAdminProfile.js";
+
+// dashboard
+import { bookingCount } from "./admin/dashboard/bookCount.js"
+import { flightCount } from "./admin/dashboard/flightCount.js";
+import { userCount } from "./admin/dashboard/userCount.js";
+import { genderCount } from "./admin/dashboard/genderCount.js"
+import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
+import { routeList } from "./admin/flightRoute.js";
+import { getPrice } from "./users/createBooking/getPrice.js";
 
 const app = express();
 app.use(express.json());
@@ -124,8 +148,9 @@ app.post("/admin/login", loginAdmin);
 app.get("/admin/logout", logoutAdmin);
 
 // system admin
+// select
 app.post("/admin/info", adminInfo);
-app.post("/system/editProfile", editAdminProfile);
+app.post("/admin/editProfile", editAdminProfile);
 app.get("/system/employeeList", employeeList);
 app.get("/system/airlineList", airlineList);
 app.get("/system/airportList", airportList);
@@ -134,7 +159,9 @@ app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
 app.get("/system/passengerListGroupByBookingID", passengerListGroupByBooking);
 app.get("/system/planeList", planeList);
+app.get("/system/routeList", routeList);
 
+// update
 app.post("/system/editProfile", editSystemProfile);
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
@@ -144,12 +171,14 @@ app.post("/system/editPassenger", editPassenger);
 app.post("/system/editFlight", editFlight);
 app.post("/system/editPlane", editPlane);
 
+// insert
 app.post("/system/insertAirport", insertAirport);
 app.post("/system/insertAirline", insertAirline);
 app.post("/system/insertPlane", insertPlane);
 app.post("/system/insertUser", insertUser);
 app.post("/system/insertFlight", insertFlight);
 
+// delete
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
 app.post("/system/deleteEmployee", deleteEmployee);
@@ -167,23 +196,33 @@ app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
 
-app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
+// app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
 app.post("/search/getFlight", getFlight);
 app.post("/contact/flightInfo", flightInfo);
 app.post("/contact/addonInfo", addOnInfo);
+app.post("/contact/getBase", getBase);
 app.post("/insertBooking", insertBooking);
 
+
+// insert contact page
+app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getPrice", getPrice);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
-app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getUserBooking", getUserBooking);
+app.post("/getAvailableSeat", getAvailableSeat);
+
+
+// Dashboard
 app.get("/system/genderCount", genderCount);
 app.get("/system/bookCount", bookingCount);
 app.get("/system/bookBySec", getbookCountsBySection);
 app.get("/system/airportbyAdds", getAddonsCountByAirport);
 app.get("/system/bookEachday", getBookingsCountByAirline);
-app.get("/system/destinaton", getFlightCountsBySection)
-app.post("/getUserBooking", getUserBooking);
+app.get("/system/destination", getFlightCountsBySection);
+app.get("/system/flightCount", flightCount);
+app.get("/system/userCount", userCount);
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);

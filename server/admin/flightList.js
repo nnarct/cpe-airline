@@ -1,7 +1,7 @@
 import { db } from "../index.js";
 export const flightList = (req, res) => {
   const sql =
-    "SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID WHERE f.FlightID < 200 AND f.FlightID > 100 ORDER BY f.FlightID;";
+    "SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID ORDER BY f.FlightID;";
   const sqlAirports = "SELECT AirportID, Name, IATA FROM airport";
   const sqlAirlines = "SELECT AirlineID, Name, Link FROM airline";
   let airports = [];
@@ -34,7 +34,7 @@ export const flightList = (req, res) => {
 
 export const flightListSort = (req, res) => {
   const sql =
-    "SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID WHERE al.Name LIKE ? AND f.FlightID < 31 ORDER BY f.FlightID;";
+    "SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID WHERE al.Name LIKE ? ORDER BY f.FlightID;";
   const sqlAirports = "SELECT AirportID, Name, IATA FROM airport";
   const sqlAirlines = "SELECT AirlineID, Name, Link FROM airline";
   let airports = [];

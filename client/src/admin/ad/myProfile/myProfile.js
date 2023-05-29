@@ -19,10 +19,10 @@ export const MyProfile = () => {
   }, [cookie]);
   return (
     <>
-      <div className="my-3 flex justify-center text-4xl font-semibold">
-        Admin
-      </div>
       <MyProfileWrapper>
+        <div className="my-3 flex justify-center text-4xl font-semibold">
+          Admin
+        </div>
         <Card className="flex items-center">
           <NameIcon>{info.FirstName ? info.FirstName[0] : ""}</NameIcon>
           <div>
@@ -31,7 +31,7 @@ export const MyProfile = () => {
           </div>
         </Card>
         <Card>
-          <DataBlock title={"Email"}>{info?.Email}</DataBlock>
+          <DataBlock title={"Email"}>{info?.Email || "-"}</DataBlock>
         </Card>
         <Card>
           <DataBlock title={"Phone Number"}>{info?.TelNo || "-"}</DataBlock>

@@ -12,8 +12,9 @@ import { AirportList } from "../system/airportList/airportList";
 import { FlightList } from "../system/flightList/flightList";
 import { UserList } from "../system/userList/userList";
 import { PassengerList } from "../system/passengerList/passengerList";
-import { Dashboard } from "../system/dashboard";
+import { Dashboard } from "../system/dashboard/dashboard";
 import { PlaneList } from "../system/planeList/planeList";
+import { FlightRoute } from "../system/flightRoute/fightRoute";
 
 export const SystemDashboard = () => {
   const navigate = useNavigate();
@@ -53,6 +54,8 @@ export const SystemDashboard = () => {
             {content === "UserList" && <UserList />}
             {content === "PassengerList" && <PassengerList />}
             {content === "PlaneList" && <PlaneList />}
+            {content === "FlightRoute" && <FlightRoute />}
+
           </div>
         </div>
       )}

@@ -1,14 +1,26 @@
 import { db } from "../../index.js";
 
 export const getFlightCountsBySection = (req, res) => {
-  const airlineIds = ['1', '2', '3', '4', '5','6', '7'];
+  const airlineIds = ["1", "2", "3", "4", "5", "6", "7"];
   const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
   const nextMonthDate = new Date();
   nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-  const nextMonthDateString = nextMonthDate.toISOString().slice(0, 19).replace("T", " ");
-  const query = `SELECT a.Section, ${airlineIds.map((id, index) => `COUNT(CASE WHEN f.AirlineID = '${id}' THEN 1 END) AS Airline${index + 1}Count`).join(',')}, COUNT(b.BookingID) AS BookingCount FROM airport AS a JOIN flight AS f ON a.AirportID = f.DestinationAirportID JOIN booking AS b ON f.FlightID = b.FlightID WHERE f.AirlineID IN ('${airlineIds.join("','")}') AND f.ArrivalTime BETWEEN '${currentDate}' AND '${nextMonthDateString}' GROUP BY a.Section;`;
-  const airline = "SELECT Name FROM airline"
-
+  const nextMonthDateString = nextMonthDate
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
+  const query = `SELECT a.Section, ${airlineIds
+    .map(
+      (id, index) =>
+        `COUNT(CASE WHEN f.AirlineID = '${id}' THEN 1 END) AS Airline${
+          index + 1
+        }Count`
+    )
+    .join(
+      ","
+    )} FROM airport AS a JOIN flight AS f ON a.AirportID = f.DestinationAirportID WHERE f.AirlineID IN ('${airlineIds.join(
+    "','"
+  )}') AND f.ArrivalTime BETWEEN '${currentDate}' AND '${nextMonthDateString}' GROUP BY a.Section`;
 
   db.query(query, (err, data) => {
     if (err) {

@@ -14,7 +14,7 @@ export const AdminNavbar = ({ info, setPage }) => {
   return (
     <>
       <div className="flex h-12 bg-cyan-950 text-white flex justify-center">
-        <div className="container border-white flex justify-between items-center">
+        <div className="container border-white flex justify-between items-center px-3">
           <div className="flex h-full items-center space-x-2">
             <img
               alt="logo"

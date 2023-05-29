@@ -50,12 +50,14 @@ export const LineIcon = () => {
   );
 };
 
-export const Price = ({ price }) => {
+export const Price = ({ cheap, price }) => {
   return (
     <>
-      <li className="text-red-500 font-bold">
-        <span className="text-sm">B</span>
-        <span className="text-2xl">{price}</span>
+      <li className={`${cheap === 0 ? 'text-red-500' : ''} font-bold`}>
+        <span className="text-sm pr-3">฿</span>
+        <span className="text-2xl">
+          {price ? Number(price)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "1,780.00"}
+        </span>
       </li>
       <li className="text-xs">Price for one passenger</li>
     </>

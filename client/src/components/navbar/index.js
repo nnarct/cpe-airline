@@ -21,7 +21,7 @@ export const Navbar = () => {
           <div className="">
             <ul className="flex items-center">
               <Menu to="/">
-                <img src={logo} className="h-8" alt={"CPE Flying"} />
+                <img src={logo} className="h-8 object-contain" alt={"CPE Flying"} />
               </Menu>
               <Menu to={"/homepage"}>Admin Homepage</Menu>
               <Menu>Menu 2</Menu>
@@ -29,7 +29,8 @@ export const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center">
-            {auth ? <ForUser /> : <ForNoob />}
+            {auth === false ? <ForNoob /> :''}
+            {auth === true ? <ForUser /> : ''}
           </div>
         </div>
       </div>

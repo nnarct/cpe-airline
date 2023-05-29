@@ -16,11 +16,10 @@ export const FlightList = () => {
   const handleClick = () => {
     addFlight.current?.scrollIntoView({ behavior: "smooth" });
   };
-
   useEffect(() => {
     getFlights({ setFlights, setAirlines, setAirports, setLoading });
     getPlanes({ setPlanes });
-  }, []);
+  }, [flights]);
 
   // Todo - delete flight
   // Todo - Pagination
@@ -52,20 +51,21 @@ export const FlightList = () => {
   };
 
   const handleDateChange = (event) => {
-    console.log(event.target.value);
     event.target.value !== "ALL"
       ? setSelectedDate({ status: true, date: event.target.value })
       : setSelectedDate({ status: false, date: "" });
   };
 
-  const filteredFlights = flights?.filter((flight) => {
+  const filteredFlights = flights.filter((flight) => {
     if (selectedAirline.status && flight.airline !== selectedAirline.airline)
       return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    return !(selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date);
+    return !(
+      selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date
+    );
   });
 
   return (
@@ -80,6 +80,7 @@ export const FlightList = () => {
             Add Flight +
           </button>
         </Header>
+        {/* <RenderPaginationLinks filteredFlights={filteredFlights} currentPage={currentPage} setCurrentPage={setCurrentPage}/> */}
         <Header>
           <table className="text-base font-normal">
             <thead className="">
@@ -180,7 +181,7 @@ export const FlightList = () => {
             {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
-                  <tr key={tr} className="p-4 animate-pulse">
+                  <tr key={index} className="p-4 animate-pulse">
                     {[...Array(10)].map((td, i) => {
                       return (
                         <td key={i} className="p-2 border border-1 text-center">
@@ -196,7 +197,7 @@ export const FlightList = () => {
               filteredFlights?.map((flight, i) => {
                 return (
                   <Flight
-                    key={flight.FlightID || i}
+                    key={flight?.FlightID}
                     flight={flight}
                     airlines={airlines}
                     airports={airports}
@@ -207,7 +208,7 @@ export const FlightList = () => {
           </tbody>
         </Table>
         <div ref={addFlight} />
-        <AddFlight airlines={airlines} airports={airports} planes={planes}/>
+        <AddFlight airlines={airlines} airports={airports} planes={planes} />
       </Content>
     </>
   );
