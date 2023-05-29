@@ -50,7 +50,7 @@ export const Price = ({ protection, addondep, addonret, setTotal }) => {
       }
     );
     setTotal(addOnsTotalPrice + (protection ? 300 : 0) + basePrice * pass);
-  }, []);
+  }, [addOnsTotalPrice, basePrice, flightData, pass, protection, setTotal, addonret, addondep]);
   return (
     <div className="bg-white border border-primary/40 rounded-md py-3 px-3 mt-3">
       <h2 className="text-center font-bold text-2xl border-b">Price</h2>
