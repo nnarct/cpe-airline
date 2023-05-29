@@ -60,7 +60,7 @@ export const SearchResult = () => {
             showConfirmButton: true,
             timer: 5000,
             timerProgressBar: true,
-          }).then();
+          }).then(res => navigate("/"));
       }
     );
   }, [v]);
