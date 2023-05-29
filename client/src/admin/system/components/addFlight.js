@@ -5,15 +5,21 @@ import { Star } from "../../components/star";
 export const AddFlight = ({ airlines, airports, planes }) => {
   const [values, setValues] = useState({
     FlightNumber: "",
-    AirlineID: "",
+    AirlineID: 1,
     DepartureTime: new Date(),
     ArrivalTime: "",
     PlaneID: "",
-    OriginAirportID: "",
-    DestinationAirportID: "",
+    OriginAirportID: 1,
+    DestinationAirportID: 1,
   });
   const handleSubmit = (e) => {
-    if (values.FlightNumber === '') {
+    const p = document.getElementById("Plane").value;
+    const ori = document.getElementById("OriginAirport").value;
+    const des = document.getElementById("DestinationAirport").value;
+    
+    setValues({ ...values, PlaneID: p , OriginAirportID: ori, DestinationAirportID: des});
+  
+    if (values.FlightNumber === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -23,7 +29,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.AirlineID === '') {
+    if (values.AirlineID === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -33,7 +39,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.DepartureTime === '') {
+    if (values.DepartureTime === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -43,7 +49,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.ArrivalTime === '') {
+    if (values.ArrivalTime === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -53,7 +59,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.PlaneID === 0 || values.PlaneID === '') {
+    if (p === 0 ||p === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -63,7 +69,10 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.DestinationAirportID === 0 || values.DestinationAirportID === '') {
+    if (
+      values.DestinationAirportID === 0 ||
+      values.DestinationAirportID === ""
+    ) {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -73,11 +82,21 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       });
       return;
     }
-    if (values.OriginAirportID === 0 || values.OriginAirportID === '') {
+    if (values.OriginAirportID === 0 || values.OriginAirportID === "") {
       Swal.fire({
         icon: "info",
         title: "Sorry",
         text: "Please select origin airport again.",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    if (values.OriginAirportID === values.DestinationAirportID) {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: "Origin airport and destination airport must be different.",
         timer: 2000,
         timerProgressBar: true,
       });
@@ -184,21 +203,18 @@ export const AddFlight = ({ airlines, airports, planes }) => {
           <select
             id="Plane"
             className="w-full px-2 py-1.5 active:ring rounded border my-2"
-            defaultValue={0}
-            onChange={(e,) =>
-              setValues({
-                ...values,
-                PlaneID: e.target.value,
-              })
-            }
+            defaultValue={values.PlaneID}
+            onChange={(e) => {
+              setValues({ ...values, PlaneID: e.target.value });
+            }}
           >
             {planes?.map((p, i) => {
-              if (Number(p.AirlineID) === Number(values.AirlineID))
+              if (Number(p.AirlineID) === Number(values.AirlineID)){
                 return (
                   <option key={p.PlaneID} value={p.PlaneID}>
                     {p.PlaneModel} {p.airline}
                   </option>
-                );
+                );}
               return null;
             })}
           </select>
@@ -245,6 +261,21 @@ export const AddFlight = ({ airlines, airports, planes }) => {
               );
             })}
           </select>
+          <label htmlFor="Price">Economy Price</label>
+          <input
+            className="mb-2 border rounded p-1"
+            type="number"
+            min={0}
+            onChange={(e) => setValues({ ...values, EconomyPrice: e.target.value })}
+          />
+          
+          <label htmlFor="Price">Premium Price</label>
+          <input
+            className="mb-2 border rounded p-1"
+            type="number"
+            min={0}
+            onChange={(e) => setValues({ ...values, PremiumPrice: e.target.value })}
+          />
 
           <button
             className="bg-blue-500 text-white rounded py-1 px-3 hover:opacity-40  active:opacity-80"
