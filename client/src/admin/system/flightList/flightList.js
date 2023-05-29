@@ -22,7 +22,6 @@ export const FlightList = () => {
     getPlanes({ setPlanes });
   }, []);
 
-  // Todo - edit flight
   // Todo - delete flight
   // Todo - Pagination
 
@@ -59,18 +58,14 @@ export const FlightList = () => {
       : setSelectedDate({ status: false, date: "" });
   };
 
-  const filteredFlights = flights.filter((flight) => {
+  const filteredFlights = flights?.filter((flight) => {
     if (selectedAirline.status && flight.airline !== selectedAirline.airline)
       return false;
     if (selectedFrom.status && flight.oriIATA !== selectedFrom.from)
       return false;
     if (selectedTo.status && flight.desIATA !== selectedTo.to) return false;
-    if (
-      selectedDate.status &&
-      flight.DepartureTime.split("T")[0] !== selectedDate.date
-    )
-      return false;
-    return true;
+    return !(selectedDate.status &&
+      flight.DepartureTime.split("T")[0] !== selectedDate.date);
   });
 
   return (
@@ -112,9 +107,9 @@ export const FlightList = () => {
                     onChange={handleAirlineChange}
                   >
                     <option value="ALL">All</option>
-                    {airlines.map((airline) => {
+                    {airlines?.map((airline) => {
                       return (
-                        <option key={airline.id} value={airline.Name}>
+                        <option key={airline.AirlineID} value={airline.Name}>
                           {airline.Name}
                         </option>
                       );
@@ -129,9 +124,9 @@ export const FlightList = () => {
                     onChange={handleFromChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
-                        <option key={airport.id} value={airport.IATA}>
+                        <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
                         </option>
                       );
@@ -146,9 +141,9 @@ export const FlightList = () => {
                     onChange={handleToChange}
                   >
                     <option value="ALL">All</option>
-                    {airports.map((airport) => {
+                    {airports?.map((airport) => {
                       return (
-                        <option key={airport.id} value={airport.IATA}>
+                        <option key={airport.AirportID} value={airport.IATA}>
                           {airport.IATA} {airport.Name}
                         </option>
                       );
@@ -185,7 +180,7 @@ export const FlightList = () => {
             {loading &&
               [...Array(8)].map((tr, index) => {
                 return (
-                  <tr key={index} className="p-4 animate-pulse">
+                  <tr key={tr} className="p-4 animate-pulse">
                     {[...Array(10)].map((td, i) => {
                       return (
                         <td key={i} className="p-2 border border-1 text-center">
@@ -198,9 +193,10 @@ export const FlightList = () => {
               })}
             {!loading &&
               filteredFlights &&
-              filteredFlights.map((flight, i) => {
+              filteredFlights?.map((flight, i) => {
                 return (
                   <Flight
+                    key={flight.FlightID || i}
                     flight={flight}
                     airlines={airlines}
                     airports={airports}
@@ -211,7 +207,7 @@ export const FlightList = () => {
           </tbody>
         </Table>
         <div ref={addFlight} />
-        <AddFlight airlines={airlines} airports={airports} />
+        <AddFlight airlines={airlines} airports={airports} planes={planes}/>
       </Content>
     </>
   );

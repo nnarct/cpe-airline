@@ -2,12 +2,12 @@ import { editPlane, deletePlane } from "./functions";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-export const Plane = ({ plane, airlines }) => {
+export const Plane = ({ plane, airlines, setPlanes, setAirlines }) => {
     return   (
       <>
             <tr>
             <td className="border px-3 py-2 text-center hover:bg-gray-200 cursor-pointer"
-                onClick={(e) => editPlane(plane,airlines)}>
+                onClick={(e) => editPlane(setPlanes,plane,airlines,setAirlines)}>
                 <AiOutlineEdit className="mx-auto" />
             </td>
             {[

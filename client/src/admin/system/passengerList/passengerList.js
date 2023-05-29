@@ -13,13 +13,13 @@ export const PassengerList = () => {
   }, []);
 
   const handleGroupBy = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     if (e.target.value === 1) {
       getPassengers({ setPassengers });
     } else {
       getPassengersGroupByBookingID({ setPassengers });
     }
-  }
+  };
   // Todo - delete passenger ** must effect seat
   return (
     <>
@@ -30,15 +30,12 @@ export const PassengerList = () => {
             <span className="whitespace-nowrap font-semibold text-gray-600 text-sm text-left pl-2">
               Group By :
             </span>
-            <select onChange={handleGroupBy} className="border text-base px-2 py-1 border-primary/50">
-              <option value={1}>
-                Passenger ID
-              </option>
-              <option
-                value={2}
-              >
-                Booking ID
-              </option>
+            <select
+              onChange={handleGroupBy}
+              className="border text-base px-2 py-1 border-primary/50"
+            >
+              <option value={1}>Passenger ID</option>
+              <option value={2}>Booking ID</option>
             </select>
           </div>
         </Header>
@@ -46,8 +43,8 @@ export const PassengerList = () => {
           <THead>
             <Edit />
             <Th className="w-14">ID</Th>
-            <Th>FirstName</Th>
-            <Th>LastName</Th>
+            <Th className="w-40">FirstName</Th>
+            <Th className="w-40">LastName</Th>
             <Th className="w-36">DOB</Th>
             <Th className="w-28">Gender</Th>
             <Th className="w-32">Nationality</Th>
@@ -58,7 +55,7 @@ export const PassengerList = () => {
           </THead>
           <tbody>
             {passengers?.map((passenger, i) => {
-              return <Passenger passenger={passenger} />;
+              return <Passenger passenger={passenger} key={passenger.PassengerID || i}/>;
             })}
           </tbody>
         </Table>

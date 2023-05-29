@@ -1,15 +1,17 @@
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MyProfile } from "./myProfile";
 import { Row, ButtonWrap } from "./myProfileComps";
 import { Popup } from "../../modal/popup";
 export const EditProfile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const param = new URLSearchParams(location.search);
+  const id = param.get("id");
   const [isEditing, setIsEditing] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
-  const { id } = useParams();
   const edit = useRef(null);
   const [user, setUser] = useState({
     FirstName: "",
@@ -115,7 +117,7 @@ export const EditProfile = () => {
                 }}
                 className="text-gray-500 rounded mx-3 font-semibold active:bg-gray-100 border border-gray-400 py-2 px-6 hover:ring ring-gray-300/60 bg-white"
               >
-                Cancle
+                Cancel
               </button>
               <button
                 onClick={(e) => {
