@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import { db } from "../../index.js";
 export const insertBooking = (req, res) => {
-  console.log(req.body);
   const payment = req.body.payment;
   const contact = req.body.contact;
   const passenger = req.body.passenger;
@@ -20,8 +19,8 @@ export const insertBooking = (req, res) => {
 
   const sqlInvoice =
     payment.PaymentID === 2
-      ? "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `PromptpayNumber`) VALUES (?,?,?,?)"
-      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`, `Class`) VALUES (?,?,?,?,?,?)";
+      ? "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `PromptpayNumber`,`Class`) VALUES (?,?,?,?,?)"
+      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`, `Class`) VALUES (?,?,?,?,?,?,?)";
   const invoiceValue =
     payment.PaymentID === 2
       ? [
@@ -29,6 +28,7 @@ export const insertBooking = (req, res) => {
           payment.BillTo,
           contact.Total,
           payment.PromtpayNumber,
+          contact.Class,
         ]
       : [
           payment.PaymentID,
@@ -37,18 +37,19 @@ export const insertBooking = (req, res) => {
           payment.CardNumber,
           payment.CVV,
           payment.ExpDate,
+          contact.Class,
         ];
 
   const sqlDepBooking =
-    "INSERT INTO `booking` (`UserID`, `ContactFirstname`, `ContactLastname`, `ContactPhone`, `ContactEmail`, `FlightID`,`InvoiceID`) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO `booking` (`UserID`, `ContactFirstname`, `ContactLastname`, `ContactPhone`, `ContactEmail`, `FlightID`,`InvoiceID`,`Protection`) VALUES (?,?,?,?,?,?,?,?)";
 
   const sqlPassenger =
     "INSERT INTO `passenger` (`FirstName`, `LastName`, `DOB`, `Gender` ,`Nationality`, `BookingID`, `AddOnsID`, `SeatID`) VALUES (?,?,?,?,?,?,?,?)";
-
   db.query(sqlInvoice, invoiceValue, (err, result) => {
-    if (err)
+    if (err) {
+      console.log(err);
       return res.json({ Error: "Error while creating invoice in server" });
-    else {
+    } else {
       const invoiceID = result.insertId;
       db.query(
         sqlDepBooking,
@@ -60,7 +61,7 @@ export const insertBooking = (req, res) => {
           contact.email,
           departureFlightID,
           Number(invoiceID),
-          contact.Class
+          contact.Protection ? 1 : 0,
         ],
         (err, result) => {
           if (err)
@@ -105,6 +106,7 @@ export const insertBooking = (req, res) => {
             contact.email,
             returnFlightID,
             Number(invoiceID),
+            contact.Protection ? 1 : 0,
           ],
           (err, result) => {
             if (err)
@@ -124,7 +126,7 @@ export const insertBooking = (req, res) => {
                     p.nationality,
                     Number(bookingID),
                     p.addonret,
-                    p.RetSeatID
+                    p.RetSeatID,
                   ],
                   (err, result) => {
                     if (err)
