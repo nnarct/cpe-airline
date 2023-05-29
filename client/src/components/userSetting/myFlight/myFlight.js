@@ -53,13 +53,13 @@ export const MyFlight = () => {
           </div>
 
           {selectedSection === "Upcoming Flights" && (
-            <Transaction flights={filteredUpcomingFlights} />
+            <Transaction flights={filteredUpcomingFlights} s={1}/>
           )}
           {selectedSection === "Departed Flights" && (
-            <Transaction flights={filteredDepartedFlights} />
+            <Transaction flights={filteredDepartedFlights} s={0}/>
           )}
           {selectedSection === "Canceled Flights" && (
-            <Transaction flights={filteredCanceledFlights} />
+            <Transaction flights={filteredCanceledFlights} s={0}/>
           )}
         </div>
       </div>

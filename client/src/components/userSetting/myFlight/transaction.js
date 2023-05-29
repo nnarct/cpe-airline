@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 import Axios from "axios";
 import Swal from "sweetalert2";
-export const Transaction = ({ flights }) => {
+export const Transaction = ({ flights, s }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const flight = params.get("flight");
@@ -61,9 +61,9 @@ export const Transaction = ({ flights }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Todo  - send request to cancel flight in server
-        Swal.fire("Cancelled!", "Your flight has been cancelled.", "success");
+        Swal.fire("Cancelled!", "Your flight has been canceled.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("No Canceled", "Your flight is safe :)");
+        Swal.fire("Ok!", "Your flight is safe :)");
       }
     });
   };
@@ -74,7 +74,10 @@ export const Transaction = ({ flights }) => {
         <div className="mt-3">
           {flights?.map((flight, i) => {
             return (
-              <Link key={flight.FlightID} to={`${currentPath}&flight=${flight.BookingID}`}>
+              <Link
+                key={flight?.FlightID}
+                to={`${currentPath}&flight=${flight.BookingID}`}
+              >
                 <span className="max-w-1000 flex items-center mt-3 bg-white border border-gray-200 rounded-lg shadow hover:ring ring-gray-200">
                   <Item {...flight} />
                 </span>
@@ -208,19 +211,21 @@ export const Transaction = ({ flights }) => {
             </div>
           );
         })}
-        <div className="w-full p-4 flex justify-end items-center">
-          <button
-            className="px-3 py-2 flex items-center bg-red-500 text-white rounded hover:ring ring-red-400/60 focus:bg-red-600"
-            onClick={handleCancel}
-          >
-            Cancel Booking
-          </button> <button
-            className="px-3 py-2 flex items-center bg-red-500 text-white rounded hover:ring ring-red-400/60 focus:bg-red-600"
-            onClick={handleCancel}
-          >
-            Edit Booking
-          </button>
-        </div>
+        {s === 1 && (
+          <div className="w-full p-4 flex justify-end items-center space-x-3">
+            <button
+              className="px-3 py-2 flex items-center bg-red-500 text-white rounded hover:ring ring-red-400/60 focus:bg-red-600"
+              onClick={handleCancel}
+            >
+              Cancel Booking
+            </button>
+            {flightInfo?.Protection === 1 && (
+              <button className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600">
+                Edit Booking
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
