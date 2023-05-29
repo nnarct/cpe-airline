@@ -140,7 +140,7 @@ export const ContactInfo = () => {
     <>
       <Navbar />
       <PageWrapper>
-        <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+        <div className="w-full max-w-1000 mx-auto pt-3 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
           <ContactSection>
             <form action="" ref={info}>
               <InputFrom label="First Name">
@@ -270,10 +270,15 @@ export const ContactInfo = () => {
               })}
             </form>
           </ContactSection>
-          <FlightInfo
-            pass={Number(data.adult) + Number(data.child) + Number(data.infant)}
-            classType={data.c}
-          />
+          <div className="flex flex-col sm:w-2/5 md:w-2/6 m-0 px-3 w-full">
+            <FlightInfo
+              pass={
+                Number(data.adult) + Number(data.child) + Number(data.infant)
+              }
+              classType={data.c}
+            />
+            <div>Price info</div>
+          </div>
         </div>
         {/* Trip Protection */}
         <AddOns contact={contact} setContact={setContact} />
