@@ -63,6 +63,9 @@ import { genderCount } from "./admin/dashboard/genderCount.js"
 import { bookingCount } from "./admin/dashboard/bookCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
 // import { getFlightCountsBySection2 } from "./admin/dashboard/Destination2.js"
+import { getbookCountsBySection } from "./admin/dashboard/bookBySec.js"
+import { getAddonsCountByAirport} from "./admin/dashboard/airportbyAdds.js"
+import { getBookingsCountByAirline} from "./admin/dashboard/bookEachday.js"
 
 const app = express();
 app.use(express.json());
@@ -141,8 +144,11 @@ app.post("/getInvoice", getInvoice);
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
 app.get("/system/genderCount", genderCount);
 app.get("/system/bookCount", bookingCount);
-app.get("/system/destinaton", getFlightCountsBySection)
+app.get("/system/destinaton", getFlightCountsBySection);
 // app.get("/system/destinaton2", getFlightCountsBySection2)
+app.get("/system/bookBySec", getbookCountsBySection);
+app.get("/system/airportbyAdds", getAddonsCountByAirport);
+app.get("/system/bookEachday", getBookingsCountByAirline);
 
 app.listen(3001, () => {
   console.log("running on port 3001");

@@ -19,7 +19,13 @@ import {Bar} from 'react-chartjs-2';
 
 import { Header } from "./components/header";
 
-import React, { Component } from "react";
+import React, { Component }  from "react";
+
+import { MdGroupAdd } from 'react-icons/md';
+
+import { BsFillPersonLinesFill } from 'react-icons/bs'
+
+import { TbPlaneDeparture } from 'react-icons/tb'
 
 ChartJS.register(
   ArcElement,
@@ -41,25 +47,75 @@ const options = {
 
 // let datacount = 0;
 console.log('5555555')
- let countm = 0;
- let countf = 0;
-const getCountFromBackend = async () => {
-  try {
-    const response = await axios.get("http://localhost:3001/system/genderCount");
-    const maleCount = Number(response.data.MaleCount);
-    const femaleCount = Number(response.data.FemaleCount);
-    console.log(response.data.MaleCount);
-    console.log(response.data.FemaleCount);
-    countm = maleCount
-    countf = femaleCount
-    return countm,countf;
-  } catch (error) {
-    console.error('Error:', error.response.data.Error);
-    return 0; // Return default values or handle the error as per your requirement
-  }
-};
+export class GenderCountsChart extends Component {
+  state = {
+    genderCountsByAirline: {},
+    airlineNames: [],
+  };
 
-getCountFromBackend()
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://localhost:3001/system/genderCount");
+      const genderCountsByAirline = response.data.GenderCountsByAirline;
+      const airlineNames = Object.values(genderCountsByAirline).map((airline) => airline.AirlineName);
+      console.log('Gender : ',genderCountsByAirline)
+      this.setState({ genderCountsByAirline, airlineNames });
+    } catch (error) {
+      console.error("Error:", error.response.data.Error);
+    }
+  }
+
+  renderChart() {
+    const { genderCountsByAirline, airlineNames } = this.state;
+
+    if (Object.keys(genderCountsByAirline).length === 0) {
+      return null;
+    }
+
+    const airlines = Object.keys(genderCountsByAirline);
+    
+    const maleCounts = airlines.map((airline) => genderCountsByAirline[airline].MaleCount);
+    const femaleCounts = airlines.map((airline) => genderCountsByAirline[airline].FemaleCount);
+
+    const chartData = {
+      labels: airlineNames,
+      datasets: [
+        {
+          label: "Male",
+          data: maleCounts,
+          backgroundColor: [
+            "rgba(54, 162, 235, 0.5)",
+            // Add more colors if needed
+          ],
+        },
+        {
+          label: "Female",
+          data: femaleCounts,
+          backgroundColor: [
+            "rgba(255, 165, 210, 0.5)",
+            // Add more colors if needed
+          ],
+        },
+      ],
+    };
+
+    const chartOptions = {
+      responsive: true,
+      indexAxis: "x", // Set to 'y' for horizontal bar chart
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    };
+
+    return <Bar  data={chartData} options={chartOptions} />;
+  }
+
+  render() {
+    return <div>{this.renderChart()}</div>;
+  }
+}
 
 let bookcount = 0;
 const getBookCountFromBackend = async () => {
@@ -78,34 +134,38 @@ const getBookCountFromBackend = async () => {
 
 getBookCountFromBackend()
 
-let chartData = []
-class FlightCountsChart extends Component {
+export class FlightCountsChart extends Component {
   state = {
     flightCountsBySection: {},
+    AirlineName: {}
   };
 
   async componentDidMount() {
     try {
       const response = await axios.get("http://localhost:3001/system/destinaton");
       const flightCountsBySection = response.data.FlightCountsBySection;
-      this.setState({ flightCountsBySection });
+      const AirlineName = response.data.Airlinename
+      console.log('Flight : ',flightCountsBySection)
+      this.setState({ flightCountsBySection,AirlineName })
+      
     } catch (error) {
       console.error("Error:", error.response.data.Error);
     }
   }
 
   renderChart() {
-    const { flightCountsBySection } = this.state;
+    const { flightCountsBySection,AirlineName } = this.state;
 
     if (!Object.keys(flightCountsBySection).length) {
       return null;
     }
-
     const sections = Object.keys(flightCountsBySection);
     const airlines = Object.keys(flightCountsBySection[sections[0]]);
+    const airlineNames = AirlineName.map((airline) => airline.Name);
+    // console.log(airlineNames)
     const sectionColors = {
       North: "rgba(75, 192, 192, 0.5)",
-      NorthEast: "rgba(255, 99, 113, 0.5)",
+      Northeast: "rgba(255, 116, 98, 0.5)",
       Central: "rgba(54, 162, 235, 0.5)",
       South: "rgba(255, 165, 210, 0.5)",
     };
@@ -116,7 +176,7 @@ class FlightCountsChart extends Component {
     }));
 
     const chartData = {
-      labels: ['Bangkok Airways','Nok Air','Nok Air','Thai Airways','Thai Lion Air','Thai Smile','Thai VietJet Air'],
+      labels: airlineNames,
       datasets: datasets,
     };
 
@@ -126,11 +186,6 @@ class FlightCountsChart extends Component {
         x: { stacked: true },
         y: { stacked: true },
       }, 
-      elements: {
-        bar: {
-          borderWidth: 1,
-        },
-      },
       responsive: true,
       plugins: {
         legend: {
@@ -147,78 +202,314 @@ class FlightCountsChart extends Component {
   }
 }
 
-export default FlightCountsChart;
+export class BookSecCountsChart extends Component {
+  state = {
+    bookCountsByAirport: {},
+    AirlineName: {}
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://localhost:3001/system/bookBySec");
+      const bookCountsByAirport = response.data.BookCountsBySection;
+      const AirlineName = response.data.Airlinename
+      // console.log('Book :',bookCountsByAirport)
+      this.setState({ bookCountsByAirport,AirlineName })
+      
+    } catch (error) {
+      console.error("Error:", error.response.data.Error);
+    }
+  }
+
+  renderChart() {
+    const { bookCountsByAirport,AirlineName } = this.state;
+
+    if (!Object.keys(bookCountsByAirport).length) {
+      return null;
+    }
+    const airportIDs = Object.keys(bookCountsByAirport);
+    const airportData = airportIDs.map((id) => bookCountsByAirport[id]);
+    const airportIATA = airportData.map((data) => data.IATA);
+    const bookingCounts = airportData.map((data) => data.BookingCount);
+    // console.log(airlineNames)
+    const getRandomColor = () => {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+  
+    const barColors = bookingCounts.map(() => getRandomColor());
+
+    const chartData = {
+      labels: airportIATA,
+      datasets: [
+        {
+          label: "Booking Count",
+          data: bookingCounts,
+          backgroundColor: barColors,
+        },
+      ],
+    };
+
+    const chartOptions = {
+      indexAxis: "x",
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    };
+
+    return <Bar data={chartData} options={chartOptions} />;
+  }
+
+  render() {
+    return <div>{this.renderChart()}</div>;
+  }
+}
+
+export class AddonsCountChart extends Component {
+  state = {
+    addonCountsByAirport: {},
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://localhost:3001/system/airportbyAdds");
+      const addonCountsByAirport = response.data.AddonsCountByAirport;
+      console.log('Counts : ',addonCountsByAirport)
+      this.setState({ addonCountsByAirport });
+    } catch (error) {
+      console.error("Error:", error.response.data.Error);
+    }
+  }
+
+  renderChart() {
+    const { addonCountsByAirport } = this.state;
+
+    if (!addonCountsByAirport || Object.keys(addonCountsByAirport).length === 0) {
+      return null;
+    }
+  
+    const airportIDs = Object.keys(addonCountsByAirport);
+    const airportIATA = airportIDs.map((id) => addonCountsByAirport[id].IATA);
+    const addonsCounts = airportIDs.map((id) => addonCountsByAirport[id].AddonsCount);
+  
+    const chartData = {
+      labels: airportIATA,
+      datasets: [
+        {
+          label: "Addons Count",
+          data: addonsCounts,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.5)",
+            "rgba(54, 162, 235, 0.5)",
+            "rgba(255, 206, 86, 0.5)",
+            "rgba(75, 192, 192, 0.5)",
+            "rgba(153, 102, 255, 0.5)",
+          ],
+        },
+      ],
+    };
+  
+    const chartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    };
+  
+    return <Doughnut data={chartData} options={chartOptions} />;
+  }
+
+  render() {
+    return <div>{this.renderChart()}</div>;
+  }
+}
+
+export class BookingsCountByAirlineChart extends Component {
+  state = {
+    bookingsCountByAirline: {},
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://localhost:3001/system/bookEachday");
+      const bookingsCountByAirline = response.data.BookingsCountByAirline;
+      console.log('Daycount :' , bookingsCountByAirline)
+      this.setState({ bookingsCountByAirline });
+
+    } catch (error) {
+      console.error("Error:", error.response.data.Error);
+    }
+  }
+
+  renderChart() {
+    const { bookingsCountByAirline } = this.state;
+
+    if (!bookingsCountByAirline || Object.keys(bookingsCountByAirline).length === 0) {
+      return null;
+    }
+
+    const airlineIDs = Object.keys(bookingsCountByAirline);
+    const airlineNames = airlineIDs.map((id) => bookingsCountByAirline[id].Name);
+    const mondayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].MondayCount);
+    const tuesdayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].TuesdayCount);
+    const wednesdayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].WednesdayCount);
+    const thursdayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].ThursdayCount);
+    const fridayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].FridayCount);
+    const saturdayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].SaturdayCount);
+    const sundayCounts = airlineIDs.map((id) => bookingsCountByAirline[id].SundayCount);
+
+    const chartData = {
+      labels: airlineNames,
+      datasets: [
+        {
+          label: "Monday",
+          data: mondayCounts,
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+        {
+          label: "Tuesday",
+          data: tuesdayCounts,
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+        },
+        {
+          label: "Wednesday",
+          data: wednesdayCounts,
+          backgroundColor: "rgba(255, 206, 86, 0.5)",
+        },
+        {
+          label: "Thursday",
+          data: thursdayCounts,
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
+        },
+        {
+          label: "Friday",
+          data: fridayCounts,
+          backgroundColor: "rgba(153, 102, 255, 0.5)",
+        },
+        {
+          label: "Saturday",
+          data: saturdayCounts,
+          backgroundColor: "rgba(255, 159, 64, 0.5)",
+        },
+        {
+          label: "Sunday",
+          data: sundayCounts,
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+        },
+      ],
+    };
+
+    const chartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    };
+
+    return <Bar data={chartData} options={chartOptions} />;
+  }
+
+  render() {
+    return <div>{this.renderChart()}</div>;
+  }
+}
+
 
 export const Dashboard = () => {
-
-  const data = {
-    labels: ['Male', 'Female'],
-    datasets: [{
-      label: 'Poll',
-      data: [countm, countf],
-      backgroundColor: ['rgba(75, 192, 192, 0.5)', 'rgba(54, 162, 235, 0.5)'],    }]
-  }
   return (
     <>
-      <div className="ml-10">
+      <div className="ml-10 mt-5">
       <Header>Dashboard</Header>
       </div>
       <div className="Dashboard">
-      <div className="flex m-3 flex-wrap gap-1 items-center ml-10">
-        <div className="bg-gradient-to-r from-pink-300 via-red-300 to-yellow-300 dark:bg-secondary-dark-bg md:w-110 rounded-2xl">
-          <p className="mt-3 p-4">
-            <span className="text-lg font-bold text-white">Bookings</span>
-          </p>
-          <p className="mt-3 p-4 pt-0.5">
-          <svg class="h-10 w-10 text-white rounded-full bg-black bg-opacity-10 inline" width="30" height="30" viewBox="-3 0 30 25" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> 
-          <path stroke="none" d="M0 0h24v24H0z"/>  
-          <path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(-15 12 12) translate(0 -1)" />  
-          <line x1="3" y1="21" x2="21" y2="21" />
-          </svg><span className="text-3xl font-bold text-white p-5">{bookcount}</span>
-          </p>
+      <div className="flex m-3 flex-wrap items-center ml-10 grid gap-2 grid-cols-3">
+        <div className="bg-gradient-to-r from-pink-300 via-red-300 to-yellow-300 dark:bg-secondary-dark-bg md:w-96 rounded-2xl ml-5">
+            <a href="#" className="flex flex-col items-center border-gray-200 rounded-2xl shadow md:flex-row md:max-w-xl hover:shadow-lg dark:hover:shadow-black/30 bg-opacity-10 dark:border-gray-700 dark:bg-gray-800 ">
+            <div className="flex flex-col justify-between p-4 leading-normal">
+              <h5 className="mb-2 ml-3 text-xl font-semibold tracking-tight text-white dark:text-white">Bookings</h5>
+              <div className="flex items-center mb-2">
+              <TbPlaneDeparture className='w-20 h-20 text-white bg-black bg-opacity-10 rounded-full ml-3' viewBox='-3 0 30 25'/><span className="mb-3 font-bold text-3xl text-white dark:text-gray-400 ml-10 justify-center">{bookcount}</span>
+            </div>
+            </div>
+            </a>
         </div>
-        <div className="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 dark:bg-secondary-dark-bg md:w-110 rounded-2xl">
-        <p className="mt-3 p-4">
-            <span className="text-lg font-bold text-white">New Users</span>
-          </p>
-          <p className="mt-3 p-4 pt-0.5">
-          <svg class="h-10 w-10 text-white rounded-full bg-black bg-opacity-10 inline"  fill="none" viewBox="-3 0 30 25" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-          </svg>
-            <span className="text-3xl font-bold text-white p-5">24123</span>
-          </p>
+        {/* <div className="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 dark:bg-secondary-dark-bg md:w-110 rounded-2xl"> */}
+        <div className="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 dark:bg-secondary-dark-bg md:w-96 rounded-2xl">
+            <a href="#" className="flex flex-col items-center border-gray-200 rounded-2xl shadow md:flex-row md:max-w-xl hover:shadow-lg dark:hover:shadow-black/30 bg-opacity-10 dark:border-gray-700 dark:bg-gray-800 ">
+            <div className="flex flex-col justify-between p-4 leading-normal">
+              <h5 className="mb-2 ml-3 text-xl font-semibold tracking-tight text-white dark:text-white">New Users</h5>
+              <div className="flex items-center mb-2">
+            <MdGroupAdd className='w-20 h-20 text-white bg-black bg-opacity-10 rounded-full ml-3' viewBox='-4 0 31 25'/><span className="mb-3 font-bold text-3xl text-white dark:text-gray-400 ml-10 justify-center">1,543</span>
+            </div>
+            </div>
+            </a>
         </div>
-        <div className="bg-gradient-to-r from-green-500 via-green-400 to-green-200 dark:bg-secondary-dark-bg md:w-110 rounded-2xl">
-        <p className="mt-3 p-4">
-            <span className="text-lg font-bold text-white">Viewers</span>
-          </p>
-          <p className="mt-3 p-4 pt-0.5">
-          <svg class="h-10 w-10 text-white rounded-full bg-black bg-opacity-10 inline"  width="30" height="30" viewBox="-3 0 30 25" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  
-          <path stroke="none" d="M0 0h24v24H0z"/>  
-          <circle cx="9" cy="7" r="4" />  
-          <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />  
-          <path d="M16 11l2 2l4 -4" /></svg>
-          <span className="text-3xl font-bold text-white p-5">24123</span>
-          </p>
+        {/* <div className="bg-gradient-to-r from-green-500 via-green-400 to-green-200 dark:bg-secondary-dark-bg md:w-110 rounded-2xl"> */}
+        <div className="bg-gradient-to-r from-green-500 via-green-400 to-green-200 dark:bg-secondary-dark-bg md:w-96 rounded-2xl">
+            <a href="#" className="flex flex-col items-center border-gray-200 rounded-2xl shadow md:flex-row md:max-w-xl hover:shadow-lg dark:hover:shadow-black/30 bg-opacity-10 dark:border-gray-700 dark:bg-gray-800 ">
+            <div className="flex flex-col justify-between p-4 leading-normal">
+              <h5 className="mb-2 ml-3 text-xl font-semibold tracking-tight text-white dark:text-white">Visits</h5>
+              <div className="flex items-center mb-2">
+              <BsFillPersonLinesFill className='w-20 h-20 text-white bg-black bg-opacity-10 rounded-full ml-3' viewBox='-2 0 20 18'/><span className="mb-3 font-bold text-3xl text-white dark:text-gray-400 ml-10 justify-center">1,543</span>
+            </div>
+            </div>
+            </a>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-    <h1 className="font-bold text-xl ml-10 mt-10">Destination</h1>
-    <div className="ml-20">
-      <FlightCountsChart Width={380} height={200}></FlightCountsChart>
-    </div>
-  </div>
-  <div>
-    <h1 className="font-bold text-xl mt-10 ml-28">Gender</h1>
-    <div className="w-100 h-100 ml-36">
-      <Doughnut data={data} options={options}></Doughnut>
-    </div>
-    </div>
-</div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-white rounded-2xl ml-5 mt-5">
+          <h1 className="font-bold text-xl p-5">Destination</h1>
+          <div>
+          <FlightCountsChart Width={20} height={20}></FlightCountsChart>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-white rounded-2xl ml-5 mt-5 w-100">
+          <h1 className="font-bold text-xl p-5">Addons Count</h1>
+          <div>
+          <AddonsCountChart Width={360} height={200}></AddonsCountChart>
+        </div>
+      </div>
+      </div>
+      <div>
+        <div className="bg-white rounded-2xl ml-5 mt-5 w-50">
+          <h1 className="font-bold text-xl p-5">Gender Count</h1>
+          <div>
+          <GenderCountsChart Width={360} height={200}></GenderCountsChart>
+        </div>
+      </div>
+      </div>
+      <div>
+        <div className="bg-white rounded-2xl ml-5 mt-5 w-50">
+          <h1 className="font-bold text-xl p-5">BookCount</h1>
+          <div>
+          <BookSecCountsChart Width={360} height={200}></BookSecCountsChart>
+        </div>
+      </div>
+      </div>
+      <div>
+        <div className="bg-white rounded-2xl ml-5 mt-5 w-500">
+          <h1 className="font-bold text-xl p-5">BookingEachDay</h1>
+          <div>
+          <BookingsCountByAirlineChart Width={360} height={200}></BookingsCountByAirlineChart>
+        </div>
+      </div>
+      </div>
+      </div>
 
         
       </div>
     </>
   );
-}
+  }

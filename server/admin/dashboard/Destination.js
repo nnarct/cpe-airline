@@ -6,7 +6,9 @@ export const getFlightCountsBySection = (req, res) => {
   const nextMonthDate = new Date();
   nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
   const nextMonthDateString = nextMonthDate.toISOString().slice(0, 19).replace("T", " ");
-  const query = `SELECT a.Section, ${airlineIds.map((id, index) => `COUNT(CASE WHEN f.AirlineID = '${id}' THEN 1 END) AS Airline${index + 1}Count`).join(',')} FROM airport AS a JOIN flight AS f ON a.AirportID = f.DestinationAirportID WHERE f.AirlineID IN ('${airlineIds.join("','")}') AND f.ArrivalTime BETWEEN '${currentDate}' AND '${nextMonthDateString}' GROUP BY a.Section`;
+  const query = `SELECT a.Section, ${airlineIds.map((id, index) => `COUNT(CASE WHEN f.AirlineID = '${id}' THEN 1 END) AS Airline${index + 1}Count`).join(',')}, COUNT(b.BookingID) AS BookingCount FROM airport AS a JOIN flight AS f ON a.AirportID = f.DestinationAirportID JOIN booking AS b ON f.FlightID = b.FlightID WHERE f.AirlineID IN ('${airlineIds.join("','")}') AND f.ArrivalTime BETWEEN '${currentDate}' AND '${nextMonthDateString}' GROUP BY a.Section;`;
+  const airline = "SELECT Name FROM airline"
+
 
   db.query(query, (err, data) => {
     if (err) {
@@ -23,10 +25,20 @@ export const getFlightCountsBySection = (req, res) => {
       });
       flightCountsBySection[section] = counts;
     });
-
+db.query(airline,(err,airlineName) => {
+  if (err) {
+    console.log(err);
+    return res.json({ Error: "Select airline list error in server..." });
+  }
+  if (airlineName.length > 0) {
     return res.json({
-      Status: "Successfully retrieved flight counts by section",
+      Status: "Successfully select airline name",
       FlightCountsBySection: flightCountsBySection,
+      Airlinename: airlineName,
     });
+  } else {
+    return res.json({ Error: "Airline name not found" });
+  }
+})
   });
 };
