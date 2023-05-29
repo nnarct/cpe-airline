@@ -170,6 +170,7 @@ export const SeatSelect = ({
                   {row.map((seat, seatIndex) => {
                     return (
                       <Seat
+                        Class={params.get("class")}
                         id={id}
                         key={seat?.SeatID}
                         seat={seat}
@@ -189,6 +190,7 @@ export const SeatSelect = ({
                   {row.map((seat, seatIndex) => {
                     return (
                       <Seat
+                        Class={params.get("class")}
                         id={id}
                         key={seat?.SeatID}
                         seat={seat}
