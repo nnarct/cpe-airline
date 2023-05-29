@@ -86,24 +86,22 @@ export const Invoice = () => {
     });
   }, []);
 
-  // Todo - UI for invoice
-  // Todo - validate only user of the invoice can see the invoice
   return (
     <>
       <Navbar />
       <div className="bg-blue-150 w-screen flex justify-center">
         <div className="min-h-calc bg-white container lg:max-w-1000 border-l border-r">
-          <h2 className="px-3 text-7xl text-black flex flex-col justify-center">
-            Invoice
+          <h2 className="p-3 text-primary text-7xl flex flex-col justify-center">
+            Thanks for booking with us!
           </h2>
 
           {invoice?.map((invoice, i) => {
             return (
               <div
-                className="flex m-3 shadow rounded-xl"
+                className="flex m-3 shadow rounded-xl "
                 key={invoice.InvoiceID}
               >
-                <div className="rounded-l-xl p-4 w-120 h-120 bg-gradient-to-br from-cyan-400  to-blue-700">
+                <div className="rounded-l-xl p-4  w-120 h-120 bg-gradient-to-br from-cyan-200  to-blue-200">
                   <div className="m-2 text-2xl fond-bold ">
                     <div className="text-xl fond-bold pb-2 mb-2 border-b">
                       <p className="text-2xl font-bold">
@@ -153,11 +151,13 @@ export const Invoice = () => {
                         <BsCalendar3 />
                         <span>Date: </span>
                       </div>
-                      <p className="text-2xl font-bold">{moment(invoice.Date).format('DD MMM YY HH.MM')}</p>
+                      <p className="text-2xl font-bold">
+                        {moment(invoice.Date).format("DD MMM YYYY HH:MM")}
+                      </p>
                     </div>
                   </div>
                 </div>
-                <div className="rounded-r-xl bg-gradient-to-tr from-sky-400 to-purple-100 w-full">
+                <div className="rounded-r-xl text-primary bg-gradient-to-tr from-sky-400 to-purple-100 w-full">
                   <div className="content">
                     <div className="m-6 header flex flex-col items-end">
                       <img alt="" src={LogoFly} className="h-[50px]" />
@@ -166,7 +166,7 @@ export const Invoice = () => {
                       </div>
                     </div>
                     <div className="m-8 text-4xl font-bold">
-                      <h3>NokAir</h3>
+                      <h3>{invoice.Airline}</h3>
                     </div>
                     <div className="m-8 flex text-2xl font-semibold justify-between">
                       <h3>{invoice.From}</h3>
@@ -183,7 +183,7 @@ export const Invoice = () => {
                         </thead>
                         <tbody>
                           <tr className="py-4 text-xl font-semibold border-t border-primary">
-                            <td className="p-3">Economy</td>
+                            <td className="p-3">{invoice.Class}</td>
                             <td className="p-3">1</td>
                             <td className="p-3">{invoice.Total}</td>
                           </tr>
