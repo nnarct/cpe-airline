@@ -1,8 +1,7 @@
 import { Item } from "./item";
 import { airlineLogo } from "../../searchResult/function";
 import { useEffect, useState } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { BsFillLightbulbFill } from "react-icons/bs";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 import Axios from "axios";
 import Swal from "sweetalert2";
@@ -22,6 +21,7 @@ export const Transaction = ({ flights }) => {
     else {
       setDisplay(true);
       const t = flights.find((f) => f?.BookingID === Number(flight));
+      console.log(t);
       setFlightInfo(t);
       Axios.post("http://localhost:3001/getBookingInfo", { id: flight }).then(
         (res, err) => {
@@ -176,39 +176,38 @@ export const Transaction = ({ flights }) => {
         </div>
         {/* <h1 className="border-b w-full mt-4"/> */}
         {/* Passenger info */}
-        {contactInfo &&
-          contactInfo.map((info, i) => {
-            return (
-              <div key={i} className="pt-2 pb-2 px-8 mt-3 text-xl mb-4">
-                <h1 className="border-b w-full mt-4" />
-                <div className="font-bold text-3xl text-primary mt-4">
-                  Passenger {i + 1}
+        {contactInfo?.map((info, i) => {
+          return (
+            <div key={i} className="pt-2 pb-2 px-8 mt-3 text-xl mb-4">
+              <h1 className="border-b w-full mt-4" />
+              <div className="font-bold text-3xl text-primary mt-4">
+                Passenger {i + 1}
+              </div>
+              <div>
+                <h1 className="text-gray-500">Name</h1>
+                <h1 className="text-2xl">
+                  {info?.FirstName} {info?.LastName}
+                </h1>
+              </div>
+              <div className="grid gap-6 grid-cols-3 mt-2">
+                <div className="">
+                  <h1 className="text-gray-500">Seat</h1>
+                  <h1 className="text-2xl">{info?.SeatCode || "-"}</h1>
                 </div>
                 <div>
-                  <h1 className="text-gray-500">Name</h1>
+                  <h1 className="text-gray-500">Checked-In Bag</h1>
                   <h1 className="text-2xl">
-                    {info?.FirstName} {info?.LastName}
+                    {weight?.CheckedIn + info?.Weight} KG
                   </h1>
                 </div>
-                <div className="grid gap-6 grid-cols-3 mt-2">
-                  <div className="">
-                    <h1 className="text-gray-500">Seat</h1>
-                    <h1 className="text-2xl">{info?.SeatCode || "-"}</h1>
-                  </div>
-                  <div>
-                    <h1 className="text-gray-500">Checked-In Bag</h1>
-                    <h1 className="text-2xl">
-                      {weight?.CheckedIn + info?.Weight} KG
-                    </h1>
-                  </div>
-                  <div>
-                    <h1 className="text-gray-500">Carry On Bag</h1>
-                    <h1 className="text-2xl">{weight?.CarryOn} KG</h1>
-                  </div>
+                <div>
+                  <h1 className="text-gray-500">Carry On Bag</h1>
+                  <h1 className="text-2xl">{weight?.CarryOn} KG</h1>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
         <div className="w-full p-4 flex justify-end items-center">
           <button
             className="px-3 py-2 flex items-center bg-red-500 text-white rounded hover:ring ring-red-400/60 focus:bg-red-600"
