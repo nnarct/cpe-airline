@@ -12,7 +12,7 @@ export const getUserBooking = (req, res) => {
   }
 
   const sql =
-    "SELECT b.Status, b.BookingID, a.Name AS AirlineName, f.FlightNumber , f.FlightID,f.DepartureTime,f.ArrivalTime,oa.IATA AS OriginAirport, da.IATA AS DestinationAirport,f.OriginAirportID,f.DestinationAirportID,oa.Name AS NameOriginAirport,da.Name AS NameDestinationAirport FROM booking b INNER JOIN flight f ON b.FlightID = f.FlightID JOIN airline a ON f.AirlineID=a.AirlineID INNER JOIN airport AS oa ON oa.AirportID = f.OriginAirportID INNER JOIN airport AS da ON da.AirportID = f.DestinationAirportID WHERE b.UserID = ?;";
+    "SELECT b.Status,b.Protection, b.BookingID, a.Name AS AirlineName, f.FlightNumber , f.FlightID,f.DepartureTime,f.ArrivalTime,oa.IATA AS OriginAirport, da.IATA AS DestinationAirport,f.OriginAirportID,f.DestinationAirportID,oa.Name AS NameOriginAirport,da.Name AS NameDestinationAirport FROM booking b INNER JOIN flight f ON b.FlightID = f.FlightID JOIN airline a ON f.AirlineID=a.AirlineID INNER JOIN airport AS oa ON oa.AirportID = f.OriginAirportID INNER JOIN airport AS da ON da.AirportID = f.DestinationAirportID WHERE b.UserID = ?;";
   db.query(sql, [userID], (err, data) => {
     if (err) {
       console.log(err);
