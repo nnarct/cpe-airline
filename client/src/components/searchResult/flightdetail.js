@@ -58,9 +58,10 @@ export const FlightDetail = ({ v, flight }) => {
             "&isReturn=" +
             v.isReturn +
             "&departureFlightID=" +
-            flight.FlightID
+            flight.FlightID + 
+            "&class=" +
+            v.class
         );
-      window.location.reload();
     } else if (v.isReturn === "0") {
       navigate(
         "/contact?adult=" +
@@ -72,7 +73,9 @@ export const FlightDetail = ({ v, flight }) => {
           "&isReturn=" +
           v.isReturn +
           "&departureFlightID=" +
-          flight.FlightID
+          flight.FlightID +
+          "&class=" +
+          v.class
       );
     }
 
@@ -87,7 +90,6 @@ export const FlightDetail = ({ v, flight }) => {
     }
     return "-";
   };
-
   return (
     <>
       <div className="container lg:max-w-1000 my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center">
@@ -107,7 +109,7 @@ export const FlightDetail = ({ v, flight }) => {
           />
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
-          <Price price="1,092" />
+          <Price price={flight?.Price} />
           <Link to="">
             <li>
               <button
