@@ -151,9 +151,13 @@ export const Payment = () => {
   const [type, setType] = useState({ Name: "Visa", PaymentID: 1 });
   const [exp, setExp] = useState({ month: "06", year: "23" });
   const [payments, setPayments] = useState([]);
-  const [Total, setTotal] = useState(0)
+  const [Total, setTotal] = useState(0);
   useEffect(() => {
-    if(sessionStorage.passenger == null || sessionStorage.contact === null || sessionStorage.contact === undefined)
+    if (
+      sessionStorage.passenger == null ||
+      sessionStorage.contact === null ||
+      sessionStorage.contact === undefined
+    )
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -161,19 +165,20 @@ export const Payment = () => {
         confirmButtonText: "OK",
         confirmButtonColor: "#3B82F6",
       }).then(() => navigate("/"));
-    Axios.post("http://localhost:3001/getPayment").then((res, err) => {
-      if (err) {
-        Swal.fire({
-          icon: "error",
-          title: "API Error",
-          text: "Error while getting payment method.",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#3B82F6",
-        }).then(() => navigate("/"));
-      }
-      else setPayments(res.data.Payments);
-    });
-    setTotal(JSON.parse(sessionStorage.contact).Total);
+    else {
+      Axios.post("http://localhost:3001/getPayment").then((res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "API Error",
+            text: "Error while getting payment method.",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#3B82F6",
+          }).then(() => navigate("/"));
+        } else setPayments(res.data.Payments);
+      });
+      setTotal(JSON.parse(sessionStorage.contact).Total);
+    }
   }, []);
 
   const handleSubmit = (e) => {
@@ -198,7 +203,10 @@ export const Payment = () => {
         booking.returnFlightID = params.get("returnFlightID");
 
       if (type.Name === "PromptPay") {
-        if(form["PromtpayNumber"].value.length !== 10 && form["PromtpayNumber"].value.length !== 13){
+        if (
+          form["PromtpayNumber"].value.length !== 10 &&
+          form["PromtpayNumber"].value.length !== 13
+        ) {
           Swal.fire({
             icon: "error",
             title: "Oops! Sorry",
@@ -206,7 +214,10 @@ export const Payment = () => {
           });
           return;
         }
-        if(contact.FirstName + " " + contact.LastName === '' || form["PromtpayNumber"].value === ''){
+        if (
+          contact.FirstName + " " + contact.LastName === "" ||
+          form["PromtpayNumber"].value === ""
+        ) {
           Swal.fire({
             icon: "error",
             title: "Oops! Sorry",
@@ -220,7 +231,13 @@ export const Payment = () => {
           PromtpayNumber: form["PromtpayNumber"].value,
         };
       } else {
-        if(form["cardHolder"].value === '' || form["cardNumber"].value === '' || form["cvv"].value === '' || exp.month === '' || exp.year === ''){
+        if (
+          form["cardHolder"].value === "" ||
+          form["cardNumber"].value === "" ||
+          form["cvv"].value === "" ||
+          exp.month === "" ||
+          exp.year === ""
+        ) {
           Swal.fire({
             icon: "error",
             title: "Oops! Sorry",
@@ -240,7 +257,6 @@ export const Payment = () => {
         (res, err) => {
           if (err) console.log(err);
           if (res.data.Error) {
-            console.log(res.data);
             Swal.fire({
               icon: "error",
               title: "Oops! Sorry",
@@ -283,10 +299,8 @@ export const Payment = () => {
 
   return (
     <>
-    
       <Navbar />
       <PageWrapper>
-        
         <form
           ref={paymentForm}
           className="mx-auto bg-white w-120 flex flex-col p-3 md:p-6 rounded-xl shadow"
