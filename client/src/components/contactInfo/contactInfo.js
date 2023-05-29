@@ -107,7 +107,7 @@ export const ContactInfo = () => {
     e.preventDefault();
     if (validate(contact) === 0) return;
     const form = info.current;
-    setContact({ ...contact, total: total });
+    setContact({ ...contact, Total: total });
     let values = [];
     for (let i = 1; i <= pass.length; i++) {
       const fname = form[`fname${i}`].value;
