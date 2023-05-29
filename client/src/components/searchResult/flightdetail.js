@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { LineIcon, Logo, Price, TimeAndAirport } from "./components";
-export const FlightDetail = ({ v, flight }) => {
+export const FlightDetail = ({ v, flight, cheap }) => {
   const navigate = useNavigate();
   const [cookies] = useCookies();
 
@@ -109,7 +109,7 @@ export const FlightDetail = ({ v, flight }) => {
           />
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
-          <Price price={flight?.Price} />
+          <Price cheap={cheap} price={flight?.Price} />
           <Link to="">
             <li>
               <button

@@ -51,7 +51,7 @@ export const SearchResult = () => {
             title: "Sorry",
             showConfirmButton: true,
             confirmButtonText: "Back to homepage",
-          }).then((res) => navigate("/"));
+          }).then(res => navigate("/"));
         } else
           Swal.fire({
             icon: "error",
@@ -203,7 +203,7 @@ export const SearchResult = () => {
 
             {flights?.map((flight, i) => {
               return (
-                <FlightDetail key={flight.FlightID} v={v} flight={flight} />
+                <FlightDetail cheap={i} key={flight.FlightID} v={v} flight={flight} />
               );
             })}
           </>
