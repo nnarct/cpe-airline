@@ -73,18 +73,12 @@ import {
   verifyOwner,
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
-<<<<<<< HEAD
-import { editPlane } from "./admin/edit/editPlane.js";
-import { genderCount } from "./admin/dashboard/genderCount.js"
-import { bookingCount } from "./admin/dashboard/bookCount.js"
-import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
 // import { getFlightCountsBySection2 } from "./admin/dashboard/Destination2.js"
 import { getbookCountsBySection } from "./admin/dashboard/bookBySec.js"
 import { getAddonsCountByAirport} from "./admin/dashboard/airportbyAdds.js"
 import { getBookingsCountByAirline} from "./admin/dashboard/bookEachday.js"
-import { getUserBooking } from "./users/myFlight/getUserBooking.js";
-import { deleteUser } from "./admin/delete/deleteUser.js";
-=======
+
+
 import { getFlight } from "./users/createBooking/getFlight.js";
 import { flightInfo } from "./users/createBooking/flightInfo.js";
 import { insertBooking } from "./users/createBooking/insertBooking.js";
@@ -93,7 +87,6 @@ import { getInvoice } from "./users/createBooking/getInvoice.js";
 import { addOnInfo, getBase } from "./users/createBooking/addOns.js";
 import { getAvailableSeat } from "./users/createBooking/getAvailableSeat.js";
 
->>>>>>> main
 //import { deleteFlight } from "../client/delete/deleteFlight.js";
 import { selectFlight } from "./admin/restrict/flight/select.js";
 
