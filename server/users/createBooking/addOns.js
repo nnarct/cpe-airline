@@ -33,10 +33,10 @@ export const addOnInfo = (req, res) => {
 export const getBase = (req, res) => {
   const sql =
     "SELECT s.BasePurseWeight as CarryOn , s.BaseLuggageWeight as CheckedIn FROM `seat` s INNER JOIN class c ON c.ClassID = s.ClassID INNER JOIN plane p ON c.PlaneID = p.PlaneID INNER JOIN Airline a on p.AirlineID = a.AirlineID INNER JOIN flight f on f.AirlineID = a.AirlineID WHERE f.FlightID = ? AND c.Name = ? LIMIT 1;";
-  db.query(sql, [req.body.departureFlightID, req.body.class], (err, result) => {
+    db.query(sql, [req.body.departureFlightID, req.body.class], (err, result) => {
     if (err) res.json({ Error: "Error while getting base luggage." });
     else if (result.length === 0)
-      return res.json({ Error: "No base luggage found." });
+      return res.json({ Error: "No base departure luggage found." });
     else {
       const depBase = result[0];
       if (req.body.isReturn === 1 || req.body.isReturn === "1") {
@@ -46,7 +46,7 @@ export const getBase = (req, res) => {
           (err, result) => {
             if (err) return res.json({ Error: "Error while getting base luggage." });
             else if (result.length === 0)
-              return res.json({ Error: "No base luggage found." });
+              return res.json({ Error: "No base return luggage found." });
             else {
               const retBase = result[0];
               return res.json({
