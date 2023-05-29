@@ -17,15 +17,15 @@ export const MyFlight = () => {
   const [selectedSection, setSelectedSection] = useState("Upcoming Flights");
 
   const filteredUpcomingFlights = Bookings.filter((b) => {
-    return new Date(b.DepartureTime) >= new Date();
+    return (new Date(b.DepartureTime) >= new Date() && b.Status);
   });
 
   const filteredDepartedFlights = Bookings.filter((b) => {
-    return new Date(b.DepartureTime) < new Date();
+    return (new Date(b.DepartureTime) < new Date() && b.Status);
   });
 
   const filteredCanceledFlights = Bookings.filter((b) => {
-    return 1;
+    return !b.Status;
   });
 
   return (
