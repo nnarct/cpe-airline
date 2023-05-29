@@ -26,7 +26,7 @@ export const Card = ({ className, children }) => {
 export const MyProfileWrapper = ({ children }) => {
   return (
     <>
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center min-h-calc">
         <div className="w-full max-w-3xl">
           <div className="flex flex-col w-full">{children}</div>
         </div>

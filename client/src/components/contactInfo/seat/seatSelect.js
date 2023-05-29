@@ -81,7 +81,7 @@ export const SeatSelect = ({
   };
   return (
     <>
-      <div className="w-full max-w-1000 mx-auto py-5 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
+      <div className="w-full max-w-1000 mx-auto pt-3 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
         <div className="w-full bg-white border border-primary/40 rounded-md py-3 px-5">
           <div className="border-b border-primary/20 mb-1 pb-1 flex ">
             <h1 className="text-2xl font-bold text-primary ">Seat Number</h1>
@@ -170,6 +170,7 @@ export const SeatSelect = ({
                   {row.map((seat, seatIndex) => {
                     return (
                       <Seat
+                        Class={params.get("class")}
                         id={id}
                         key={seat?.SeatID}
                         seat={seat}
@@ -189,6 +190,7 @@ export const SeatSelect = ({
                   {row.map((seat, seatIndex) => {
                     return (
                       <Seat
+                        Class={params.get("class")}
                         id={id}
                         key={seat?.SeatID}
                         seat={seat}

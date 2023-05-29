@@ -30,7 +30,7 @@ export const FlightInfo = ({ pass, classType }) => {
 
   return (
     <>
-      <div className="h-min sm:w-2/5 md:w-2/6 bg-white border border-primary/40 rounded-md py-3 px-3">
+      <div className="h-min w-full bg-white border border-primary/40 rounded-md py-3 px-3">
         <div className="font-bold flex items-center justify-center space-x-2">
           <span>{dep.OriIATA}</span>
           <BsArrowLeftRight style={{ stroke: "black", strokeWidth: "1" }} />

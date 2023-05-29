@@ -73,6 +73,12 @@ import {
   verifyOwner,
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
+// import { getFlightCountsBySection2 } from "./admin/dashboard/Destination2.js"
+import { getbookCountsBySection } from "./admin/dashboard/bookBySec.js"
+import { getAddonsCountByAirport} from "./admin/dashboard/airportbyAdds.js"
+import { getBookingsCountByAirline} from "./admin/dashboard/bookEachday.js"
+
+
 import { getFlight } from "./users/createBooking/getFlight.js";
 import { flightInfo } from "./users/createBooking/flightInfo.js";
 import { insertBooking } from "./users/createBooking/insertBooking.js";
@@ -97,6 +103,9 @@ import { userCount } from "./admin/dashboard/userCount.js";
 import { genderCount } from "./admin/dashboard/genderCount.js"
 import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
 import { getBookingInfo } from "./users/myFlight/getBookingInfo.js";
+import { routeList } from "./admin/flightRoute.js";
+import { getPrice } from "./users/createBooking/getPrice.js";
+import { bookByday } from "./admin/dashboard/bookByday.js";
 
 const app = express();
 app.use(express.json());
@@ -134,6 +143,7 @@ app.post("/admin/login", loginAdmin);
 app.get("/admin/logout", logoutAdmin);
 
 // system admin
+// select
 app.post("/admin/info", adminInfo);
 app.post("/admin/editProfile", editAdminProfile);
 app.get("/system/employeeList", employeeList);
@@ -144,7 +154,9 @@ app.get("/system/userList", userList);
 app.get("/system/passengerList", passengerList);
 app.get("/system/passengerListGroupByBookingID", passengerListGroupByBooking);
 app.get("/system/planeList", planeList);
+app.get("/system/routeList", routeList);
 
+// update
 app.post("/system/editProfile", editSystemProfile);
 app.post("/system/editEmployee", editEmployee);
 app.post("/system/editAirline", editAirline);
@@ -154,12 +166,14 @@ app.post("/system/editPassenger", editPassenger);
 app.post("/system/editFlight", editFlight);
 app.post("/system/editPlane", editPlane);
 
+// insert
 app.post("/system/insertAirport", insertAirport);
 app.post("/system/insertAirline", insertAirline);
 app.post("/system/insertPlane", insertPlane);
 app.post("/system/insertUser", insertUser);
 app.post("/system/insertFlight", insertFlight);
 
+// delete
 app.post("/system/deleteAirport", deleteAirport);
 app.post("/system/deleteAirline", deleteAirline);
 app.post("/system/deleteEmployee", deleteEmployee);
@@ -187,18 +201,26 @@ app.post("/contact/addonInfo", addOnInfo);
 app.post("/contact/getBase", getBase);
 app.post("/insertBooking", insertBooking);
 
+
+// insert contact page
+app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getPrice", getPrice);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
-app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
+app.post("/getUserBooking", getUserBooking);
 app.post("/getAvailableSeat", getAvailableSeat);
 
 
 // Dashboard
 app.get("/system/genderCount", genderCount);
 app.get("/system/bookCount", bookingCount);
-app.get("/system/destination", getFlightCountsBySection)
+app.get("/system/bookBySec", getbookCountsBySection);
+app.get("/system/airportbyAdds", getAddonsCountByAirport);
+app.get("/system/bookEachday", getBookingsCountByAirline);
+app.get("/system/destination", getFlightCountsBySection);
 app.get("/system/flightCount", flightCount);
 app.get("/system/userCount", userCount);
+app.get("/system/bookByday", bookByday);
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);

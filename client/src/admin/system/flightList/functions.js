@@ -245,16 +245,18 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
   });
 };
 // Todo -delete flight
-export const deleteFlight = (id) => {
-  // todo - popup to make sure u wanna deelte the flight
-  // if confirm - send request to daabase to delete to flight where flight id =id
+export const deleteFlight = (flight) => {
+  // todo - popup to make sure u wanna delete the flight
+  // if confirm - send request to database to delete to flight where flight id =id
   Swal.fire({
     icon: "warning",
     title: "Are you sure?",
-    html: `You are deleting Airport ${id.FlightID}, <span class="font-semibold text-red-500">${
-      id.FlightNumber
+    html: `You are deleting Airport ${flight.FlightID}, <span class="font-semibold text-red-500">${
+      flight.FlightNumber
     }</span>
-    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will be very <span class="font-semibold">harmful</span>  to the client side website! <br>This action cannot be undone !</div>`,
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will delete all passenger data of this flight.</div>
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will delete all booking data of this flight.</div>
+    <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
     showCancelButton: true,
     confirmButtonColor: "#d33",
     confirmButtonText: "Confirm",
@@ -263,7 +265,7 @@ export const deleteFlight = (id) => {
   }).then((result) => {
     if (result.isConfirmed)
       Axios.post("http://localhost:3001/system/deleteFlight", {
-        id: id.FlightNumber,
+        id: flight.FlightID,
       }).then((res, err) => {
         if (err)
           Swal.fire({

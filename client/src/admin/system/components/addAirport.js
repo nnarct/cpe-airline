@@ -2,15 +2,15 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { Star } from "../../components/star";
-
-export const AddAirport = () => {
+import { getAirports } from "../airportList/functions";
+export const AddAirport = ({ setAirports }) => {
   const [values, setValues] = useState({
     AirportID: "",
     Name: "",
     IATA: "",
     State: "",
     Province: "",
-    section:"",
+    section: "South",
   });
   const handleSubmit = (e) => {
     if (values.IATA.length !== 3) {
@@ -24,16 +24,17 @@ export const AddAirport = () => {
     } else {
       Axios.post("http://localhost:3001/system/insertAirport", values)
         .then((res) => {
-          if (res.data.Status === "Create new airport successfully! :)")
+          if (res.data.Status === "Create new airport successfully! :)") {
             Swal.fire({
               icon: "success",
               title: "Success",
               text: res.data.Status,
               timer: 3000,
               timerProgressBar: true,
-              showConfirmButton: false,
+              confirmButtonColor: "#2563eb",
             });
-          else
+            getAirports(setAirports);
+          } else
             Swal.fire({
               icon: "error",
               title: "Oops...",
@@ -49,7 +50,6 @@ export const AddAirport = () => {
   };
   return (
     <>
-
       <div className="">
         <div className="flex flex-col items-center bg-gray-50 border rounded mt-4 p-3">
           <h1 className="text-xl">Add New Airport</h1>
@@ -111,22 +111,24 @@ export const AddAirport = () => {
                 setValues({ ...values, Province: e.target.value })
               }
             />
-            
-          <label htmlFor="section">
-            section
-            <Star />
-          </label>
-          <select
-            id="section"
-            className="mb-2 border rounded p-1"
-            value={values.section} // Assuming you have a state variable named `values` where you store form data
-            onChange={(e) => setValues({ ...values, section: e.target.value })}
-           >
-            <option value="South">South</option>
-            <option value="Central">Central</option>
-            <option value="North">North</option>
-            <option value="Northeast">Northeast</option>
-          </select>
+
+            <label htmlFor="section">
+              section
+              <Star />
+            </label>
+            <select
+              id="section"
+              className="mb-2 border rounded p-1"
+              defaultValue={values.section} // Assuming you have a state variable named `values` where you store form data
+              onChange={(e) =>
+                setValues({ ...values, section: e.target.value })
+              }
+            >
+              <option value="South">South</option>
+              <option value="Central">Central</option>
+              <option value="North">North</option>
+              <option value="Northeast">Northeast</option>
+            </select>
 
             <button
               className="bg-blue-500 text-white rounded py-1 px-3 hover:opacity-40  active:opacity-80"

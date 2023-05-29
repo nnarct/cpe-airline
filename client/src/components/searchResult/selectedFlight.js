@@ -26,7 +26,7 @@ export const SelectedFlight = ({ id }) => {
     <>
       <div className="relative container lg:max-w-[1200px] my-1 p-8 bg-white rounded border flex flex-wrap justify-between items-center border-primary border-4">
         <span className="top-0 left-0 absolute uppercase py-2 px-8">
-          selected{" "}
+          selected
           <span className="font-semibold text-blue-600">Departure </span>
           flight
         </span>
@@ -46,7 +46,7 @@ export const SelectedFlight = ({ id }) => {
           />
         </div>
         <ul className="w-36 flex flex-col justify-between items-end">
-          <Price price="1,092" />
+          <Price price={flight?.Price} />
         </ul>
       </div>
       <h4 className="text-3xl font-bold py-2 text-left w-full container lg:max-w-1000 ">

@@ -122,7 +122,7 @@ export const editAirport = (setAirports, airport) => {
   });
 };
 
-export const deleteAirport = (airport) => {
+export const deleteAirport = (airport, setAirports) => {
   Swal.fire({
     icon: "warning",
     title: "Are you sure?",
@@ -159,7 +159,7 @@ export const deleteAirport = (airport) => {
             confirmButtonColor: "#3085d6",
             confirmButtonText: "OK",
             showConfirmButton: true,
-          });
+          }).then(() => getAirports(setAirports));
         else if (res.data.Error)
           Swal.fire({
             title: "Error!",

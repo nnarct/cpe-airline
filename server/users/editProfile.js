@@ -1,13 +1,13 @@
 import { db } from "../index.js";
 
 export const editProfile = (req, res) => {
-  const sqlCheck = "SELECT UserID FROM user WHERE Email = ?";
+  const sqlCheck = "SELECT UserID FROM user WHERE Email = ? AND UserID != ?";
   const sql =
     "UPDATE user SET FirstName = ?, LastName = ?, Email = ?, TelNo = ? WHERE UserID =?";
-  db.query(sqlCheck, [req.body.Email], (error, data) => {
+  db.query(sqlCheck, [req.body.Email, req.body.id], (error, data) => {
     if (error)
       return res.json({ Error: "Error while checking email unique..." });
-    if (data.length > 0 && data.Email !== req.body.Email) return res.json({ Error: "Email already exists..." });
+    if (data.length > 0) return res.json({ Error: "Email already exists..." });
     db.query(
       sql,
       [

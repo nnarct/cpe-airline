@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { db } from "../../index.js";
 export const insertBooking = (req, res) => {
+  console.log(req.body);
   const payment = req.body.payment;
   const contact = req.body.contact;
   const passenger = req.body.passenger;
@@ -20,19 +21,19 @@ export const insertBooking = (req, res) => {
   const sqlInvoice =
     payment.PaymentID === 2
       ? "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `PromptpayNumber`) VALUES (?,?,?,?)"
-      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`) VALUES (?,?,?,?,?,?)";
+      : "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `CardNumber`, `CVV` ,`ExpDate`, `Class`) VALUES (?,?,?,?,?,?)";
   const invoiceValue =
     payment.PaymentID === 2
       ? [
           payment.PaymentID,
           payment.BillTo,
-          req.body.Total,
+          contact.Total,
           payment.PromtpayNumber,
         ]
       : [
           payment.PaymentID,
           payment.BillTo,
-          req.body.Total,
+          contact.Total,
           payment.CardNumber,
           payment.CVV,
           payment.ExpDate,
@@ -59,6 +60,7 @@ export const insertBooking = (req, res) => {
           contact.email,
           departureFlightID,
           Number(invoiceID),
+          contact.Class
         ],
         (err, result) => {
           if (err)

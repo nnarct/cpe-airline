@@ -17,8 +17,8 @@ export const Flight = ({ flight , airlines, airports, planes }) => {
           flight.FlightNumber,
           flight.oriIATA,
           flight.desIATA,
-          moment(flight.DepartureTime).format("HH:MM - DD MMM YY"),
-          moment(flight.ArrivalTime).format("HH:MM - DD MMM YY"),
+          moment(flight.DepartureTime).format("HH:mm - DD MMM YY"),
+          moment(flight.ArrivalTime).format("HH:mm - DD MMM YY"),
           flight.airline,
           flight.PlaneID,
         ].map((item, i) => {
@@ -31,7 +31,7 @@ export const Flight = ({ flight , airlines, airports, planes }) => {
 
         <td
           className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
-          onClick={(e) => deleteFlight(flight?.FlightID)}
+          onClick={(e) => deleteFlight(flight)}
         >
           <RiDeleteBin6Line className="mx-auto" />
         </td>

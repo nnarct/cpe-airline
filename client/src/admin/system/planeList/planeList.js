@@ -28,7 +28,6 @@ export const PlaneList = () => {
             <Th>PlaneID</Th>
             <Th>AirlineID</Th>
             <Th>PlaneModel</Th>
-            <Th>SeatingPlan</Th>
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>

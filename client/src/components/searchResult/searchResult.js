@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FlightDetail } from "./flightdetail";
 import { SelectedFlight } from "./selectedFlight";
-
+import { Link } from "react-router-dom";
 export const SearchResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,38 +24,46 @@ export const SearchResult = () => {
   };
 
   const [flights, setFlights] = useState([{ Origin: "" }]);
+  const [noFlight, setNoFlight] = useState(true);
   useEffect(() => {
-    Axios.get("http://localhost:3001").then((res, err) => {
-      if (err || res.data.Status !== "Success") navigate("/");
-      else {
-        if (v.departureFlightID) {
-          v.arrival = params.get("departure");
-          v.departure = params.get("arrival");
+    if (v.departureFlightID) {
+      v.arrival = params.get("departure");
+      v.departure = params.get("arrival");
+    }
+    Axios.post("http://localhost:3001/search/SearchFlights", v).then(
+      (res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry",
+            text: "Something went wrong",
+            showConfirmButton: true,
+            confirmButtonText: "Back to homepage",
+          }).then((res) => navigate("/"));
         }
-        Axios.post("http://localhost:3001/search/SearchFlights", v).then(
-          (res, err) => {
-            if (err)
-              Swal.fire({
-                icon: "error",
-                text: err,
-                title: "Error",
-                showConfirmButton: true,
-                timer: 5000,
-              }).then(() => navigate("/"));
-            if (res.data.Status === "Success") setFlights(res.data.Flights);
-            else
-              Swal.fire({
-                icon: "error",
-                text: res.data.Status,
-                title: "Error",
-                showConfirmButton: true,
-                timer: 5000,
-              }).then(() => navigate("/"));
-          }
-        );
+        if (res.data.Status === "Success") {
+          setNoFlight(false);
+          setFlights(res.data.Flights);
+        } else if (res.data.Status === "No flight found.") {
+          Swal.fire({
+            icon: "warning",
+            text: "No flight on this route",
+            title: "Sorry",
+            showConfirmButton: true,
+            confirmButtonText: "Back to homepage",
+          }).then(res => navigate("/"));
+        } else
+          Swal.fire({
+            icon: "error",
+            text: res.data.Error,
+            title: "Error",
+            showConfirmButton: true,
+            timer: 5000,
+            timerProgressBar: true,
+          }).then(res => navigate("/"));
       }
-    });
-  }, [v, params, navigate]);
+    );
+  }, [v]);
 
   const prevDay = (e) => {
     e.preventDefault();
@@ -108,7 +116,7 @@ export const SearchResult = () => {
           "&isReturn=" +
           v.isReturn
       );
-    window.location.reload();
+    // window.location.reload();
   };
   const nextDay = (e) => {
     e.preventDefault();
@@ -161,7 +169,7 @@ export const SearchResult = () => {
           "&isReturn=" +
           v.isReturn
       );
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -172,28 +180,34 @@ export const SearchResult = () => {
             to={airportName(flights[0].Destination, flights[0].DesIATA)}
             departure={formatDate(v.departure)}
           /> */}
-        {v.departureFlightID && v.departureFlightID !== "null" ? (
-          <SelectedFlight id={v.departureFlightID} />
-        ) : (
-          <div>
-            <button
-              onClick={prevDay}
-              className="bg-blue-300 hover:ring border rounded mx-3 px-3"
-            >
-              Previous Day
-            </button>
-            <button
-              onClick={nextDay}
-              className="bg-blue-300 hover:ring border rounded mx-3 px-3"
-            >
-              Next Day
-            </button>
-          </div>
-        )}
+        {noFlight ? null : (
+          <>
+            {v.departureFlightID && v.departureFlightID !== "null" ? (
+              <SelectedFlight id={v.departureFlightID} />
+            ) : (
+              <div>
+                <button
+                  onClick={prevDay}
+                  className="bg-blue-300 hover:ring border rounded mx-3 px-3"
+                >
+                  Previous Day
+                </button>
+                <button
+                  onClick={nextDay}
+                  className="bg-blue-300 hover:ring border rounded mx-3 px-3"
+                >
+                  Next Day
+                </button>
+              </div>
+            )}
 
-        {flights?.map((flight, i) => {
-          return <FlightDetail key={flight.FlightID} v={v} flight={flight} />;
-        })}
+            {flights?.map((flight, i) => {
+              return (
+                <FlightDetail cheap={i} key={flight.FlightID} v={v} flight={flight} />
+              );
+            })}
+          </>
+        )}
       </div>
     </>
   );
