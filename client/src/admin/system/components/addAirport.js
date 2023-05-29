@@ -10,7 +10,7 @@ export const AddAirport = ({ setAirports }) => {
     IATA: "",
     State: "",
     Province: "",
-    section: "",
+    section: "South",
   });
   const handleSubmit = (e) => {
     if (values.IATA.length !== 3) {
