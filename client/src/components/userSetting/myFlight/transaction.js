@@ -21,7 +21,6 @@ export const Transaction = ({ flights, s }) => {
     else {
       setDisplay(true);
       const t = flights.find((f) => f?.BookingID === Number(flight));
-      console.log(t);
       setFlightInfo(t);
       Axios.post("http://localhost:3001/getBookingInfo", { id: flight }).then(
         (res, err) => {
@@ -55,12 +54,21 @@ export const Transaction = ({ flights, s }) => {
       icon: "warning",
       title: "Are you sure?",
       text: "You won't be able to revert this!",
-      showCancelButton: true,
       confirmButtonText: "Yes, cancel it!",
       cancelButtonText: "No, keep it",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Todo  - send request to cancel flight in server
+        Axios.post("http://localhost:3001/cancelBooking", {
+          id: flight.BookingID,
+        }).then((res, err) => {
+          if (err) Swal.fire("Error!", "Something went wrong.", "error");
+          else if (res.data.Status === "Cancel booking successfully! :)")
+            Swal.fire(
+              "Canceled!",
+              "Your booking has been canceled.",
+              "success"
+            ).then(() => navigate(currentPath));
+        });
         Swal.fire("Cancelled!", "Your flight has been canceled.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("Ok!", "Your flight is safe :)");
@@ -68,6 +76,84 @@ export const Transaction = ({ flights, s }) => {
     });
   };
 
+  const editBooking = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Edit Booking",
+      html: `
+      <div>You are editing booking
+      <span class="font-bold">
+      ${flightInfo?.BookingID}
+      }</span>
+    </div>
+  <div class="flex items-center justify-center py-1">
+    <label htmlFor="fname" class="w-24 block">First Name</label>
+    <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${777}">
+  </div>
+  <div class="flex items-center justify-center py-1">
+    <label htmlFor="lname" class="w-24 block">Last
+    Name</label>
+    <input id="swal-input2" class="w-full px-2 py-1.5 active:ring" placeholder="Last name" value="${88}">,
+  </div>
+  <div class="flex items-center justify-center py-1">
+    <label htmlFor="State" class="w-24 block">State</label>
+    <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Email" value="${99}">
+  </div>
+  <div class="flex items-center justify-center py-1">
+    <label htmlFor="Phone" class="w-24 block">Phone</label>
+    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="0994848848" value="${99}">
+    </div>`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const fname = document.getElementById("swal-input1").value;
+        const lname = document.getElementById("swal-input2").value;
+        const email = document.getElementById("swal-input3").value;
+        const telno = document.getElementById("swal-input4").value;
+        Axios.post("http://localhost:3001/editBooking", {
+          id: flightInfo?.BookingID,
+          fname: fname,
+          lname: lname,
+          email: email,
+          telno: telno,
+        }).then((res, err) => {
+          Swal.fire("Edited!", "Your booking has been edited.", "success");
+        });
+      }
+    });
+  };
+  const editPassenger = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Edit passenger",
+      html: `
+    <div>You are editing passenger id:
+      <span class="font-bold">
+      ${flightInfo?.BookingID}
+      }</span>
+        </div>
+      <div class="flex items-center justify-center py-1">
+        <label htmlFor="fname" class="w-24 block">First Name</label>
+        <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${777}">
+      </div>
+      <div class="flex items-center justify-center py-1">
+        <label htmlFor="lname" class="w-24 block">Last
+        Name</label>
+        <input id="swal-input2" type="date" class="w-full px-2 py-1.5 active:ring" placeholder="Last name" value="${88}">,
+      </div>
+      <div class="flex items-center justify-center py-1">
+        <label htmlFor="state" class="w-24 block">State</label>
+        <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Email" value="${99}">
+      </div>
+      <div class="flex items-center justify-center py-1">
+        <label htmlFor="province" class="w-24 block">Province</label>
+        <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="0994848848" value="${99}">
+  </div>`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Edited!", "Your booking has been edited.", "success");
+      }
+    });
+  };
   return !display ? (
     <>
       <ul>
@@ -156,9 +242,20 @@ export const Transaction = ({ flights, s }) => {
           </div>
         </div>
         <div className="pt-2 pb-2 px-8 mt-3 text-xl border-t">
-          <h1 className="font-bold text-3xl text-primary mb-2">
-            Contact Information
-          </h1>
+          <div className="flex justify-between items-center">
+            <h1 className="font-bold text-3xl text-primary mb-2">
+              Contact Information
+            </h1>
+            {s === 1 && flightInfo?.Protection === 1 && (
+              <button
+                className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
+                onClick={editBooking}
+              >
+                Edit
+              </button>
+            )}
+          </div>
+
           <div>
             <h1 className="text-gray-500">Name</h1>
             <h1 className="text-2xl">
@@ -177,14 +274,20 @@ export const Transaction = ({ flights, s }) => {
             </div>
           </div>
         </div>
-        {/* <h1 className="border-b w-full mt-4"/> */}
         {/* Passenger info */}
         {contactInfo?.map((info, i) => {
           return (
             <div key={i} className="pt-2 pb-2 px-8 mt-3 text-xl mb-4">
-              <h1 className="border-b w-full mt-4" />
-              <div className="font-bold text-3xl text-primary mt-4">
-                Passenger {i + 1}
+              <div className="font-bold text-3xl border-t text-primary mt-4">
+                <h1> Passenger {i + 1}</h1>
+                {s === 1 && flightInfo?.Protection === 1 && (
+                  <button
+                    className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
+                    onClick={editPassenger(i.PassengerID)}
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
               <div>
                 <h1 className="text-gray-500">Name</h1>
@@ -219,11 +322,6 @@ export const Transaction = ({ flights, s }) => {
             >
               Cancel Booking
             </button>
-            {flightInfo?.Protection === 1 && (
-              <button className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600">
-                Edit Booking
-              </button>
-            )}
           </div>
         )}
       </div>
