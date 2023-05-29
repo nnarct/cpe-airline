@@ -21,7 +21,7 @@ export const getFlightCountsBySection = (req, res) => {
     )} FROM airport AS a JOIN flight AS f ON a.AirportID = f.DestinationAirportID WHERE f.AirlineID IN ('${airlineIds.join(
     "','"
   )}') AND f.ArrivalTime BETWEEN '${currentDate}' AND '${nextMonthDateString}' GROUP BY a.Section`;
-  const airline = "SELECT Name FROM airline";
+  const airline = "SELECT Name FROM airline;";
   db.query(query, (err, data) => {
     if (err) {
       return res.json({ Error: "Retrieve flight counts error in Server..." });
