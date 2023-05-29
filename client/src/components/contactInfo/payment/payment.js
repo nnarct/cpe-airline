@@ -192,7 +192,6 @@ export const Payment = () => {
         contact: contact,
         passenger: passenger,
         isReturn: params.get("isReturn"),
-        Total: contact.Total,
         departureFlightID: params.get("departureFlightID"),
       };
       if (params.get("returnFlightID") !== null)
