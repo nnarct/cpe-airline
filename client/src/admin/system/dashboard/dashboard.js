@@ -19,6 +19,7 @@ import {
   FlightCountsChart,
   GenderCountsChart,
   BookingsCountByAirlineChart,
+  BookByday
 } from "./functions";
 import { Header } from "../components/header";
 import { Content } from "../components/content";
@@ -88,30 +89,33 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-        <Chart topic={"Flight destinations group by airlines"}>
+        <Chart topic={"Flight Destinations Group by Airlines"}>
           <FlightCountsChart />
         </Chart>
 
         <div className="flex space-x-7 w-full container">
-          <Chart topic={"Count add-ons by destination"}>
+          <Chart topic={"Count Add-ons by Destination"}>
             <AddonsCountChart/>
           </Chart>
           <Chart className={''}
-            topic={"Count passenger by gender, group by airline"}
+            topic={"Count Passenger By Gender, Group by Airlines"}
           >
             <GenderCountsChart />
           </Chart>
         </div>
 
         <div className="flex space-x-7 w-full container">
-          <Chart topic={"Most booked destination"}>
+          <Chart topic={"Most Booked Destination"}>
             <BookSecCountsChart />
           </Chart>
 
-          <Chart topic={"Most flying day"}>
+          <Chart topic={"Most Flying Day"}>
             <BookingsCountByAirlineChart />
           </Chart>
         </div>
+        <Chart topic={"Most Booking Day"}>
+            <BookByday />
+          </Chart>
       </Content>
     </>
   );
