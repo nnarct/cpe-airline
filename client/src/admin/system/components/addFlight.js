@@ -183,7 +183,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
           </label>
           <select
             id="Plane"
-            className="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2"
+            className="w-full px-2 py-1.5 active:ring rounded border my-2"
             defaultValue={0}
             onChange={(e,) =>
               setValues({
