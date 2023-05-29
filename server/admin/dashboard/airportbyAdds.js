@@ -2,11 +2,12 @@ import { db } from "../../index.js";
 
 export const getAddonsCountByAirport = (req, res) => {
   const query = `
-    SELECT a.AirportID, a.IATA, COUNT(ad.AddonsID) AS AddonsCount
-    FROM airport AS a
-    JOIN flight AS f ON a.AirportID = f.DestinationAirportID
-    JOIN addons AS ad ON f.FlightID = ad.FlightID
-    GROUP BY a.AirportID, a.IATA;
+  SELECT a.AirportID, a.IATA, SUM(CASE WHEN AddOnsID IS NULL THEN 0 ELSE 1 END) AS AddonsCount
+  FROM airport AS a
+  JOIN flight AS f ON a.AirportID = f.DestinationAirportID
+  JOIN booking AS b ON f.FlightID = b.FlightID
+  JOIN passenger AS p ON b.BookingID = p.BookingID
+  GROUP BY a.AirportID, a.IATA;
   `;
 
   db.query(query, (err, data) => {
