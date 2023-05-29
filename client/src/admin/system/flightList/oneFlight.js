@@ -31,7 +31,7 @@ export const Flight = ({ flight , airlines, airports, planes }) => {
 
         <td
           className="border p-2 text-center hover:bg-gray-200 cursor-pointer"
-          onClick={(e) => deleteFlight(flight?.FlightID)}
+          onClick={(e) => deleteFlight(flight)}
         >
           <RiDeleteBin6Line className="mx-auto" />
         </td>
