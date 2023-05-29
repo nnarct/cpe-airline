@@ -9,8 +9,8 @@ export const dob =
 export const ExtWrap = ({ children }) => {
   return (
     <>
-      <div className="w-full max-w-1000 mx-auto pt-3 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
-        <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
+      <div className="w-full max-w-1000 pt-3">
+        <div className="bg-white border border-primary/40 rounded-md py-3 px-5">
           {children}
         </div>
       </div>
@@ -54,8 +54,8 @@ export const InputFrom = ({ label, children }) => {
 export const ContactSection = ({ children }) => {
   return (
     <>
-      <div className="sm:w-3/5 md:w-4/6 bg-white border border-primary/40 rounded-md py-3 px-5">
-        <h1 className="text-2xl  bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
+      <div className="bg-white border border-primary/40 rounded-md py-3 px-5">
+        <h1 className="text-2xl bg-white font-bold text-primary border-b border-primary/20 mb-1 pb-1">
           Contact Info
         </h1>
         {children}
