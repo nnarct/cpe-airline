@@ -2,6 +2,7 @@ import moment from "moment";
 import { FaPlane } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { airlineLogo } from "./function";
+import React from "react";
 
 export const Logo = ({ airlineName, flight }) => {
   return (
@@ -51,12 +52,16 @@ export const LineIcon = () => {
 };
 
 export const Price = ({ cheap, price }) => {
+
+  const randomNumber = React.useMemo(() => {
+    return (Math.random() * (4500 - 1000) + 1000).toFixed(2);
+  }, []);
   return (
     <>
       <li className={`${cheap === 0 ? 'text-red-500' : ''} font-bold`}>
         <span className="text-sm pr-3">฿</span>
         <span className="text-2xl">
-          {price ? Number(price)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "1,780.00"}
+          {price ? Number(price)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : randomNumber}
         </span>
       </li>
       <li className="text-xs">Price for one passenger</li>
