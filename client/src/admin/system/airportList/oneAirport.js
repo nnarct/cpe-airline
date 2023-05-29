@@ -31,7 +31,7 @@ export const Airport = ({setAirports,airport}) => {
   <td
     className="border p-2 text-center font-bold select-none cursor-pointer hover:bg-gray-200"
     onClick={() => {
-        deleteAirport(airport);
+        deleteAirport(airport,setAirports);
     }}
   >
     <RiDeleteBin6Line className="mx-auto" />
