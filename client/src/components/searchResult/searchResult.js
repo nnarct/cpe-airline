@@ -26,48 +26,43 @@ export const SearchResult = () => {
   const [flights, setFlights] = useState([{ Origin: "" }]);
   const [noFlight, setNoFlight] = useState(true);
   useEffect(() => {
-    Axios.get("http://localhost:3001").then((res, err) => {
-      if (err || res.data.Status !== "Success") navigate("/");
-      else {
-        if (v.departureFlightID) {
-          v.arrival = params.get("departure");
-          v.departure = params.get("arrival");
+    if (v.departureFlightID) {
+      v.arrival = params.get("departure");
+      v.departure = params.get("arrival");
+    }
+    Axios.post("http://localhost:3001/search/SearchFlights", v).then(
+      (res, err) => {
+        if (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry",
+            text: "Something went wrong",
+            showConfirmButton: true,
+            confirmButtonText: "Back to homepage",
+          }).then((res) => navigate("/"));
         }
-        Axios.post("http://localhost:3001/search/SearchFlights", v).then(
-          (res, err) => {
-            if (err) {
-              Swal.fire({
-                icon: "error",
-                title: "Sorry",
-                text: "Something went wrong",
-                showConfirmButton: true,
-                confirmButtonText: "Back to homepage",
-              }).then((res) => navigate("/"));
-            }
-            if (res.data.Status === "Success") {
-              setNoFlight(false);
-              setFlights(res.data.Flights);
-            } else if (res.data.Status === "No flight found.") {
-              Swal.fire({
-                icon: "warning",
-                text: "No flight on this route",
-                title: "Sorry",
-                showConfirmButton: true,
-                confirmButtonText: "Back to homepage",
-              }).then((res) => navigate("/"));
-            } else
-              Swal.fire({
-                icon: "error",
-                text: res.data.Error,
-                title: "Error",
-                showConfirmButton: true,
-                timer: 5000,
-                timerProgressBar: true,
-              }).then();
-          }
-        );
+        if (res.data.Status === "Success") {
+          setNoFlight(false);
+          setFlights(res.data.Flights);
+        } else if (res.data.Status === "No flight found.") {
+          Swal.fire({
+            icon: "warning",
+            text: "No flight on this route",
+            title: "Sorry",
+            showConfirmButton: true,
+            confirmButtonText: "Back to homepage",
+          }).then((res) => navigate("/"));
+        } else
+          Swal.fire({
+            icon: "error",
+            text: res.data.Error,
+            title: "Error",
+            showConfirmButton: true,
+            timer: 5000,
+            timerProgressBar: true,
+          }).then();
       }
-    });
+    );
   }, [v]);
 
   const prevDay = (e) => {
