@@ -160,7 +160,7 @@ export const LuggagesDep = ({ luggages, id, fn }) => {
                 value={luggage.AddOnsID}
                 className="w-3 mr-2 "
                 onChange={() => {
-                  fn(id, luggage.AddOnsID);
+                  fn(id, luggage);
                 }}
               />
               <label
@@ -217,7 +217,7 @@ export const LuggagesRet = ({ luggages, id, fn }) => {
                 value={luggage.AddOnsID}
                 className="w-3 mr-2 "
                 onChange={() => {
-                  fn(id, luggage.AddOnsID);
+                  fn(id, luggage);
                 }}
               />
               <label
