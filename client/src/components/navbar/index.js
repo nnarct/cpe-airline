@@ -29,7 +29,7 @@ export const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center">
-            {auth === false ? <ForUser /> :''}
+            {auth === false ? <ForNoob /> :''}
             {auth === true ? <ForUser /> : ''}
           </div>
         </div>
