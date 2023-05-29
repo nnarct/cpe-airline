@@ -54,8 +54,10 @@ export const Price = ({ price }) => {
   return (
     <>
       <li className="text-red-500 font-bold">
-        <span className="text-sm">B</span>
-        <span className="text-2xl">{price}</span>
+        <span className="text-sm pr-3">฿</span>
+        <span className="text-2xl">
+          {price ? Number(price)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""}
+        </span>
       </li>
       <li className="text-xs">Price for one passenger</li>
     </>
