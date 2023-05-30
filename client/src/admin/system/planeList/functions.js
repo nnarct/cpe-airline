@@ -170,24 +170,17 @@ export const addPlane = (airlines, setPlanes, setAirlines) => {
                   <div class="flex items-center justify-center">
                     <label htmlFor="PlaneModel" class="w-28 block">PlaneModel</label>
                   <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="PlaneModel"></div>
-                  <div class="flex items-center justify-center">
-                    <label htmlFor="SeatingPlan" class="w-28 block">SeatingPlan</label>
-                    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2" placeholder="SeatingPlan"></div>
-                  </div>
               </form>
               `,
     preConfirm: () => {
       const airlineID = document.getElementById("swal-input2").value;
       const planeModel = document.getElementById("swal-input3").value;
-      const seatingPlan = document.getElementById("swal-input4").value;
 
       if (!airlineID) Swal.showValidationMessage("Please enter a airlineID");
       if (!planeModel) Swal.showValidationMessage("Please enter a planeModel");
-      // if (!seatingPlan) Swal.showValidationMessage("Please enter a seatingPlan");
       return {
         AirlineID: airlineID,
         PlaneModel: planeModel,
-        SeatingPlan: seatingPlan === "" ? null : seatingPlan,
       };
     },
     confirmButtonText: "Save",

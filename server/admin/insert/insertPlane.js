@@ -1,11 +1,10 @@
 import { db } from "../../index.js";
 export const insertPlane = (req, res) => {
   const sql =
-    "INSERT INTO plane (AirlineID, PlaneModel, SeatingPlan) VALUES (?)";
+    "INSERT INTO plane (AirlineID, PlaneModel) VALUES (?)";
   const values = [
     req.body.AirlineID,
     req.body.PlaneModel,
-    req.body.SeatingPlane,
   ];
   db.query(sql, [values], (err, result) => {
     if (err) return res.json({ Error: "Inserting data error in server..." });
