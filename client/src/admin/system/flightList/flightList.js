@@ -21,7 +21,6 @@ export const FlightList = () => {
     getPlanes({ setPlanes });
   }, [flights]);
 
-  // Todo - delete flight
   // Todo - Pagination
 
   const [selectedAirline, setSelectedAirline] = useState({
@@ -80,7 +79,6 @@ export const FlightList = () => {
             Add Flight +
           </button>
         </Header>
-        {/* <RenderPaginationLinks filteredFlights={filteredFlights} currentPage={currentPage} setCurrentPage={setCurrentPage}/> */}
         <Header>
           <table className="text-base font-normal">
             <thead className="">
@@ -115,7 +113,6 @@ export const FlightList = () => {
                         </option>
                       );
                     })}
-                    {/* Add more airline options as needed */}
                   </select>
                 </td>
                 <td className="pr-3">
@@ -132,7 +129,6 @@ export const FlightList = () => {
                         </option>
                       );
                     })}
-                    {/* Add more location options as needed */}
                   </select>
                 </td>
                 <td className="pr-3">
@@ -149,7 +145,6 @@ export const FlightList = () => {
                         </option>
                       );
                     })}
-                    {/* Add more location options as needed */}
                   </select>
                 </td>
                 <td className="pr-3">
@@ -175,6 +170,8 @@ export const FlightList = () => {
             <Th>Arrival time</Th>
             <Th>Airline</Th>
             <Th className="w-20">Plane ID</Th>
+            <Th>Economy Price</Th>
+            <Th>Premium Economy Price</Th>
             <Th className="w-20">Delete</Th>
           </THead>
           <tbody>
