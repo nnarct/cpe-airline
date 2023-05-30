@@ -4,7 +4,6 @@ export const getInfo = (cookieID, setInfo, setAirlines) => {
   Axios.post("http://localhost:3001/admin/info", { cookieID }).then(
     (res, err) => {
       if (err) {
-        console.log(err)
         Swal.fire({
           icon: "error",
           title: "Oops...",

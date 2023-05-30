@@ -23,10 +23,8 @@ export const registerAdmin = (req, res) => {
         req.body.airlineID,
       ];
       db.query(sql, [values], (err, result) => {
-        if (err) {
-          console.log(err);
+        if (err)
           return res.json({ Error: "Inserting data error in server..." });
-        }
         return res.json({ Status: "Create new admin successfully! :)" });
       });
     });

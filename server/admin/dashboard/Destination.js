@@ -38,10 +38,8 @@ export const getFlightCountsBySection = (req, res) => {
       flightCountsBySection[section] = counts;
     });
     db.query(airline, (err, airlineName) => {
-      if (err) {
-        console.log(err);
+      if (err)
         return res.json({ Error: "Select airline list error in server..." });
-      }
       if (airlineName.length > 0) {
         return res.json({
           Status: "Successfully select airline name",

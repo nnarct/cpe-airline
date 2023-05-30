@@ -44,7 +44,12 @@ export const AddAirport = ({ setAirports }) => {
             });
         })
         .then((err) => {
-          if (err) console.log(err);
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: "Something went wrong!",
+            });
         });
     }
   };

@@ -19,7 +19,6 @@ export const AmadeusSearchFlights = (req, res) => {
       return res.json({ Status: "Success", Flights: response.data });
     })
     .catch((err) => {
-      console.log(err);
       return res.json({ Error: "Error in server while searching flight..." });
     });
 };

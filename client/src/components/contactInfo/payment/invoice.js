@@ -68,7 +68,12 @@ export const Invoice = () => {
         };
         Axios.post("http://localhost:3001/getInvoice", value).then(
           (response, error) => {
-            if (error) console.log(error);
+            if (error)
+              Swal.fire({
+                icon: "error",
+                title: "Sorry...",
+                text: "Something went wrong!",
+              });
             if (response.data.Error) {
               Swal.fire({
                 icon: "error",

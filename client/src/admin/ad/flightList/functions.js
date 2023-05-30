@@ -9,16 +9,16 @@ export const getFlights = async ({
   setLoading,
   adminCookie,
 }) => {
-  Axios.post("http://localhost:3001/selectFlight", { adminCookie }).then(
-    (res, err) => {
+  Axios.post("http://localhost:3001/selectFlight", { adminCookie })
+    .then((res, err) => {
       if (err) Swal.fire("Error", err.message, "error");
       if (res.data.Status) {
         setFlights(res.data.Data);
         setAirlines(res.data.Airlines);
         setAirports(res.data.Airports);
       } else Swal.fire("Error", res.data.Error, "error");
-    }
-  ).then(() => setLoading(false));
+    })
+    .then(() => setLoading(false));
 };
 
 export const getPlanes = async ({ setPlanes }) => {
@@ -27,7 +27,7 @@ export const getPlanes = async ({ setPlanes }) => {
     const data = await res.json();
     setPlanes(data.Data);
   } catch (err) {
-    console.log(err);
+    Swal.fire("Error", err.message, "error");
   }
 };
 
@@ -182,7 +182,6 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
       else if (!arrTime)
         Swal.showValidationMessage("Please select arrival time");
       else if (originAirport === destinationAirport) {
-        console.log(originAirport, destinationAirport);
         Swal.showValidationMessage(
           "Origin and destination airports cannot be the same. Please select again."
         );

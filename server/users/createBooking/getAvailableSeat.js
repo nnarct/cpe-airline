@@ -15,7 +15,6 @@ export const getAvailableSeat = (req, res) => {
     [req.body.departureFlightID, req.body.departureFlightID],
     (err, dep) => {
       if (err) {
-        console.log("here1", err);
         return res.json({
           Error: "Error while selecting available departure flight seats",
         });
@@ -47,13 +46,12 @@ export const getAvailableSeat = (req, res) => {
                       sqlBooked,
                       [req.body.returnFlightID, req.body.returnFlightID],
                       (err, ret) => {
-                        if (err) {
-                          console.log(err);
+                        if (err)
                           return res.json({
                             Error:
                               "Error while select booked return flight seat",
                           });
-                        } else {
+                        else {
                           bookedReturnSeat = ret;
                           return res.json({
                             Status: "Success",
@@ -75,12 +73,11 @@ export const getAvailableSeat = (req, res) => {
             sqlBooked,
             [req.body.departureFlightID, req.body.departureFlightID],
             (err, dep) => {
-              if (err) {
-                console.log(err);
+              if (err)
                 return res.json({
                   Error: "Error while select booked departure flight seat",
                 });
-              } else {
+              else {
                 bookedDepartureSeat = dep;
                 return res.json({
                   Status: "Success",

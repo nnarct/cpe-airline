@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -41,16 +42,35 @@ export const Price = ({ protection, addOnDep, addOnRet, setTotal }) => {
   useEffect(() => {
     Axios.post("http://localhost:3001/getPrice", flightData).then(
       (res, err) => {
-        if (err) throw err;
+        if (err)
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Something went wrong!",
+          });
         if (res.data.Status === "Success") {
           setDepPrice(res.data.DepartureFlightPrice);
           if (flightData.isReturn === 1)
             setRetPrice(res.data.ReturnFlightPrice);
-        } else console.log(res.data.Error);
+        } else
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: res.data.Error,
+          });
       }
     );
     setTotal(addOnsTotalPrice + (protection ? 300 : 0) + basePrice * pass);
-  }, [addOnsTotalPrice, basePrice, flightData, pass, protection, setTotal, addOnRet, addOnDep]);
+  }, [
+    addOnsTotalPrice,
+    basePrice,
+    flightData,
+    pass,
+    protection,
+    setTotal,
+    addOnRet,
+    addOnDep,
+  ]);
   return (
     <div className="bg-white border border-primary/40 rounded-md py-3 px-3 mt-3">
       <h2 className="text-center font-bold text-2xl border-b">Price</h2>

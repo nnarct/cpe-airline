@@ -54,7 +54,12 @@ export const ChangePassword = () => {
     }
     Axios.post("http://localhost:3001/user/changePassword", values).then(
       (res, err) => {
-        if (err) console.log(err);
+        if (err)
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Something went wrong!",
+          });
         else if (res.data.Status === "Change password successfully! :)")
           Swal.fire({
             icon: "success",

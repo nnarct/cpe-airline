@@ -126,10 +126,21 @@ export const Employee = ({ editThisRow, setEditThisRow, employee }) => {
               icon: "error",
               title: "Sorry...",
               text: res.data.Error,
+              timer: 5000,
+              timerProgressBar: true,
+              confirmButtonColor: "#235edf",
             });
         })
         .then((err) => {
-          if (err) console.log(err);
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: "Something went wrong :(",
+              timer: 5000,
+              timerProgressBar: true,
+              confirmButtonColor: "#235edf",
+            });
         });
     }
   };

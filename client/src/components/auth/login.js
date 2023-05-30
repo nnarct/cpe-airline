@@ -41,7 +41,11 @@ export const Login = ({ setAuth }) => {
   const handleSubmit = () => {
     if (verifyValues() === true) {
       Axios.post("http://localhost:3001/login", values).then((res, err) => {
-        if (err) console.log(err);
+        if (err) Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: "Something went wrong!",
+        });
         if (res.data.Status === "Successfully login") {
           setAuth(true);
           if (redirect === "/search") navigate(-1);

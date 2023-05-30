@@ -22,29 +22,22 @@ export const insertFlight = (req, res) => {
   ];
 
   db.query(sql, [values], (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.json({ Error: "Inserting data error in server..." });
-    }
+    if (err) return res.json({ Error: "Inserting data error in server..." });
     const flightID = result.insertId;
     db.query(
       sqlPremiumPrice,
       [req.body.PremiumPrice, flightID, req.body.PlaneID],
       (err, result) => {
-        if (err) {
-          console.log(err);
+        if (err)
           return res.json({ Error: "Error while inserting economy price..." });
-        }
       }
     );
     db.query(
       sqlEconomyPrice,
       [req.body.EconomyPrice, flightID, req.body.PlaneID],
       (err, result) => {
-        if (err) {
-          console.log(err);
+        if (err)
           return res.json({ Error: "Error while inserting economy price..." });
-        }
       }
     );
     return res.json({ Status: "Create new flight successfully! :)" });

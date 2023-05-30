@@ -1,5 +1,6 @@
 import Axios from "axios";
 import moment from "moment";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BsArrowLeftRight } from "react-icons/bs";
@@ -19,11 +20,21 @@ export const FlightInfo = ({ pass, classType }) => {
   useEffect(() => {
     Axios.post("http://localhost:3001/contact/flightInfo", data).then(
       (res, err) => {
-        if (err) console.log(err);
+        if (err)
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Something went wrong!",
+          });
         if (res.data.Status === "Success") {
           setDep(res.data.DepFlight);
           if (data.isReturn !== "0") setRet(res.data.RetFlight);
-        } else console.log(res.data.Error);
+        } else
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: res.data.Error,
+          });
       }
     );
   }, []);

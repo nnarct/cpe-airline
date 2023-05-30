@@ -23,7 +23,11 @@ export const getFlights = async ({
     setAirlines(data.Airlines);
     setAirports(data.Airports);
   } catch (err) {
-    console.log(err);
+    Swal.fire({
+      icon: "error",
+      title: "Sorry...",
+      text: "Something went wrong!",
+    });
   } finally {
     setLoading(false);
   }
@@ -35,7 +39,11 @@ export const getPlanes = async ({ setPlanes }) => {
     const data = await res.json();
     setPlanes(data.Data);
   } catch (err) {
-    console.log(err);
+    Swal.fire({
+      icon: "error",
+      title: "Sorry...",
+      text: "Something went wrong!",
+    });
   }
 };
 

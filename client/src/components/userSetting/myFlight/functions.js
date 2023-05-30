@@ -3,7 +3,12 @@ import Swal from "sweetalert2";
 
 export const getUserBookings = (setBookings) => {
   Axios.post("http://localhost:3001/getUserBookings").then((res, err) => {
-    if (err) console.log(err);
+    if (err)
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Something went wrong!",
+      });
     else if (res.data.Error === "No user's bookings found.") setBookings([]);
     else if (res.data.Error === "Error while user's bookings ...") {
       Swal.fire({

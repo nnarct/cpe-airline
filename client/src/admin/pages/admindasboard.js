@@ -9,6 +9,7 @@ import { FlightList } from "../ad/flightList/flightList";
 import { PlaneList } from "../system/planeList/planeList";
 import { PassengerList } from "../ad/passengerList/passengerList";
 import { MyProfile } from "../ad/myProfile/myProfile";
+import Swal from "sweetalert2";
 export const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,7 +20,11 @@ export const AdminDashboard = () => {
   const [info, setInfo] = useState(null);
   useEffect(() => {
     Axios.get("http://localhost:3001/emauth").then((res, err) => {
-      if (err) console.log(err); // You are not authenticated
+      if (err) Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
       if (res.data.Status === "Success") {
         if (res.data.Info.Position === "System") navigate("/system");
         setInfo(res.data.Info);

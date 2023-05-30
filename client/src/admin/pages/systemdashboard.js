@@ -15,6 +15,7 @@ import { PassengerList } from "../system/passengerList/passengerList";
 import { Dashboard } from "../system/dashboard/dashboard";
 import { PlaneList } from "../system/planeList/planeList";
 import { FlightRoute } from "../system/flightRoute/fightRoute";
+import Swal from "sweetalert2";
 
 export const SystemDashboard = () => {
   const navigate = useNavigate();
@@ -26,7 +27,11 @@ export const SystemDashboard = () => {
   const [content, setContent] = useState(c);
   useEffect(() => {
     Axios.get("http://localhost:3001/emauth").then((res, err) => {
-      if (err) console.log(err); // You are not authenticated
+      if (err) Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Something went wrong!",
+      });
       if (res.data.Status === "Success") {
         setInfo(res.data.Info);
         if (res.data.Info.Position === "Admin") navigate("/admin");

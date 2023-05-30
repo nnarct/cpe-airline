@@ -1,6 +1,8 @@
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Logo from "./../../assets/logo/logo.png";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 export const AdminNavbar = ({ info, setPage }) => {
   const navigate = useNavigate();
   const handleDelete = () => {
@@ -8,7 +10,11 @@ export const AdminNavbar = ({ info, setPage }) => {
       .then((res) => {
         window.location.reload(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err,
+      }));
   };
 
   return (

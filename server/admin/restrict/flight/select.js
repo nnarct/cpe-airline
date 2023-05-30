@@ -25,10 +25,7 @@ export const selectFlight = (req, res) => {
   });
   const sql = `SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID WHERE f.AirlineID = (SELECT AirlineID FROM employee WHERE EmployeeID = ?)`;
   db.query(sql, [adminID.EmployeeID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.json({ Error: "Select flight error in server..." });
-    }
+    if (err) return res.json({ Error: "Select flight error in server..." });
     return data.length > 0
       ? res.json({
           Status: "Success",

@@ -255,7 +255,12 @@ export const Payment = () => {
       }
       Axios.post("http://localhost:3001/insertBooking", booking).then(
         (res, err) => {
-          if (err) console.log(err);
+          if (err)
+            Swal.fire({
+              icon: "error",
+              title: "Sorry...",
+              text: "Something went wrong!",
+            });
           if (res.data.Error) {
             Swal.fire({
               icon: "error",

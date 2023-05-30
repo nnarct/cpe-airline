@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import { getInfo } from "./getInfo";
 
 export const editProfile = (info, setInfo, cookie) => {
-  console.log(info);
   Swal.fire({
     title: "Edit Profile",
     html: `

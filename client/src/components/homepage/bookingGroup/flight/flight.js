@@ -31,7 +31,12 @@ export const Flight = () => {
       const res = await fetch("http://localhost:3001/airportList");
       const data = await res.json();
       const err = data.Error;
-      if (err) console.log(err);
+      if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: "Something went wrong!",
+        });
       setAirports(data.Data);
     };
     getAirports();
@@ -55,7 +60,7 @@ export const Flight = () => {
         confirmButtonText: "OK",
       });
       return;
-    } 
+    }
     if (values.adult + values.child + values.infant > 9) {
       Swal.fire({
         title: "Oops!",

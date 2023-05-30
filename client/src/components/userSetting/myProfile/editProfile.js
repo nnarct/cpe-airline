@@ -22,12 +22,28 @@ export const EditProfile = () => {
 
   useEffect(() => {
     Axios.get("http://localhost:3001").then((res, err) => {
-      if (err) console.log(err);
+      if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: "Something went wrong!",
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonColor: "#2563ed",
+        });
       if (res.data.Status !== "Success") navigate("/"); // Not logged in user
     });
     Axios.post("http://localhost:3001/showProfile", { id: id }).then(
       (res, err) => {
-        if (err) console.log(err);
+        if (err)
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "Something went wrong!",
+            timer: 3000,
+            timerProgressBar: true,
+            confirmButtonColor: "#2563ed",
+          });
         if (res.data.Status === "Success") setUser(res.data.Data);
         else
           Swal.fire({
@@ -52,7 +68,15 @@ export const EditProfile = () => {
       TelNo: form.tel.value,
     };
     Axios.post("http://localhost:3001/editProfile", values).then((res, err) => {
-      if (err) console.log(err);
+      if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: "Something went wrong!",
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonColor: "#2563ed",
+        });
       if (res.data.Status === "Edit user successfully! :)") {
         setUser(values);
       } else {

@@ -13,7 +13,6 @@ export const PassengerList = () => {
   }, []);
 
   const handleGroupBy = (e) => {
-    console.log(e.target.value);
     if (e.target.value === 1) {
       getPassengers({ setPassengers });
     } else {

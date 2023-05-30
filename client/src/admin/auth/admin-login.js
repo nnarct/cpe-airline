@@ -14,7 +14,7 @@ export const LoginAdmin = () => {
   const [seePass, setSeePass] = useState("password");
   const handleSubmit = () => {
     Axios.post("http://localhost:3001/admin/login", values).then((res, err) => {
-      if (err) console.log(err);
+      if (err) Swal.fire("Oops...", err.message, "error");
       if (res.data?.Status === "Successfully login admin") {
         if (res.data.Position === "Admin") navigate("/admin");
         if (res.data.Position === "System") navigate("/system");
@@ -32,7 +32,7 @@ export const LoginAdmin = () => {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/emauth").then((res, err) => {
-      if (err) console.log(err); // You are not authenticated
+      if (err) Swal.fire("Oops...", err.message, "error");
       if (res.data.Status === "Success") {
         if (res.data.Info.Position === "Admin") navigate("/admin");
         if (res.data.Info.Position === "System") navigate("/system");

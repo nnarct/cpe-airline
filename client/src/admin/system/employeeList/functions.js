@@ -8,7 +8,11 @@ export const getEmployeeList = async (setEmployees, setAirlines) => {
     setEmployees(data.Data);
     setAirlines(data.Airlines);
   } catch (error) {
-    console.log(error);
+    Swal.fire({
+      icon: "error",
+      title: "Sorry...",
+      text: "Something went wrong!",
+    });
   }
 };
 
@@ -82,8 +86,10 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
       const email = document.getElementById("Email").value;
       let TelNo = document.getElementById("TelNo").value;
       const position = document.getElementById("Position").value;
-      const airlineID = 
-        position === "Admin" ? document.getElementById("AirlineID").value : null;     
+      const airlineID =
+        position === "Admin"
+          ? document.getElementById("AirlineID").value
+          : null;
       if (!firstName) Swal.showValidationMessage("Please enter FirstName");
       else if (!lastName) Swal.showValidationMessage("Please enter LastName");
       else if (!email) Swal.showValidationMessage("Please enter Email");
@@ -98,7 +104,7 @@ export const editEmployee = (setEmployees, setAirlines, employee, airlines) => {
           return Swal.showValidationMessage("Phone number is invalid");
       }
       const val = {
-      // return {
+        // return {
         id: employee?.EmployeeID,
         FirstName: firstName,
         LastName: lastName,

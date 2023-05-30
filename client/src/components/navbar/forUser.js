@@ -6,7 +6,7 @@ import { BsPersonCircle, BsPersonFillGear } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
-export const ForUser = ({setAuth}) => {
+export const ForUser = ({ setAuth }) => {
   const [info, setInfo] = useState({ UserID: "", firstName: "", lastName: "" });
   useEffect(() => {
     Axios.get("http://localhost:3001/userName").then((res, err) => {
@@ -44,14 +44,23 @@ export const ForUser = ({setAuth}) => {
       }
     });
   }, []);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogout = () => {
     Axios.get("http://localhost:3001/logout")
       .then((res) => {
         setAuth(false);
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: "Something went wrong!",
+          timer: 3000,
+          timerProgressBar: true,
+          confirmButtonColor: "#2563ed",
+        })
+      );
   };
 
   const [isOpen, setIsOpen] = useState(false);

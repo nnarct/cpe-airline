@@ -1,6 +1,6 @@
+import Swal from "sweetalert2";
 import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-
 import { FaPlaneArrival } from "react-icons/fa";
 import { Card } from "../card";
 import { DropHead } from "./components/drophead";
@@ -25,7 +25,11 @@ export const To = ({ airports, values, setValues }) => {
         );
       }
     } else {
-      console.log("airports from database not found");
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Airports from database not found",
+      });
       return "";
     }
   };
@@ -34,7 +38,11 @@ export const To = ({ airports, values, setValues }) => {
       const airport = airports.find((airport) => airport.AirportID === id);
       if (airport) return airport.Name;
     } else {
-      console.log("airports from database not found");
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Airports from database not found",
+      });
       return "";
     }
   };
@@ -43,7 +51,11 @@ export const To = ({ airports, values, setValues }) => {
       const airport = airports.find((airport) => airport.AirportID === id);
       if (airport) return airport.IATA;
     } else {
-      console.log("airports from database not found");
+      Swal.fire({
+        icon: "error",
+        title: "Sorry...",
+        text: "Airports from database not found",
+      });
       return "";
     }
   };

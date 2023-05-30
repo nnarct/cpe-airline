@@ -5,10 +5,7 @@ import jwt from "jsonwebtoken";
 export const loginAdmin = (req, res) => {
   const sql = "SELECT * FROM employee WHERE username = ?";
   db.query(sql, [req.body.username], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.json({ Error: "Login error in server..." });
-    }
+    if (err) return res.json({ Error: "Login error in server..." });
     if (data.length > 0) {
       bcrypt.compare(
         req.body.password.toString(),
@@ -32,4 +29,4 @@ export const loginAdmin = (req, res) => {
       );
     } else return res.json({ Error: "Data not found" });
   });
-}
+};
