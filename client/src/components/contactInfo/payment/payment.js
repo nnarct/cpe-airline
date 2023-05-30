@@ -337,7 +337,9 @@ export const Payment = () => {
           )}
           <div className="text-right border-t py-3 mt-4">
             <span className="font-bold text-xl">Total</span>
-            <span className="font-bold text-3xl px-5">{Total}</span>
+            <span className="font-bold text-3xl px-5">
+              {Total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </span>
             <span>฿ </span>
           </div>
           <button
