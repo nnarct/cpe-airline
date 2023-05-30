@@ -202,7 +202,7 @@ export const Invoice = () => {
                         <tbody>
                           <tr className="py-4 text-xl font-semibold border-t border-primary">
                             <td className="p-3">{invoice.Class}</td>
-                            <td className="p-3">1</td>
+                            <td className="p-3">{invoice.PassengerCount}</td>
                             <td className="p-3">
                               {invoice.Total.toFixed(2).replace(
                                 /\B(?=(\d{3})+(?!\d))/g,
