@@ -48,7 +48,7 @@ export const flightList = (req, res) => {
               c_premium.Name = 'Premium Economy' OR c_premium.Name IS NULL
           ) AND(
               c_economy.Name = 'Economy' OR c_economy.Name IS NULL
-          ) AND f.FlightID > 2200
+          )
       ORDER BY
           f.FlightID;`;
   const sqlAirports = "SELECT AirportID, Name, IATA FROM airport";
