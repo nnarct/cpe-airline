@@ -77,6 +77,7 @@ export const Transaction = ({ flights, s }) => {
   };
 
   const editBooking = (e) => {
+  
     Swal.fire({
       title: "Edit Booking",
       html: `
@@ -86,21 +87,21 @@ export const Transaction = ({ flights, s }) => {
       </span>
     </div>
   <div class="flex items-center justify-center py-1">
-    <label htmlFor="fname" class="w-24 block">First Name</label>
-    <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${777}">
+    <label htmlFor="fname" class="w-32 block">First Name</label>
+    <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${contactInfo[0].ContactFirstname}">
   </div>
   <div class="flex items-center justify-center py-1">
-    <label htmlFor="lname" class="w-24 block">Last
+    <label htmlFor="lname" class="w-32 block">Last
     Name</label>
-    <input id="swal-input2" class="w-full px-2 py-1.5 active:ring" placeholder="Last name" value="${88}">,
+    <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Last name" value="${contactInfo[0].ContactLastname}">
   </div>
   <div class="flex items-center justify-center py-1">
-    <label htmlFor="State" class="w-24 block">State</label>
-    <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Email" value="${99}">
+    <label htmlFor="State" class="w-32 block">Email</label>
+    <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Email" value="${contactInfo[0].ContactEmail}">
   </div>
   <div class="flex items-center justify-center py-1">
-    <label htmlFor="Phone" class="w-24 block">Phone</label>
-    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="0994848848" value="${99}">
+    <label htmlFor="Phone" class="w-32 block">Phone</label>
+    <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="0994848848" value="${contactInfo[0].ContactPhone}">
     </div>`,
     }).then((result) => {
       if (result.isConfirmed) {
@@ -120,7 +121,8 @@ export const Transaction = ({ flights, s }) => {
       }
     });
   };
-  const editPassenger = (e) => {
+  const editPassenger = (i) => {
+    console.log(i)
     Swal.fire({
       title: "Edit passenger",
       html: `
@@ -131,24 +133,30 @@ export const Transaction = ({ flights, s }) => {
         </div>
       <div class="flex items-center justify-center py-1">
         <label htmlFor="fname" class="w-24 block">First Name</label>
-        <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${777}">
+        <input id="swal-input1" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="First name" value="${i.FirstName}">
       </div>
       <div class="flex items-center justify-center py-1">
         <label htmlFor="lname" class="w-24 block">Last
         Name</label>
-        <input id="swal-input2" type="date" class="w-full px-2 py-1.5 active:ring" placeholder="Last name" value="${88}">,
+        <input id="swal-input2" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Last name" value="${i.LastName}">,
       </div>
-      <div class="flex items-center justify-center py-1">
-        <label htmlFor="state" class="w-24 block">State</label>
-        <input id="swal-input3" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="Email" value="${99}">
-      </div>
-      <div class="flex items-center justify-center py-1">
-        <label htmlFor="province" class="w-24 block">Province</label>
-        <input id="swal-input4" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border" placeholder="0994848848" value="${99}">
-  </div>`,
+     `,
+     preConfirm: () => {
+      return {fname: document.getElementById("swal-input1").value,
+      lname: document.getElementById("swal-input2").value,
+    id: i.PassengerID}}
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Edited!", "Your booking has been edited.", "success");
+        Axios.post("http://localhost:3001/editPassenger", result.value).then((res, err) => {
+          if (err) Swal.fire("Error!", "Something went wrong.", "error");
+          else if (res.data.Status === "Success")
+            Swal.fire(
+              "Edited!",
+              "Your passenger has been edited.",
+              "success"
+            ).then(() => navigate(currentPath));
+        });
+        Swal.fire("Edited!", "Your booking has been edited.", "warning");
       }
     });
   };
@@ -247,7 +255,7 @@ export const Transaction = ({ flights, s }) => {
             {s === 1 && flightInfo?.Protection === 1 && (
               <button
                 className="px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
-                onClick={editBooking}
+                onClick={e=>editBooking(e)}
               >
                 Edit
               </button>
@@ -281,7 +289,7 @@ export const Transaction = ({ flights, s }) => {
                 {s === 1 && flightInfo?.Protection === 1 && (
                   <button
                     className="text-base px-3 py-2 flex items-center bg-blue-500 text-white rounded hover:ring focus:bg-blue-600"
-                    onClick={editPassenger(info.PassengerID)}
+                    onClick={()=>editPassenger(info)}
                   >
                     Edit
                   </button>
