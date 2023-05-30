@@ -13,7 +13,7 @@ export const AddOns = ({ contact, setContact }) => {
               type="radio"
               value=""
               name="TravelProtection"
-              onChange={() => setContact({ ...contact, protection: true })}
+              onChange={() => setContact({ ...contact, Protection: true })}
             />
             <label
               htmlFor="TravelProtection1"
@@ -29,7 +29,7 @@ export const AddOns = ({ contact, setContact }) => {
                 type="radio"
                 value=""
                 name="TravelProtection"
-                onChange={() => setContact({ ...contact, protection: false })}
+                onChange={() => setContact({ ...contact, Protection: false })}
               />
             </div>
             <div className="ml-2">
