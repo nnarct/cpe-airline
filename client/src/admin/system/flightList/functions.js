@@ -116,6 +116,7 @@ export const editFlight = ({ flight, airlines, airports, planes }) => {
         <label htmlFor="Plane" class="w-24 block">Plane</label>
         <select id="PlaneSelect" class="w-full md:w-4/5 px-2 py-1.5 active:ring rounded border my-2">
         </select>
+        
     </form>`,
     confirmButtonText: "Save",
     showCancelButton: true,
@@ -251,9 +252,7 @@ export const deleteFlight = (flight) => {
   Swal.fire({
     icon: "warning",
     title: "Are you sure?",
-    html: `You are deleting Airport ${flight.FlightID}, <span class="font-semibold text-red-500">${
-      flight.FlightNumber
-    }</span>
+    html: `You are deleting Airport ${flight.FlightID}, <span class="font-semibold text-red-500">${flight.FlightNumber}</span>
     <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will delete all passenger data of this flight.</div>
     <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This will delete all booking data of this flight.</div>
     <div class="py-1 bg-red-100 text-red-700 w-full rounded mt-4">This action cannot be undone !</div>`,
@@ -263,10 +262,19 @@ export const deleteFlight = (flight) => {
     cancelButtonText: "Cancel",
     focusCancel: true,
   }).then((result) => {
-    if (result.isConfirmed)
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Loading...",
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       Axios.post("http://localhost:3001/system/deleteFlight", {
         id: flight.FlightID,
       }).then((res, err) => {
+        Swal.close();
         if (err)
           Swal.fire({
             title: "Error!",
@@ -297,6 +305,6 @@ export const deleteFlight = (flight) => {
             showConfirmButton: false,
           });
       });
+    }
   });
 };
-
