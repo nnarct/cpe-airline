@@ -71,12 +71,12 @@ export const ContactInfo = () => {
     })
   );
   const [addon, setAddon] = useState([]);
-  const [genders, setGenders] = useState(pass.map((p) => ""));
-  const [addondep, setAddondep] = useState(pass.map((p) => null));
-  const [addonret, setAddonret] = useState(pass.map((p) => null));
   const [base, setBase] = useState([]);
   const [dep, setDep] = useState({});
   const [ret, setRet] = useState({});
+  const [genders, setGenders] = useState(pass.map((p) => ""));
+  const [addOnDep, setAddOnDep] = useState(pass.map((p) => null));
+  const [addOnRet, setAddOnRet] = useState(pass.map((p) => null));
   const [depSeats, setDepSeats] = useState(pass.map((p) => null));
   const [retSeats, setRetSeats] = useState(pass.map((p) => null));
   const [total, setTotal] = useState(0);
@@ -90,18 +90,18 @@ export const ContactInfo = () => {
   }, []);
 
   const handleDepAdd = (index, element) => {
-    const newArray = addondep.map((d, i) => {
+    const newArray = addOnDep.map((d, i) => {
       if (i === index) return element;
       return d;
     });
-    setAddondep(newArray);
+    setAddOnDep(newArray);
   };
   const handleRetAdd = (index, element) => {
-    const newArray = addonret.map((r, i) => {
+    const newArray = addOnRet.map((r, i) => {
       if (i === index) return element;
       return r;
     });
-    setAddonret(newArray);
+    setAddOnRet(newArray);
   };
 
   const handleSubmit = (e) => {
@@ -117,8 +117,8 @@ export const ContactInfo = () => {
       const nationality = form[`nationality${i}`].value;
       const gender = genders[i - 1];
       const dob = value.find((v) => v.id === i);
-      const addDep = addondep[i - 1]?.AddOnsID;
-      const addRet = addonret[i - 1]?.AddOnsID;
+      const addDep = addOnDep[i - 1]?.AddOnsID;
+      const addRet = addOnRet[i - 1]?.AddOnsID;
       const depSeat = depSeats[i - 1];
       const retSeat = retSeats[i - 1];
       if (validatePassenger(fname, lname, dob, nationality, gender) === 0)
@@ -130,14 +130,12 @@ export const ContactInfo = () => {
         dob: JSON.stringify(dob.dob),
         nationality: nationality,
         gender: gender,
-        addondep: addDep,
-        addonret: addRet,
+        addOnDep: addDep,
+        addOnRet: addRet,
         DepSeatID: depSeat,
         RetSeatID: retSeat,
       });
     }
-    console.log("values", values);
-    console.log("contact", contact);
     setSession(contact, values);
     navigate("/payment" + location.search);
   };
@@ -152,7 +150,7 @@ export const ContactInfo = () => {
               <form action="" ref={info}>
                 <InputFrom label="First Name">
                   <input
-                    name="cfirstname"
+                    name="cFirstName"
                     type="text"
                     className={inp}
                     defaultValue={contact.FirstName}
@@ -163,7 +161,7 @@ export const ContactInfo = () => {
                 </InputFrom>
                 <InputFrom label="Last Name">
                   <input
-                    name="clastname"
+                    name="cLastName"
                     type="text"
                     className={inp}
                     defaultValue={contact.LastName}
@@ -174,7 +172,7 @@ export const ContactInfo = () => {
                 </InputFrom>
                 <InputFrom label="Phone">
                   <input
-                    name="cphone"
+                    name="cPhone"
                     type="text"
                     className={inp}
                     defaultValue={contact.phone}
@@ -185,7 +183,7 @@ export const ContactInfo = () => {
                 </InputFrom>
                 <InputFrom label="Email">
                   <input
-                    name="cemail"
+                    name="cEmail"
                     type="text"
                     className={inp}
                     defaultValue={contact.email}
@@ -328,7 +326,7 @@ export const ContactInfo = () => {
                         luggages={addon.dep}
                         id={i}
                         fn={handleDepAdd}
-                        addondep={addondep}
+                        addOnDep={addOnDep}
                       />
                     </>
                   );
@@ -348,7 +346,7 @@ export const ContactInfo = () => {
                         luggages={addon.ret}
                         id={i}
                         fn={handleRetAdd}
-                        addonret={addonret}
+                        addOnRet={addOnRet}
                       />
                     </>
                   );
@@ -365,8 +363,8 @@ export const ContactInfo = () => {
             />
             <Price
               protection={contact.Protection}
-              addondep={addondep}
-              addonret={addonret}
+              addOnDep={addOnDep}
+              addOnRet={addOnRet}
               setTotal={setTotal}
             />
           </div>

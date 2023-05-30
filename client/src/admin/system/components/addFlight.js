@@ -77,7 +77,7 @@ export const AddFlight = ({ airlines, airports, planes }) => {
       Swal.fire({
         icon: "info",
         title: "Sorry",
-        text: "Please select destiantion airport again.",
+        text: "Please select destination airport again.",
         timer: 2000,
         timerProgressBar: true,
       });

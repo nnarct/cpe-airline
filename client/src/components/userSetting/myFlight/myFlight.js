@@ -1,10 +1,7 @@
-import Axios from "axios";
-import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { Transaction } from "./transaction";
 import { Menu } from "./menu";
 import { getUserBookings } from "./functions";
-import { useLocation } from "react-router-dom";
 
 export const MyFlight = () => {
   const [Bookings, setBookings] = useState([]);

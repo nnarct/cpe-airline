@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const Price = ({ protection, addondep, addonret, setTotal }) => {
+export const Price = ({ protection, addOnDep, addOnRet, setTotal }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
@@ -29,11 +29,11 @@ export const Price = ({ protection, addondep, addonret, setTotal }) => {
     ? depPrice?.Price + retPrice?.Price
     : depPrice?.Price;
 
-  const addOnsDepPrice = addondep.reduce((sum, a) => {
+  const addOnsDepPrice = addOnDep.reduce((sum, a) => {
     if (a && typeof a === "object" && "Price" in a) return sum + a.Price;
     return sum;
   }, 0); // sum price of all selected add ons for departure flight
-  const addOnsRetPrice = addonret.reduce((sum, a) => {
+  const addOnsRetPrice = addOnRet.reduce((sum, a) => {
     if (a && typeof a === "object" && "Price" in a) return sum + a.Price;
     return sum;
   }, 0);
@@ -50,7 +50,7 @@ export const Price = ({ protection, addondep, addonret, setTotal }) => {
       }
     );
     setTotal(addOnsTotalPrice + (protection ? 300 : 0) + basePrice * pass);
-  }, [addOnsTotalPrice, basePrice, flightData, pass, protection, setTotal, addonret, addondep]);
+  }, [addOnsTotalPrice, basePrice, flightData, pass, protection, setTotal, addOnRet, addOnDep]);
   return (
     <div className="bg-white border border-primary/40 rounded-md py-3 px-3 mt-3">
       <h2 className="text-center font-bold text-2xl border-b">Price</h2>

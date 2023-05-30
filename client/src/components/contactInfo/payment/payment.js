@@ -31,14 +31,14 @@ const PromptPay = () => {
     <>
       <ul className="pl-4">
         <li className="flex items-center space-x-3">
-          <label htmlFor="PromtpayNumber">
+          <label htmlFor="PromptPayNumber">
             Citizen ID/Phone Number <Star />
           </label>
           <input
             required
             type="text"
             className="w-48 p-1 m-1 border rounded outline-none hover:ring active:ring-blue-200/80"
-            name="PromtpayNumber"
+            name="PromptPayNumber"
             maxLength={13}
             minLength={10}
             onKeyDown={handleNumber}
@@ -204,19 +204,19 @@ export const Payment = () => {
 
       if (type.Name === "PromptPay") {
         if (
-          form["PromtpayNumber"].value.length !== 10 &&
-          form["PromtpayNumber"].value.length !== 13
+          form["PromptPayNumber"].value.length !== 10 &&
+          form["PromptPayNumber"].value.length !== 13
         ) {
           Swal.fire({
             icon: "error",
             title: "Oops! Sorry",
-            text: "PromtPay number must be 10 0r 13 digits",
+            text: "PromptPay number must be 10 0r 13 digits",
           });
           return;
         }
         if (
           contact.FirstName + " " + contact.LastName === "" ||
-          form["PromtpayNumber"].value === ""
+          form["PromptPayNumber"].value === ""
         ) {
           Swal.fire({
             icon: "error",
@@ -228,7 +228,7 @@ export const Payment = () => {
         booking.payment = {
           PaymentID: type.PaymentID,
           BillTo: contact.FirstName + " " + contact.LastName,
-          PromtpayNumber: form["PromtpayNumber"].value,
+          PromptPayNumber: form["PromptPayNumber"].value,
         };
       } else {
         if (
