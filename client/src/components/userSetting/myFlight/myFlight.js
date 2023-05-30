@@ -1,31 +1,26 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { Transaction } from "./transaction";
 import { Menu } from "./menu";
+import { getUserBookings } from "./functions";
+import { useLocation } from "react-router-dom";
 
 export const MyFlight = () => {
   const [Bookings, setBookings] = useState([]);
   useEffect(() => {
-    Axios.post("http://localhost:3001/getUserBooking").then((res, err) => {
-      if (err) console.log(err);
-      else if (res.data.Error) console.log(res.data.Error);
-      else if (res.data.Status) setBookings(res.data.Data);
-    });
+    getUserBookings(setBookings);
   }, []);
 
-  // initialize the state to show the upcoming flights section by default
   const [selectedSection, setSelectedSection] = useState("Upcoming Flights");
-
-  const filteredUpcomingFlights = Bookings.filter((b) => {
-    return (new Date(b.DepartureTime) >= new Date() && b.Status);
+  const filteredUpcomingBookings = Bookings.filter((booking) => {
+    return new Date(booking.DepartureTime) >= new Date() && booking.Status;
   });
-
-  const filteredDepartedFlights = Bookings.filter((b) => {
-    return (new Date(b.DepartureTime) < new Date() && b.Status);
+  const filteredDepartedBookings = Bookings.filter((booking) => {
+    return new Date(booking.DepartureTime) < new Date() && booking.Status;
   });
-
-  const filteredCanceledFlights = Bookings.filter((b) => {
-    return !b.Status;
+  const filteredCanceledBookings = Bookings.filter((booking) => {
+    return !booking.Status;
   });
 
   return (
@@ -53,13 +48,13 @@ export const MyFlight = () => {
           </div>
 
           {selectedSection === "Upcoming Flights" && (
-            <Transaction flights={filteredUpcomingFlights} s={1}/>
+            <Transaction bookings={filteredUpcomingBookings} s={1} />
           )}
           {selectedSection === "Departed Flights" && (
-            <Transaction flights={filteredDepartedFlights} s={0}/>
+            <Transaction bookings={filteredDepartedBookings} s={0} />
           )}
           {selectedSection === "Canceled Flights" && (
-            <Transaction flights={filteredCanceledFlights} s={0}/>
+            <Transaction bookings={filteredCanceledBookings} s={0} />
           )}
         </div>
       </div>
