@@ -260,7 +260,7 @@ export const Payment = () => {
             Swal.fire({
               icon: "error",
               title: "Oops! Sorry",
-              text: "Something went wrong, please contact admin..",
+              text: res.data.Error,
             });
             return;
           }

@@ -16,7 +16,6 @@ export const insertBooking = (req, res) => {
       else UserID = decoded.UserID;
     });
   }
-
   const sqlInvoice =
     payment.PaymentID === 2
       ? "INSERT INTO `invoice` (`PaymentID`, `BillTo`, `Total`, `PromptpayNumber`,`Class`) VALUES (?,?,?,?,?)"
@@ -95,7 +94,7 @@ export const insertBooking = (req, res) => {
           }
         }
       );
-      if (isReturn) {
+      if (isReturn === 1 || isReturn === "1") {
         db.query(
           sqlDepBooking,
           [
