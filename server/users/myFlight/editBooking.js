@@ -33,7 +33,7 @@ export const editPassengerInBooking = (req, res) => {
     SET 
         FirstName = ? ,
         LastName = ?,
-        Nationality = ?,
+        Nationality = ?
     WHERE
         PassengerID = ? ; `;
   db.query(
