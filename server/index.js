@@ -29,6 +29,7 @@ import {
 } from "./admin/passengerList.js";
 import { userList } from "./admin/userList.js";
 import { planeList } from "./admin/planeList.js";
+import { routeList } from "./admin/flightRoute.js";
 
 // edit
 import { editEmployee } from "./admin/edit/editEmployee.js";
@@ -63,7 +64,15 @@ import { airportListUser } from "./users/airportList.js";
 import { showProfile } from "./users/showProfile.js";
 import { editProfile } from "./users/editProfile.js";
 import { changePassword } from "./users/changePassword.js";
-import { getUserBooking } from "./users/myFlight/getUserBooking.js";
+import { getUserBookings } from "./users/myFlight/getUserBookings.js";
+
+// use my flight
+import { getBooking } from "./users/myFlight/getBooking.js";
+import { cancelBooking } from "./users/myFlight/cancelBooking.js";
+import {
+  editBooking,
+  editPassengerInBooking,
+} from "./users/myFlight/editBooking.js";
 
 // search flight
 import { searchFlights } from "./users/searchFlight/searchFlight.js";
@@ -73,41 +82,33 @@ import {
   verifyOwner,
   verifyOwnerRes,
 } from "./users/searchFlight/verifyowner.js";
-// import { getFlightCountsBySection2 } from "./admin/dashboard/Destination2.js"
-import { getbookCountsBySection } from "./admin/dashboard/bookBySec.js"
-import { getAddonsCountByAirport} from "./admin/dashboard/airportbyAdds.js"
-import { getBookingsCountByAirline} from "./admin/dashboard/bookEachday.js"
-
+import { getbookCountsBySection } from "./admin/dashboard/bookBySec.js";
+import { getAddonsCountByAirport } from "./admin/dashboard/airportbyAdds.js";
+import { getBookingsCountByAirline } from "./admin/dashboard/bookEachday.js";
 
 import { getFlight } from "./users/createBooking/getFlight.js";
 import { flightInfo } from "./users/createBooking/flightInfo.js";
-import { insertBooking } from "./users/createBooking/insertBooking.js";
+import { getPrice } from "./users/createBooking/getPrice.js";
 import { getPayment } from "./users/createBooking/getPayment.js";
 import { getInvoice } from "./users/createBooking/getInvoice.js";
 import { addOnInfo, getBase } from "./users/createBooking/addOns.js";
 import { getAvailableSeat } from "./users/createBooking/getAvailableSeat.js";
-
-//import { deleteFlight } from "../client/delete/deleteFlight.js";
-import { selectFlight } from "./admin/restrict/flight/select.js";
-
+import { insertBooking } from "./users/createBooking/insertBooking.js";
 
 // admin my profile
 import { adminInfo } from "./admin/adminInfo.js";
 import { editSystemProfile } from "./admin/edit/editSystemProfile.js";
 import { editAdminProfile } from "./admin/edit/editAdminProfile.js";
 
+import { selectFlight } from "./admin/restrict/flight/select.js";
+
 // dashboard
-import { bookingCount } from "./admin/dashboard/bookCount.js"
+import { bookingCount } from "./admin/dashboard/bookCount.js";
 import { flightCount } from "./admin/dashboard/flightCount.js";
 import { userCount } from "./admin/dashboard/userCount.js";
-import { genderCount } from "./admin/dashboard/genderCount.js"
-import { getFlightCountsBySection } from "./admin/dashboard/Destination.js"
-import { getBookingInfo } from "./users/myFlight/getBookingInfo.js";
-import { routeList } from "./admin/flightRoute.js";
-import { getPrice } from "./users/createBooking/getPrice.js";
+import { genderCount } from "./admin/dashboard/genderCount.js";
+import { getFlightCountsBySection } from "./admin/dashboard/Destination.js";
 import { bookByday } from "./admin/dashboard/bookByday.js";
-import { cancelBooking } from "./users/myFlight/cancelBooking.js";
-import { editBooking } from "./users/myFlight/editBooking.js";
 
 const app = express();
 app.use(express.json());
@@ -192,8 +193,11 @@ app.get("/airportList", airportListUser);
 app.post("/showProfile", showProfile);
 app.post("/editProfile", editProfile);
 app.post("/user/changePassword", changePassword);
-app.post("/getUserBooking", getUserBooking);
-app.post('/getBookingInfo',getBookingInfo);
+app.post("/getUserBookings", getUserBookings);
+app.post("/getBooking", getBooking);
+app.post("/cancelBooking", cancelBooking);
+app.post("/editBooking", editBooking);
+app.post("/editPassenger", editPassengerInBooking);
 
 // app.post("/AmadeusSearchFlights", AmadeusSearchFlights);
 app.post("/search/SearchFlights", searchFlights);
@@ -203,15 +207,13 @@ app.post("/contact/addonInfo", addOnInfo);
 app.post("/contact/getBase", getBase);
 app.post("/insertBooking", insertBooking);
 
-
 // insert contact page
 app.get("/invoice/userauth", verifyOwner, verifyOwnerRes);
 app.post("/getPrice", getPrice);
 app.post("/getPayment", getPayment);
 app.post("/getInvoice", getInvoice);
-app.post("/getUserBooking", getUserBooking);
+app.post("/getUserBookings", getUserBookings);
 app.post("/getAvailableSeat", getAvailableSeat);
-
 
 // Dashboard
 app.get("/system/genderCount", genderCount);
@@ -223,13 +225,6 @@ app.get("/system/destination", getFlightCountsBySection);
 app.get("/system/flightCount", flightCount);
 app.get("/system/userCount", userCount);
 app.get("/system/bookByday", bookByday);
-
-
-app.post("/cancelBooking", cancelBooking);
-app.post("/editBooking", editBooking);
-app.post("/editPassenger", editPassenger);
-
-
 
 // select for non-system admin
 app.post("/selectPassenger", selectPassenger);
