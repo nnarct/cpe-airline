@@ -183,7 +183,7 @@ export const SearchResult = () => {
         {noFlight ? null : (
           <>
             {v.departureFlightID && v.departureFlightID !== "null" ? (
-              <SelectedFlight id={v.departureFlightID} />
+              <SelectedFlight id={v.departureFlightID} Class={v.class}/>
             ) : (
               <div>
                 <button
