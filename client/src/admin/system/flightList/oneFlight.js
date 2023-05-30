@@ -2,7 +2,7 @@ import moment from "moment";
 import { editFlight, deleteFlight } from "./functions";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
-export const Flight = ({ flight , airlines, airports, planes }) => {
+export const Flight = ({ flight, airlines, airports, planes }) => {
   return (
     <>
       <tr>
@@ -21,6 +21,8 @@ export const Flight = ({ flight , airlines, airports, planes }) => {
           moment(flight.ArrivalTime).format("HH:mm - DD MMM YY"),
           flight.airline,
           flight.PlaneID,
+          flight.EconomyPrice,
+          flight.PremiumPrice,
         ].map((item, i) => {
           return (
             <td key={i} className="p-2 border border-1 text-center">
