@@ -16,8 +16,9 @@ export const AddFlight = ({ airlines, airports, planes }) => {
     const p = document.getElementById("Plane").value;
     const ori = document.getElementById("OriginAirport").value;
     const des = document.getElementById("DestinationAirport").value;
-    
-    setValues({ ...values, PlaneID: p , OriginAirportID: ori, DestinationAirportID: des});
+    values.PlaneID = p;
+    values.OriginAirportID = ori;
+    values.DestinationAirportID = des;
   
     if (values.FlightNumber === "") {
       Swal.fire({
