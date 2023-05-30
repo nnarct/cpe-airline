@@ -72,7 +72,7 @@ export const Price = ({ protection, addondep, addonret, setTotal }) => {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </span>
         </div>
-        {(protection || addOnsTotalPrice > 0) && (
+        {(protection === true || addOnsTotalPrice > 0) && (
           <div className="flex justify-between font-bold pt-2 mt-1 border-t">
             <span>Add-ons</span>
             <span>
