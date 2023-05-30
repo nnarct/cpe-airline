@@ -1,10 +1,5 @@
 import Swal from "sweetalert2";
 
-export const checkUniqueData = (dep, ret) => {
-  const combined = [...dep, ...ret];
-  const uniqueSet = new Set(combined);
-  return combined.length === uniqueSet.size;
-};
 export const Seat = ({ id, seat, seatID, setSeatID, Class }) => {
   const handleSeat = (index, element) => {
     if (seatID.includes(element)) return; // seat is already selected
