@@ -1,7 +1,56 @@
 import { db } from "../index.js";
 export const flightList = (req, res) => {
   const sql =
-    "SELECT f.*, dap.IATA as desIATA, oap.IATA as oriIATA , al.Name as airline FROM flight f INNER JOIN Airport AS dap ON dap.AirportID = f.DestinationAirportID INNER JOIN Airport as oap ON oap.AirportID = f.OriginAirportID INNER JOIN Airline AS al on al.AirlineID = f.AirlineID ORDER BY f.FlightID;";
+    `SELECT
+    f.*,
+    premium.Price AS PremiumPrice,
+    premium.PriceID AS PremiumPriceID,
+    economy.Price AS EconomyPrice,
+    economy.PriceID AS EconomyPriceID,
+    dap.IATA AS desIATA,
+    oap.IATA AS oriIATA,
+    al.Name AS airline
+      FROM
+          flight f
+      INNER JOIN Airport AS dap
+      ON
+          dap.AirportID = f.DestinationAirportID
+      INNER JOIN Airport AS oap
+      ON
+          oap.AirportID = f.OriginAirportID
+      INNER JOIN Airline AS al
+      ON
+          al.AirlineID = f.AirlineID
+      LEFT JOIN price premium ON
+          f.FlightID = premium.FlightID AND premium.ClassID =(
+          SELECT
+              ClassID
+          FROM
+              class
+          WHERE NAME
+              = 'Premium Economy' AND PlaneID = f.PlaneID
+      )
+      LEFT JOIN price economy ON
+          f.FlightID = economy.FlightID AND economy.ClassID =(
+          SELECT
+              ClassID
+          FROM
+              class
+          WHERE NAME
+              = 'Economy' AND PlaneID = f.PlaneID
+      )
+      LEFT JOIN class c_premium ON
+          premium.ClassID = c_premium.ClassID
+      LEFT JOIN class c_economy ON
+          economy.ClassID = c_economy.ClassID
+      WHERE
+          (
+              c_premium.Name = 'Premium Economy' OR c_premium.Name IS NULL
+          ) AND(
+              c_economy.Name = 'Economy' OR c_economy.Name IS NULL
+          ) AND f.FlightID > 2200
+      ORDER BY
+          f.FlightID;`;
   const sqlAirports = "SELECT AirportID, Name, IATA FROM airport";
   const sqlAirlines = "SELECT AirlineID, Name, Link FROM airline";
   let airports = [];
