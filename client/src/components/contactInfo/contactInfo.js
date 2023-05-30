@@ -382,13 +382,15 @@ export const ContactInfo = () => {
           ret={ret}
           dep={dep}
         />
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-1 mt-3t w-fit rounded hover:ring "
-        >
-          Submit
-        </button>
+        <div className="w-full mx-auto max-w-1000 flex justify-end px-2 py-4">
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="bg-blue-500 text-2xl text-white py-2 px-7 w-fit rounded-xl hover:ring "
+          >
+            Submit
+          </button>
+        </div>
       </PageWrapper>
     </>
   );
