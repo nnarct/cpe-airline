@@ -1,6 +1,7 @@
 import moment from "moment/moment";
-import { TbPlaneInflight } from "react-icons/tb";
 import { airlineLogo } from "../../searchResult/function";
+import { BsShieldFillCheck } from "react-icons/bs";
+import { TbPlaneInflight } from "react-icons/tb";
 export const Item = ({
   AirlineName,
   BookingID,
@@ -10,7 +11,7 @@ export const Item = ({
   OriginAirport,
   ArrivalTime,
   DestinationAirport,
-  
+  Protection
 }) => {
   return (
     <>
@@ -65,9 +66,10 @@ export const Item = ({
               </div>
             </div>
             <div className="mt-2 border-b-2 border-gray-200"></div>
-            <li>
-              Booking ID: <span>{BookingID}</span>
-            </li>
+            <div className="flex justify-between items-center">
+              <span> Booking ID: <span>{BookingID}</span></span>
+             {Protection === 1 ? <span className="py-1"><BsShieldFillCheck color="green"/></span>:''}
+            </div>
           </div>
         </div>
       </div>
