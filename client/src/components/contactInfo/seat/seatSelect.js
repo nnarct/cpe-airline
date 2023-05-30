@@ -1,9 +1,11 @@
 import Axios from "axios";
-import { TbPointFilled } from "react-icons/tb";
-import { Seat, checkUniqueData } from "./seat";
-import { BsArrowRightShort } from "react-icons/bs";
-import { useEffect, useState } from "react";
 import moment from "moment";
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Seat } from "./seat";
+import { BsArrowRightShort } from "react-icons/bs";
+import { TbPointFilled } from "react-icons/tb";
 export const SeatSelect = ({
   params,
   depSeats,
@@ -14,6 +16,7 @@ export const SeatSelect = ({
   dep,
   ret,
 }) => {
+  const navigate = useNavigate();
   const [availableDepartureSeat, setAvailableDepartureSeat] = useState([]);
   const [availableReturnSeat, setAvailableReturnSeat] = useState([]);
   const [bookedDepartureSeat, setBookedDepartureSeat] = useState([]);
@@ -25,7 +28,15 @@ export const SeatSelect = ({
       returnFlightID: params.get("returnFlightID"),
       class: params.get("class"),
     }).then((res, err) => {
-      if (err) console.log(err); // Todo - handle error
+      if (err)
+        Swal.fire({
+          icon: "error",
+          title: "Sorry",
+          text: "Something went wrong",
+          showConfirmButton: true,
+          confirmButtonText: "Back to homepage",
+          confirmButtonColor: "#2356eb",
+        }).then((res) => navigate("/"));
       if (res.data.Status === "Success") {
         setAvailableDepartureSeat(res.data.availableDepartureSeat);
         setBookedDepartureSeat(res.data.bookedDepartureSeat);
@@ -34,7 +45,15 @@ export const SeatSelect = ({
           setBookedReturnSeat(res.data.bookedReturnSeat);
         }
         return;
-      } else console.log(res.data.Error);
+      } else
+        Swal.fire({
+          icon: "error",
+          title: "Sorry",
+          text: res.data.Error,
+          showConfirmButton: true,
+          confirmButtonText: "Back to homepage",
+          confirmButtonColor: "#2356eb",
+        }).then((res) => navigate("/"));
     });
   }, []);
 
@@ -84,7 +103,7 @@ export const SeatSelect = ({
       <div className="w-full max-w-1000 mx-auto pt-3 px-2 flex space-y-3 space-y-reverse sm:space-y-0 sm:space-x-3 flex-col-reverse sm:flex-row">
         <div className="w-full bg-white border border-primary/40 rounded-md py-3 px-5">
           <div className="border-b border-primary/20 mb-1 pb-1 flex ">
-            <h1 className="text-2xl font-bold text-primary ">Seat Number</h1>
+            <h1 className="text-2xl font-bold text-primary ">Select seat</h1>
             {flightData.isReturn ? (
               <>
                 <div
