@@ -2,10 +2,10 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { Logo, TimeAndAirport, Price, LineIcon } from "./components";
 import Swal from "sweetalert2";
-export const SelectedFlight = ({ id }) => {
+export const SelectedFlight = ({ id , Class }) => {
   const [flight, setFlight] = useState({});
   useEffect(() => {
-    Axios.post("http://localhost:3001/search/getFlight", { id }).then(
+    Axios.post("http://localhost:3001/search/getFlight", { id: id, Class:Class }).then(
       (res, err) => {
         if (err) console.log(err);
         if (res.data.Status === "Success") setFlight(res.data.Flight[0]);
@@ -13,7 +13,6 @@ export const SelectedFlight = ({ id }) => {
       }
     );
   }, [id]);
-
   const name = (name) => {
     if (!name) {
       return;
