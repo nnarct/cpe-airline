@@ -40,7 +40,7 @@ export const Navbar = () => {
           {!loading && (
             <div className="flex items-center">
               {auth === false ? <ForNoob /> : ""}
-              {auth === true ? <ForUser /> : ""}
+              {auth === true ? <ForUser setAuth={setAuth}/> : ""}
             </div>
           )}
         </div>

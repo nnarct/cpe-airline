@@ -6,7 +6,7 @@ import { BsPersonCircle, BsPersonFillGear } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
-export const ForUser = () => {
+export const ForUser = ({setAuth}) => {
   const [info, setInfo] = useState({ UserID: "", firstName: "", lastName: "" });
   useEffect(() => {
     Axios.get("http://localhost:3001/userName").then((res, err) => {
@@ -48,6 +48,7 @@ const navigate = useNavigate()
   const handleLogout = () => {
     Axios.get("http://localhost:3001/logout")
       .then((res) => {
+        setAuth(false);
         navigate("/");
       })
       .catch((err) => console.log(err));
